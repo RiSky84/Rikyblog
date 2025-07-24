@@ -328,3 +328,65 @@ footer {
     color: #3498db !important;
     font-weight: 500;
 }
+
+/* YouTube Section Styling */
+#youtube-channel {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 30%, #e9ecef 70%, #d4c5b9 100%);
+    border-left: 5px solid #ff0000;
+    border-right: 2px solid #8b7d6b;
+    border-top: 1px solid #d4c5b9;
+    border-bottom: 2px solid #5d4e75;
+}
+
+.youtube-container {
+    text-align: center;
+    margin-top: 1.5em;
+}
+
+.youtube-link {
+    text-decoration: none;
+    display: inline-block;
+}
+
+.youtube-button {
+    background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%);
+    color: #ffffff;
+    padding: 1em 2em;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(255, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8em;
+    font-family: 'Merriweather', 'Times New Roman', Times, serif;
+    font-weight: 600;
+    font-size: 1.1em;
+    letter-spacing: 0.5px;
+    min-width: 280px;
+}
+
+.youtube-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(255, 0, 0, 0.4);
+    background: linear-gradient(135deg, #ff1a1a 0%, #e60000 100%);
+}
+
+.youtube-icon {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease;
+}
+
+.youtube-button:hover .youtube-icon {
+    transform: scale(1.1);
+}
+
+.youtube-description {
+    margin-top: 1em;
+    font-style: italic;
+    color: #5d4e75 !important;
+    font-family: 'Crimson Text', 'Times New Roman', Times, serif !important;
+    font-size: 1em !important;
+    text-align: center !important;
+}
