@@ -1,60 +1,149 @@
+/* Google Fonts Import for Advanced Typography */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400;1,600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Merriweather:wght@300;400;700&display=swap');
+
 body { 
-    font-family: Arial, sans-serif; 
+    font-family: 'Times New Roman', Times, Georgia, 'Libre Baskerville', serif; 
     margin: 2em; 
-    background: linear-gradient(135deg, #2c1810 0%, #8b4513 30%, #deb887 70%, #f5deb3 100%), url('Dev.webp') no-repeat center center fixed;
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 20%, #5d4e75 40%, #8b7d6b 60%, #d4c5b9 80%, #f8f9fa 100%), url('Dev.webp') no-repeat center center fixed;
     background-size: cover;
-    color: #3e2723;
+    color: #2c3e50;
+    font-size: 1.1em;
+    line-height: 1.7;
+    letter-spacing: 0.3px;
 }
 header { 
     text-align: center; 
     margin-bottom: 2em; 
-    background: rgba(62, 39, 35, 0.9);
-    color: #f5deb3;
-    border-bottom: 2px solid #d2691e;
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: #f8f9fa;
+    border-bottom: 3px solid #3498db;
+    padding: 1.5em;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(44, 62, 80, 0.3);
+    font-family: 'Playfair Display', 'Times New Roman', Times, serif;
+}
+
+header h1 {
+    font-family: 'Playfair Display', 'Times New Roman', Times, serif;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+header p {
+    font-family: 'Crimson Text', 'Times New Roman', Times, serif;
+    font-style: italic;
+    font-size: 1.2em;
+    margin-top: 0.5em;
 }
 article { 
-    background: rgba(245, 222, 179, 0.95); 
-    padding: 1em; 
-    margin-bottom: 1em; 
-    border-radius: 8px; 
-    box-shadow: 0 2px 4px rgba(62, 39, 35, 0.5); 
-    border: 1px solid #d2691e;
-    color: #3e2723;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 50%, #e9ecef 100%); 
+    padding: 2em; 
+    margin-bottom: 1.5em; 
+    border-radius: 12px; 
+    box-shadow: 0 4px 12px rgba(44, 62, 80, 0.15); 
+    border-left: 4px solid #3498db;
+    border-right: 1px solid #d4c5b9;
+    border-top: 1px solid #d4c5b9;
+    border-bottom: 1px solid #8b7d6b;
+    color: #2c3e50;
+    font-family: 'Crimson Text', 'Times New Roman', Times, serif;
+    font-size: 1.1em;
+    line-height: 1.8;
 }
-h1, h2 { color: #8b4513; }
-h2 { border-bottom: 1px solid #d2691e; }
-.date { color: #a0522d; font-size: 0.9em; }
+h1, h2 { 
+    color: #2c3e50; 
+    text-shadow: 1px 1px 2px rgba(52, 73, 94, 0.1);
+    font-family: 'Playfair Display', 'Times New Roman', Times, serif;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+h1 {
+    color: #3498db;
+    font-size: 2.8em;
+    font-family: 'Playfair Display', 'Times New Roman', Times, serif;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: capitalize;
+}
+h2 { 
+    border-bottom: 2px solid #8b7d6b; 
+    padding-bottom: 0.5em;
+    color: #34495e;
+    font-size: 1.8em;
+    font-family: 'Crimson Text', 'Times New Roman', Times, serif;
+    font-weight: 600;
+    margin-top: 1.5em;
+}
+.date { 
+    color: #5d4e75; 
+    font-size: 0.95em; 
+    font-style: italic; 
+    font-family: 'Crimson Text', 'Times New Roman', Times, serif;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-size: 0.85em;
+}
 .dev-bg {
     margin: 2em auto;
     max-width: 600px;
-    background: rgba(245, 222, 179, 0.95);
-    padding: 1em;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(62, 39, 35, 0.4);
-    color: #3e2723;
-    border: 1px solid #d2691e;
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 50%, #e9ecef 100%);
+    padding: 1.5em;
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(44, 62, 80, 0.2);
+    color: #2c3e50;
+    border: 2px solid #d4c5b9;
 }
 
-/* Warm Developer Workspace Theme Sections */
+/* Blue, Brown, White Multi-Shade Theme Sections */
 section {
-    background: rgba(245, 222, 179, 0.9);
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 30%, #e9ecef 70%, #d4c5b9 100%);
     margin: 2em 0;
+    padding: 2em;
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(44, 62, 80, 0.15);
+    border-left: 5px solid #3498db;
+    border-right: 2px solid #8b7d6b;
+    border-top: 1px solid #d4c5b9;
+    border-bottom: 2px solid #5d4e75;
+    color: #2c3e50;
+    font-family: 'Libre Baskerville', 'Times New Roman', Times, serif;
+    font-size: 1.05em;
+    line-height: 1.7;
+}
+
+section h2 {
+    font-family: 'Playfair Display', 'Times New Roman', Times, serif;
+    color: #2c3e50;
+    font-size: 2em;
+    margin-bottom: 1em;
+}
+
+/* List styling for blue, brown, white theme */
+ul {
+    color: #2c3e50;
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
     padding: 1.5em;
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(62, 39, 35, 0.3);
-    border: 1px solid #d2691e;
-    color: #3e2723;
-}
-
-/* List styling for warm developer theme */
-ul {
-    color: #3e2723;
+    border-left: 3px solid #3498db;
+    font-family: 'Crimson Text', 'Times New Roman', Times, serif;
+    font-size: 1.05em;
+    line-height: 1.6;
 }
 
 ul li {
-    margin-bottom: 0.5em;
-    padding: 0.3em 0;
-    border-bottom: 1px solid #deb887;
+    margin-bottom: 0.8em;
+    padding: 0.6em 0;
+    border-bottom: 1px solid #d4c5b9;
+    transition: all 0.3s ease;
+    font-weight: 400;
+    letter-spacing: 0.3px;
+}
+
+ul li:hover {
+    color: #3498db;
+    padding-left: 0.8em;
+    font-weight: 500;
 }
 
 ul li:last-child {
@@ -63,6 +152,179 @@ ul li:last-child {
 
 /* Image styling updates */
 img {
-    filter: contrast(1.1) brightness(1.05) sepia(0.1) saturate(1.2);
-    border: 2px solid #d2691e;
+    filter: contrast(1.1) brightness(1.05) saturate(1.1);
+    border: 3px solid #8b7d6b;
+    box-shadow: 0 4px 12px rgba(44, 62, 80, 0.2);
+    transition: transform 0.3s ease;
+}
+
+img:hover {
+    transform: scale(1.02);
+    border-color: #3498db;
+}
+
+/* Additional Blue, Brown, White Accent Elements */
+p {
+    line-height: 1.8;
+    color: #34495e;
+    font-family: 'Crimson Text', 'Times New Roman', Times, serif;
+    font-size: 1.1em;
+    margin-bottom: 1.2em;
+    text-align: justify;
+    letter-spacing: 0.2px;
+}
+
+/* First letter styling for paragraphs in articles */
+article p:first-of-type::first-letter {
+    font-family: 'Playfair Display', 'Times New Roman', Times, serif;
+    font-size: 3.5em;
+    line-height: 0.8;
+    float: left;
+    margin: 0.1em 0.1em 0 0;
+    color: #3498db;
+    font-weight: 700;
+}
+
+/* Accent colors for interactive elements */
+a {
+    color: #3498db;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #2980b9;
+    text-decoration: underline;
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f8f9fa;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #3498db, #8b7d6b);
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #2980b9, #5d4e75);
+}
+
+/* Selection highlighting */
+::selection {
+    background: #3498db;
+    color: #ffffff;
+}
+
+/* Button-like styling for any future buttons */
+.btn {
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    color: #ffffff;
+    padding: 0.8em 2em;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 3px 8px rgba(52, 152, 219, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Merriweather', 'Times New Roman', Times, serif;
+    font-size: 1em;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(52, 152, 219, 0.4);
+    letter-spacing: 1.5px;
+}
+
+/* Quote styling for future use */
+blockquote {
+    font-family: 'Playfair Display', 'Times New Roman', Times, serif;
+    font-size: 1.3em;
+    font-style: italic;
+    color: #5d4e75;
+    border-left: 4px solid #3498db;
+    padding-left: 1.5em;
+    margin: 1.5em 0;
+    background: rgba(248, 249, 250, 0.5);
+    padding: 1em 1em 1em 2em;
+    border-radius: 0 8px 8px 0;
+}
+
+/* Enhanced typography for emphasis */
+em {
+    font-family: 'Crimson Text', 'Times New Roman', Times, serif;
+    font-style: italic;
+    color: #2980b9;
+}
+
+strong {
+    font-family: 'Merriweather', 'Times New Roman', Times, serif;
+    font-weight: 700;
+    color: #2c3e50;
+}
+
+/* Developer Credit Styling */
+.developer-credit {
+    font-family: 'Crimson Text', 'Times New Roman', Times, serif;
+    font-size: 0.9em;
+    font-style: italic;
+    color: #3498db !important;
+    margin-top: 1em;
+    text-align: center;
+    letter-spacing: 0.5px;
+}
+
+.developer-credit strong {
+    color: #f8f9fa;
+    font-weight: 600;
+}
+
+.developer-credit em {
+    color: #d4c5b9;
+    font-style: italic;
+}
+
+/* Footer Styling */
+footer {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: #f8f9fa;
+    text-align: center;
+    padding: 2em;
+    margin-top: 3em;
+    border-radius: 15px;
+    box-shadow: 0 -4px 12px rgba(44, 62, 80, 0.2);
+    border-top: 3px solid #3498db;
+}
+
+.footer-content p {
+    font-family: 'Crimson Text', 'Times New Roman', Times, serif;
+    font-size: 1em;
+    margin: 0.5em 0;
+    color: #f8f9fa !important;
+    text-align: center !important;
+}
+
+.footer-content strong {
+    color: #3498db;
+    font-weight: 600;
+}
+
+.developer-signature {
+    font-style: italic;
+    font-size: 0.9em !important;
+    color: #d4c5b9 !important;
+    margin-top: 1em !important;
+}
+
+.developer-signature em {
+    color: #3498db !important;
+    font-weight: 500;
 }
