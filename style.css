@@ -1,0 +1,68 @@
+body { 
+    font-family: Arial, sans-serif; 
+    margin: 2em; 
+    background: linear-gradient(135deg, #2c1810 0%, #8b4513 30%, #deb887 70%, #f5deb3 100%), url('Dev.webp') no-repeat center center fixed;
+    background-size: cover;
+    color: #3e2723;
+}
+header { 
+    text-align: center; 
+    margin-bottom: 2em; 
+    background: rgba(62, 39, 35, 0.9);
+    color: #f5deb3;
+    border-bottom: 2px solid #d2691e;
+}
+article { 
+    background: rgba(245, 222, 179, 0.95); 
+    padding: 1em; 
+    margin-bottom: 1em; 
+    border-radius: 8px; 
+    box-shadow: 0 2px 4px rgba(62, 39, 35, 0.5); 
+    border: 1px solid #d2691e;
+    color: #3e2723;
+}
+h1, h2 { color: #8b4513; }
+h2 { border-bottom: 1px solid #d2691e; }
+.date { color: #a0522d; font-size: 0.9em; }
+.dev-bg {
+    margin: 2em auto;
+    max-width: 600px;
+    background: rgba(245, 222, 179, 0.95);
+    padding: 1em;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(62, 39, 35, 0.4);
+    color: #3e2723;
+    border: 1px solid #d2691e;
+}
+
+/* Warm Developer Workspace Theme Sections */
+section {
+    background: rgba(245, 222, 179, 0.9);
+    margin: 2em 0;
+    padding: 1.5em;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(62, 39, 35, 0.3);
+    border: 1px solid #d2691e;
+    color: #3e2723;
+}
+
+/* List styling for warm developer theme */
+ul {
+    color: #3e2723;
+}
+
+ul li {
+    margin-bottom: 0.5em;
+    padding: 0.3em 0;
+    border-bottom: 1px solid #deb887;
+}
+
+ul li:last-child {
+    border-bottom: none;
+}
+
+/* Image styling updates */
+img {
+    filter: contrast(1.1) brightness(1.05) sepia(0.1) saturate(1.2);
+    border: 2px solid #d2691e;
+}
