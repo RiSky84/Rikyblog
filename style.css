@@ -14,7 +14,28 @@ html {
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
     scroll-behavior: smooth;
+    scroll-padding-top: 70px; /* Account for fixed navigation */
     height: 100%;
+    /* Enhanced smooth scrolling for WebKit browsers */
+    -webkit-overflow-scrolling: touch;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        scroll-behavior: smooth;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+    
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
 }
 
 body { 
@@ -32,6 +53,9 @@ body {
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     overflow-x: hidden;
+    /* Enhanced scrolling performance */
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
 }
 header { 
     text-align: center; 
@@ -420,9 +444,13 @@ footer {
     width: 100%;
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     z-index: 1000;
     border-bottom: 1px solid rgba(52, 152, 219, 0.1);
     transition: all 0.3s ease;
+    /* Smooth scroll optimization */
+    will-change: transform;
+    transform: translateZ(0);
 }
 
 .nav-content {
@@ -441,6 +469,11 @@ footer {
     font-weight: 700;
     color: #3498db;
     text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.logo:hover {
+    color: #2980b9;
 }
 
 .nav-links {
@@ -457,11 +490,19 @@ footer {
     font-weight: 500;
     transition: all 0.3s ease;
     position: relative;
+    padding: 10px 15px;
+    border-radius: 8px;
+    /* Smooth interaction optimization */
+    will-change: color, background-color;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 .nav-link:hover,
 .nav-link.active {
     color: #3498db;
+    background: rgba(52, 152, 219, 0.05);
 }
 
 .nav-link::after {
@@ -469,15 +510,16 @@ footer {
     position: absolute;
     width: 0;
     height: 2px;
-    bottom: -5px;
-    left: 0;
+    bottom: 5px;
+    left: 50%;
     background: #3498db;
-    transition: width 0.3s ease;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
 }
 
 .nav-link:hover::after,
 .nav-link.active::after {
-    width: 100%;
+    width: 70%;
 }
 
 .mobile-menu-toggle {
@@ -485,6 +527,13 @@ footer {
     flex-direction: column;
     cursor: pointer;
     gap: 4px;
+    padding: 8px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.mobile-menu-toggle:hover {
+    background: rgba(52, 152, 219, 0.1);
 }
 
 .mobile-menu-toggle span {
@@ -492,6 +541,7 @@ footer {
     height: 3px;
     background: #3498db;
     transition: all 0.3s ease;
+    border-radius: 2px;
 }
 
 /* Animated Header Styles */
@@ -933,6 +983,17 @@ footer {
         -webkit-touch-callout: default;
         -webkit-user-select: text;
         user-select: text;
+        /* Enhanced mobile scrolling */
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
+        scroll-behavior: smooth;
+    }
+
+    /* Enhanced HTML for mobile smooth scrolling */
+    html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 80px; /* More padding for mobile navigation */
+        -webkit-overflow-scrolling: touch;
     }
 
     /* Navigation improvements for mobile Chrome */
@@ -946,6 +1007,9 @@ footer {
         -webkit-backdrop-filter: blur(15px);
         border-bottom: 1px solid rgba(52, 152, 219, 0.1);
         z-index: 1001;
+        /* Smooth transform optimization */
+        will-change: transform;
+        transform: translateZ(0);
     }
 
     .nav-links {
@@ -962,10 +1026,12 @@ footer {
         justify-content: start;
         align-items: center;
         padding-top: 50px;
-        transition: left 0.3s ease;
+        transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Smoother easing */
         box-shadow: 0 5px 20px rgba(0,0,0,0.15);
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
+        /* Smooth scroll optimization */
+        overscroll-behavior: contain;
     }
 
     .nav-links.active {
@@ -973,21 +1039,30 @@ footer {
     }
 
     .nav-link {
-        padding: 15px 20px;
+        padding: 18px 25px;
         font-size: 1.1rem;
-        margin: 10px 0;
+        margin: 8px 0;
         min-height: 44px; /* Minimum touch target size for mobile */
         display: flex;
         align-items: center;
         justify-content: center;
-        border-radius: 8px;
-        transition: all 0.3s ease;
+        border-radius: 12px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Smoother transitions */
         -webkit-tap-highlight-color: rgba(52, 152, 219, 0.2);
+        width: 80%;
+        max-width: 300px;
+        /* Smooth interaction optimization */
+        will-change: background-color, transform;
+        transform: translateZ(0);
     }
 
     .nav-link:active {
         background: rgba(52, 152, 219, 0.1);
-        transform: scale(0.98);
+        transform: scale(0.98) translateZ(0);
+    }
+
+    .nav-link::after {
+        display: none; /* Remove underline animation on mobile for better performance */
     }
 
     .mobile-menu-toggle {
@@ -998,11 +1073,13 @@ footer {
         align-items: center;
         justify-content: center;
         -webkit-tap-highlight-color: rgba(52, 152, 219, 0.2);
+        border-radius: 8px;
+        transition: all 0.3s ease;
     }
 
     .mobile-menu-toggle:active {
         background: rgba(52, 152, 219, 0.1);
-        border-radius: 8px;
+        transform: scale(0.95);
     }
 
     .mobile-menu-toggle.active span:nth-child(1) {

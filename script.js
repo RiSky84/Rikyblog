@@ -330,7 +330,7 @@ function initializeShareButtons() {
     });
 }
 
-// Back to Top Button with mobile Chrome optimization
+// Back to Top Button with enhanced smooth scrolling
 function initializeBackToTop() {
     const backToTopBtn = document.getElementById('backToTop');
     let ticking = false;
@@ -353,36 +353,66 @@ function initializeBackToTop() {
 
     window.addEventListener('scroll', updateBackToTopButton, { passive: true });
 
+    // Enhanced smooth scroll to top function
+    function smoothScrollToTop() {
+        const startPosition = window.pageYOffset;
+        const duration = 600;
+        let start = null;
+
+        function easeOutCubic(t) {
+            return 1 - Math.pow(1 - t, 3);
+        }
+
+        function animation(currentTime) {
+            if (start === null) start = currentTime;
+            const timeElapsed = currentTime - start;
+            const progress = Math.min(timeElapsed / duration, 1);
+            const easedProgress = easeOutCubic(progress);
+            
+            window.scrollTo(0, startPosition * (1 - easedProgress));
+            
+            if (timeElapsed < duration) {
+                requestAnimationFrame(animation);
+            }
+        }
+
+        requestAnimationFrame(animation);
+    }
+
     backToTopBtn.addEventListener('click', (e) => {
         e.preventDefault();
         
-        // Use smooth scrolling with fallback for mobile Chrome
-        if ('scrollBehavior' in document.documentElement.style) {
+        // Use enhanced smooth scrolling for consistent experience across devices
+        if ('scrollBehavior' in document.documentElement.style && !(/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))) {
+            // Use native smooth scrolling on desktop browsers that support it well
             window.scrollTo({
                 top: 0,
                 behavior: 'smooth'
             });
         } else {
-            // Polyfill for older mobile browsers
-            const scrollToTop = () => {
-                const c = document.documentElement.scrollTop || document.body.scrollTop;
-                if (c > 0) {
-                    window.requestAnimationFrame(scrollToTop);
-                    window.scrollTo(0, c - c / 8);
-                }
-            };
-            scrollToTop();
+            // Use custom smooth scrolling for mobile devices and older browsers
+            smoothScrollToTop();
         }
     });
 
-    // Add touch feedback for mobile
+    // Add touch feedback for mobile with improved performance
+    let touchTimeout;
     backToTopBtn.addEventListener('touchstart', function() {
+        clearTimeout(touchTimeout);
         this.style.transform = 'scale(0.95)';
     }, { passive: true });
 
     backToTopBtn.addEventListener('touchend', function() {
-        this.style.transform = '';
+        const btn = this;
+        touchTimeout = setTimeout(() => {
+            btn.style.transform = '';
+        }, 150);
     }, { passive: true });
+
+    // Prevent double-tap zoom on mobile
+    backToTopBtn.addEventListener('touchend', function(e) {
+        e.preventDefault();
+    });
 }
 
 // Contact Form
@@ -413,10 +443,39 @@ function initializeContactForm() {
     }
 }
 
-// Smooth Scrolling
+// Smooth Scrolling with enhanced mobile and desktop support
 function initializeSmoothScrolling() {
     const navLinks = document.querySelectorAll('.nav-link');
     
+    // Enhanced smooth scrolling function with mobile optimization
+    function smoothScrollTo(targetElement) {
+        const targetPosition = targetElement.offsetTop;
+        const startPosition = window.pageYOffset;
+        const distance = targetPosition - startPosition - 70; // Account for fixed nav
+        const duration = 800; // Slightly longer for smoother feel
+        let start = null;
+
+        // Easing function for smooth animation
+        function easeInOutCubic(t) {
+            return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+        }
+
+        function animation(currentTime) {
+            if (start === null) start = currentTime;
+            const timeElapsed = currentTime - start;
+            const progress = Math.min(timeElapsed / duration, 1);
+            const easedProgress = easeInOutCubic(progress);
+            
+            window.scrollTo(0, startPosition + distance * easedProgress);
+            
+            if (timeElapsed < duration) {
+                requestAnimationFrame(animation);
+            }
+        }
+
+        requestAnimationFrame(animation);
+    }
+
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
@@ -424,12 +483,58 @@ function initializeSmoothScrolling() {
             const targetSection = document.getElementById(targetId);
             
             if (targetSection) {
-                targetSection.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
+                // Check if browser supports native smooth scrolling
+                if ('scrollBehavior' in document.documentElement.style) {
+                    // Use native smooth scrolling for better performance on modern browsers
+                    targetSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start',
+                        inline: 'nearest'
+                    });
+                } else {
+                    // Use custom smooth scrolling for older browsers and better mobile compatibility
+                    smoothScrollTo(targetSection);
+                }
+
+                // Close mobile menu if open
+                const navLinksContainer = document.querySelector('.nav-links');
+                const mobileToggle = document.querySelector('.mobile-menu-toggle');
+                const body = document.body;
+                
+                if (navLinksContainer && navLinksContainer.classList.contains('active')) {
+                    navLinksContainer.classList.remove('active');
+                    mobileToggle.classList.remove('active');
+                    body.style.overflow = '';
+                    body.style.position = '';
+                    body.style.width = '';
+                }
             }
         });
+    });
+
+    // Add smooth scrolling to any anchor links in the page content
+    const allAnchorLinks = document.querySelectorAll('a[href^="#"]');
+    allAnchorLinks.forEach(link => {
+        if (!link.classList.contains('nav-link')) { // Avoid duplicate listeners
+            link.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                
+                if (targetSection) {
+                    e.preventDefault();
+                    
+                    if ('scrollBehavior' in document.documentElement.style) {
+                        targetSection.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start',
+                            inline: 'nearest'
+                        });
+                    } else {
+                        smoothScrollTo(targetSection);
+                    }
+                }
+            });
+        }
     });
 }
 
