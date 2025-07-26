@@ -1911,15 +1911,15 @@ body.dark-mode section#blog-posts::before {
 
 /* Hobbies Section Dark Mode - Ultra Specific */
 body.dark-mode section#my-hobbies {
-    background: linear-gradient(135deg, #0f3460 0%, #533a7b 30%, #8b5a9b 70%, #1a1a2e 100%) !important;
-    border-left: 5px solid #66bb6a !important;
-    border-right: 2px solid #ba68c8 !important;
-    border-top: 1px solid #4caf50 !important;
-    border-bottom: 2px solid #2e7d32 !important;
+    background: linear-gradient(135deg, #0d2818 0%, #1a3a29 30%, #0f3460 70%, #1a1a2e 100%) !important;
+    border-left: 6px solid #66bb6a !important;
+    border-right: 3px solid #4caf50 !important;
+    border-top: 2px solid #81c784 !important;
+    border-bottom: 3px solid #2e7d32 !important;
     position: relative !important;
     overflow: hidden !important;
-    color: #f0f2f5 !important;
-    box-shadow: 0 6px 20px rgba(102, 187, 106, 0.3) !important;
+    color: #ffffff !important;
+    box-shadow: 0 8px 25px rgba(102, 187, 106, 0.4) !important;
 }
 
 body.dark-mode section#my-hobbies::before {
@@ -1929,27 +1929,36 @@ body.dark-mode section#my-hobbies::before {
     left: 0 !important;
     right: 0 !important;
     bottom: 0 !important;
-    background: radial-gradient(circle at 50% 50%, rgba(102, 187, 106, 0.08) 0%, transparent 50%) !important;
+    background: radial-gradient(circle at 30% 30%, rgba(102, 187, 106, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 70% 70%, rgba(76, 175, 80, 0.08) 0%, transparent 50%) !important;
     pointer-events: none !important;
+    z-index: 1 !important;
 }
 
 body.dark-mode section#my-hobbies ul li {
-    color: #f0f2f5 !important;
-    background: rgba(102, 187, 106, 0.15) !important;
-    padding: 10px 20px !important;
-    margin: 8px 0 !important;
+    color: #ffffff !important;
+    background: rgba(102, 187, 106, 0.2) !important;
+    padding: 12px 24px !important;
+    margin: 10px 0 !important;
     border-radius: 25px !important;
-    border-left: 3px solid #66bb6a !important;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4) !important;
+    border-left: 4px solid #66bb6a !important;
+    border: 1px solid rgba(102, 187, 106, 0.3) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5) !important;
     transition: all 0.3s ease !important;
-    font-weight: 500 !important;
+    font-weight: 600 !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7) !important;
+    position: relative !important;
+    z-index: 2 !important;
 }
 
 body.dark-mode section#my-hobbies ul li:hover {
-    background: rgba(102, 187, 106, 0.25) !important;
-    transform: translateX(15px) !important;
-    box-shadow: 0 5px 15px rgba(102, 187, 106, 0.4) !important;
-    border-left-width: 5px !important;
+    color: #ffffff !important;
+    background: rgba(102, 187, 106, 0.35) !important;
+    transform: translateX(15px) scale(1.02) !important;
+    box-shadow: 0 6px 20px rgba(102, 187, 106, 0.5) !important;
+    border-left-width: 6px !important;
+    border-color: rgba(102, 187, 106, 0.6) !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8) !important;
 }
 
 /* Enhanced YouTube Section Dark Mode - Ultra Specific */
@@ -2017,6 +2026,22 @@ body.dark-mode section#my-hobbies h2 {
     text-shadow: 0 2px 4px rgba(102, 187, 106, 0.5) !important;
     position: relative !important;
     z-index: 2 !important;
+    font-weight: 700 !important;
+    font-size: 2.2rem !important;
+}
+
+/* Enhanced hobbies section text visibility */
+body.dark-mode section#my-hobbies p {
+    color: #ffffff !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8) !important;
+    font-weight: 500 !important;
+    position: relative !important;
+    z-index: 2 !important;
+}
+
+body.dark-mode section#my-hobbies ul {
+    position: relative !important;
+    z-index: 2 !important;
 }
 
 body.dark-mode section#youtube-channel h2 {
@@ -2037,7 +2062,16 @@ body.dark-mode #youtube-channel p {
 
 /* Image Enhancement in Dark Mode */
 body.dark-mode #my-hobbies img {
-    border: 3px solid #66bb6a !important;
-    box-shadow: 0 4px 20px rgba(102, 187, 106, 0.3) !important;
-    filter: brightness(0.9) contrast(1.1);
+    border: 4px solid #66bb6a !important;
+    box-shadow: 0 6px 25px rgba(102, 187, 106, 0.5) !important;
+    filter: brightness(0.95) contrast(1.15) !important;
+    position: relative !important;
+    z-index: 2 !important;
+}
+
+body.dark-mode #my-hobbies img:hover {
+    border-color: #4caf50 !important;
+    box-shadow: 0 8px 30px rgba(102, 187, 106, 0.7) !important;
+    transform: scale(1.02) !important;
+    transition: all 0.3s ease !important;
 }
