@@ -1060,6 +1060,98 @@ footer {
     animation: fadeIn 0.6s ease-out;
 }
 
+/* Notification System Styles */
+#notification-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10000;
+    pointer-events: none;
+    max-width: 400px;
+}
+
+.notification {
+    margin-bottom: 10px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    transform: translateX(400px);
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    pointer-events: auto;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+    font-family: 'Merriweather', serif;
+    font-size: 14px;
+    min-width: 280px;
+    max-width: 400px;
+    overflow: hidden;
+}
+
+.notification.notification-success {
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    color: white;
+}
+
+.notification.notification-error {
+    background: linear-gradient(135deg, #f44336, #da190b);
+    color: white;
+}
+
+.notification.notification-info {
+    background: linear-gradient(135deg, #2196F3, #1976D2);
+    color: white;
+}
+
+.notification-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 24px;
+}
+
+.notification-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.notification-message {
+    flex: 1;
+    line-height: 1.4;
+}
+
+/* Dark mode notification adjustments */
+body.dark-mode .notification {
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+
+/* Mobile notification adjustments */
+@media (max-width: 768px) {
+    #notification-container {
+        top: 80px; /* Below fixed navigation */
+        right: 15px;
+        left: 15px;
+        max-width: none;
+    }
+    
+    .notification {
+        min-width: auto;
+        max-width: none;
+        transform: translateY(-100px);
+        font-size: 14px;
+    }
+    
+    .notification-content {
+        padding: 14px 18px;
+        gap: 10px;
+    }
+    
+    .notification-icon {
+        font-size: 16px;
+    }
+}
+
 /* Mobile Chrome Optimizations and Responsiveness */
 @media (max-width: 768px) {
     /* Enhanced body styles for mobile Chrome */

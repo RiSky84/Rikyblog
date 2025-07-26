@@ -12,6 +12,14 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeNavigation();
     initializeDarkMode();
     initializeNotificationSystem();
+    
+    // Test notification to ensure system is working
+    setTimeout(() => {
+        if (typeof showNotification === 'function') {
+            showNotification('Welcome to Riky Rabha\'s Blog! 🎉', 'success', 4000);
+        }
+    }, 1000);
+    
     initializeTypewriter();
     initializeStats();
     initializeSearch();
@@ -298,7 +306,10 @@ function initializeNotificationSystem() {
 // Show notification function
 function showNotification(message, type = 'success', duration = 3000) {
     const container = document.getElementById('notification-container');
-    if (!container) return;
+    if (!container) {
+        console.warn('Notification container not found');
+        return;
+    }
 
     const notification = document.createElement('div');
     notification.className = `notification notification-${type}`;
@@ -308,45 +319,15 @@ function showNotification(message, type = 'success', duration = 3000) {
             <span class="notification-message">${message}</span>
         </div>
     `;
-    
-    // Styling
-    notification.style.cssText = `
-        background: ${type === 'success' ? 'linear-gradient(135deg, #4CAF50, #45a049)' : 
-                   type === 'error' ? 'linear-gradient(135deg, #f44336, #da190b)' : 
-                   'linear-gradient(135deg, #2196F3, #1976D2)'};
-        color: white;
-        padding: 16px 24px;
-        border-radius: 12px;
-        margin-bottom: 10px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-        transform: translateX(400px);
-        transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        pointer-events: auto;
-        cursor: pointer;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255,255,255,0.2);
-        font-family: 'Merriweather', sans-serif;
-        font-size: 14px;
-        min-width: 280px;
-        max-width: 400px;
-    `;
-
-    notification.querySelector('.notification-content').style.cssText = `
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    `;
-
-    notification.querySelector('.notification-icon').style.cssText = `
-        font-size: 18px;
-        flex-shrink: 0;
-    `;
 
     container.appendChild(notification);
+    
+    console.log('📢 Notification created:', message, type);
 
     // Animate in
     setTimeout(() => {
         notification.style.transform = 'translateX(0)';
+        console.log('📢 Notification animated in');
     }, 100);
 
     // Auto remove
@@ -358,6 +339,7 @@ function showNotification(message, type = 'success', duration = 3000) {
     notification.addEventListener('click', () => {
         clearTimeout(removeTimeout);
         removeNotification(notification);
+        console.log('📢 Notification dismissed by click');
     });
 }
 
@@ -677,43 +659,57 @@ function initializeContactForm() {
     
     if (contactForm) {
         contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
             const submitBtn = this.querySelector('.submit-btn');
             const originalText = submitBtn.innerHTML;
-            const formData = new FormData(this);
             
-            // Validate form
-            const name = formData.get('name');
-            const email = formData.get('email');
-            const message = formData.get('message');
+            // Check if form has real Formspree action
+            const hasFormspreeAction = this.action && this.action.includes('formspree.io') && !this.action.includes('YOUR_FORM_ID');
             
-            if (!name || !email || !message) {
-                showNotification('Please fill in all fields', 'error');
+            if (hasFormspreeAction) {
+                // Real form submission with Formspree
+                submitBtn.innerHTML = '<span>Sending to Gmail...</span>';
+                submitBtn.disabled = true;
+                showNotification('📧 Sending your message to Riky\'s Gmail...', 'info', 3000);
+                
+                // Let the form submit naturally to Formspree
+                // No e.preventDefault() - this allows real email sending
                 return;
-            }
-            
-            if (!isValidEmail(email)) {
-                showNotification('Please enter a valid email address', 'error');
-                return;
-            }
-            
-            submitBtn.innerHTML = '<span>Sending...</span>';
-            submitBtn.disabled = true;
-            
-            showNotification('Sending your message...', 'info', 2000);
-            
-            // Simulate form submission
-            setTimeout(() => {
-                submitBtn.innerHTML = '<span>✓ Sent!</span>';
-                this.reset();
-                showNotification('Message sent successfully! I\'ll get back to you soon. 📧', 'success', 5000);
+            } else {
+                // Form needs setup - prevent submission and show instructions
+                e.preventDefault();
+                
+                const formData = new FormData(this);
+                
+                // Validate form first
+                const name = formData.get('name');
+                const email = formData.get('_replyto') || formData.get('email');
+                const message = formData.get('message');
+                
+                if (!name || !email || !message) {
+                    showNotification('Please fill in all fields', 'error', 4000);
+                    return;
+                }
+                
+                if (!isValidEmail(email)) {
+                    showNotification('Please enter a valid email address', 'error', 4000);
+                    return;
+                }
+                
+                // Show setup instructions
+                submitBtn.innerHTML = '<span>Setup Required</span>';
+                submitBtn.disabled = true;
+                
+                showNotification('⚙️ Form needs email setup! Check the setup guide.', 'info', 3000);
+                
+                setTimeout(() => {
+                    showNotification('📧 To receive real emails: 1) Sign up at formspree.io 2) Replace YOUR_FORM_ID in HTML 3) Push to GitHub', 'info', 8000);
+                }, 3500);
                 
                 setTimeout(() => {
                     submitBtn.innerHTML = originalText;
                     submitBtn.disabled = false;
-                }, 3000);
-            }, 2000);
+                }, 5000);
+            }
         });
     }
 
