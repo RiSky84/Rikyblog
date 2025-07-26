@@ -1909,17 +1909,23 @@ body.dark-mode section#blog-posts::before {
     pointer-events: none !important;
 }
 
-/* Hobbies Section Dark Mode - Ultra Specific */
+/* Hobbies Section Dark Mode - Ultra Specific with Vibrant Colors */
 body.dark-mode section#my-hobbies {
-    background: linear-gradient(135deg, #0d2818 0%, #1a3a29 30%, #0f3460 70%, #1a1a2e 100%) !important;
-    border-left: 6px solid #66bb6a !important;
-    border-right: 3px solid #4caf50 !important;
-    border-top: 2px solid #81c784 !important;
-    border-bottom: 3px solid #2e7d32 !important;
+    background: linear-gradient(135deg, 
+        #0a1f0a 0%, 
+        #1a2f3a 25%, 
+        #2d1b69 50%, 
+        #4a148c 75%, 
+        #1a1a2e 100%) !important;
+    border-left: 8px solid #4caf50 !important;
+    border-right: 4px solid #66bb6a !important;
+    border-top: 3px solid #81c784 !important;
+    border-bottom: 4px solid #2e7d32 !important;
     position: relative !important;
     overflow: hidden !important;
     color: #ffffff !important;
-    box-shadow: 0 8px 25px rgba(102, 187, 106, 0.4) !important;
+    box-shadow: 0 12px 40px rgba(76, 175, 80, 0.6), 
+                inset 0 1px 0 rgba(129, 199, 132, 0.3) !important;
 }
 
 body.dark-mode section#my-hobbies::before {
@@ -1929,36 +1935,89 @@ body.dark-mode section#my-hobbies::before {
     left: 0 !important;
     right: 0 !important;
     bottom: 0 !important;
-    background: radial-gradient(circle at 30% 30%, rgba(102, 187, 106, 0.12) 0%, transparent 50%),
-                radial-gradient(circle at 70% 70%, rgba(76, 175, 80, 0.08) 0%, transparent 50%) !important;
+    background: 
+        radial-gradient(circle at 20% 20%, rgba(76, 175, 80, 0.2) 0%, transparent 40%),
+        radial-gradient(circle at 80% 30%, rgba(129, 199, 132, 0.15) 0%, transparent 45%),
+        radial-gradient(circle at 40% 80%, rgba(46, 125, 50, 0.18) 0%, transparent 50%),
+        radial-gradient(circle at 70% 70%, rgba(102, 187, 106, 0.12) 0%, transparent 35%) !important;
     pointer-events: none !important;
     z-index: 1 !important;
 }
 
 body.dark-mode section#my-hobbies ul li {
     color: #ffffff !important;
-    background: rgba(102, 187, 106, 0.2) !important;
-    padding: 12px 24px !important;
-    margin: 10px 0 !important;
-    border-radius: 25px !important;
-    border-left: 4px solid #66bb6a !important;
-    border: 1px solid rgba(102, 187, 106, 0.3) !important;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5) !important;
-    transition: all 0.3s ease !important;
-    font-weight: 600 !important;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7) !important;
+    background: rgba(102, 187, 106, 0.25) !important;
+    padding: 15px 25px !important;
+    margin: 12px 0 !important;
+    border-radius: 30px !important;
+    border-left: 5px solid #66bb6a !important;
+    border: 2px solid rgba(102, 187, 106, 0.4) !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6), 
+                0 2px 10px rgba(102, 187, 106, 0.3) !important;
+    transition: all 0.4s ease !important;
+    font-weight: 700 !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8) !important;
     position: relative !important;
     z-index: 2 !important;
+    backdrop-filter: blur(10px) !important;
+}
+
+/* Individual hobby item colors */
+body.dark-mode section#my-hobbies ul li:nth-child(1) {
+    background: linear-gradient(135deg, rgba(255, 87, 34, 0.3) 0%, rgba(255, 152, 0, 0.2) 100%) !important;
+    border-left-color: #ff5722 !important;
+    border-color: rgba(255, 87, 34, 0.5) !important;
+    box-shadow: 0 6px 20px rgba(255, 87, 34, 0.4) !important;
+}
+
+body.dark-mode section#my-hobbies ul li:nth-child(2) {
+    background: linear-gradient(135deg, rgba(156, 39, 176, 0.3) 0%, rgba(186, 104, 200, 0.2) 100%) !important;
+    border-left-color: #9c27b0 !important;
+    border-color: rgba(156, 39, 176, 0.5) !important;
+    box-shadow: 0 6px 20px rgba(156, 39, 176, 0.4) !important;
+}
+
+body.dark-mode section#my-hobbies ul li:nth-child(3) {
+    background: linear-gradient(135deg, rgba(33, 150, 243, 0.3) 0%, rgba(100, 181, 246, 0.2) 100%) !important;
+    border-left-color: #2196f3 !important;
+    border-color: rgba(33, 150, 243, 0.5) !important;
+    box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4) !important;
+}
+
+body.dark-mode section#my-hobbies ul li:nth-child(4) {
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.3) 0%, rgba(255, 235, 59, 0.2) 100%) !important;
+    border-left-color: #ffc107 !important;
+    border-color: rgba(255, 193, 7, 0.5) !important;
+    box-shadow: 0 6px 20px rgba(255, 193, 7, 0.4) !important;
+}
+
+body.dark-mode section#my-hobbies ul li:nth-child(5) {
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.3) 0%, rgba(129, 199, 132, 0.2) 100%) !important;
+    border-left-color: #4caf50 !important;
+    border-color: rgba(76, 175, 80, 0.5) !important;
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4) !important;
+}
+
+body.dark-mode section#my-hobbies ul li:nth-child(6) {
+    background: linear-gradient(135deg, rgba(233, 30, 99, 0.3) 0%, rgba(244, 143, 177, 0.2) 100%) !important;
+    border-left-color: #e91e63 !important;
+    border-color: rgba(233, 30, 99, 0.5) !important;
+    box-shadow: 0 6px 20px rgba(233, 30, 99, 0.4) !important;
+}
+
+body.dark-mode section#my-hobbies ul li:nth-child(7) {
+    background: linear-gradient(135deg, rgba(0, 188, 212, 0.3) 0%, rgba(77, 208, 225, 0.2) 100%) !important;
+    border-left-color: #00bcd4 !important;
+    border-color: rgba(0, 188, 212, 0.5) !important;
+    box-shadow: 0 6px 20px rgba(0, 188, 212, 0.4) !important;
 }
 
 body.dark-mode section#my-hobbies ul li:hover {
     color: #ffffff !important;
-    background: rgba(102, 187, 106, 0.35) !important;
-    transform: translateX(15px) scale(1.02) !important;
-    box-shadow: 0 6px 20px rgba(102, 187, 106, 0.5) !important;
-    border-left-width: 6px !important;
-    border-color: rgba(102, 187, 106, 0.6) !important;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8) !important;
+    transform: translateX(20px) scale(1.05) !important;
+    border-left-width: 8px !important;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9) !important;
+    filter: brightness(1.2) !important;
 }
 
 /* Enhanced YouTube Section Dark Mode - Ultra Specific */
@@ -2022,26 +2081,57 @@ body.dark-mode section#blog-posts h2 {
 }
 
 body.dark-mode section#my-hobbies h2 {
-    color: #66bb6a !important;
-    text-shadow: 0 2px 4px rgba(102, 187, 106, 0.5) !important;
+    background: linear-gradient(135deg, #4caf50 0%, #66bb6a 25%, #81c784 50%, #a5d6a7 75%, #c8e6c9 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    text-shadow: none !important;
     position: relative !important;
     z-index: 2 !important;
-    font-weight: 700 !important;
-    font-size: 2.2rem !important;
+    font-weight: 800 !important;
+    font-size: 2.5rem !important;
+    text-align: center !important;
+    margin-bottom: 30px !important;
+    filter: drop-shadow(0 2px 4px rgba(76, 175, 80, 0.6)) !important;
+}
+
+body.dark-mode section#my-hobbies h2::before {
+    content: '🎨 ' !important;
+    position: absolute !important;
+    left: -50px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    font-size: 2rem !important;
+    filter: drop-shadow(0 2px 4px rgba(76, 175, 80, 0.8)) !important;
+}
+
+body.dark-mode section#my-hobbies h2::after {
+    content: ' 🎯' !important;
+    position: absolute !important;
+    right: -50px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    font-size: 2rem !important;
+    filter: drop-shadow(0 2px 4px rgba(76, 175, 80, 0.8)) !important;
 }
 
 /* Enhanced hobbies section text visibility */
 body.dark-mode section#my-hobbies p {
     color: #ffffff !important;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8) !important;
-    font-weight: 500 !important;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9) !important;
+    font-weight: 600 !important;
     position: relative !important;
     z-index: 2 !important;
+    background: rgba(76, 175, 80, 0.1) !important;
+    padding: 15px !important;
+    border-radius: 15px !important;
+    border: 1px solid rgba(76, 175, 80, 0.3) !important;
 }
 
 body.dark-mode section#my-hobbies ul {
     position: relative !important;
     z-index: 2 !important;
+    padding: 20px 0 !important;
 }
 
 body.dark-mode section#youtube-channel h2 {
@@ -2060,18 +2150,45 @@ body.dark-mode #youtube-channel p {
     z-index: 2;
 }
 
-/* Image Enhancement in Dark Mode */
+/* Enhanced Image with Rainbow Border in Dark Mode */
 body.dark-mode #my-hobbies img {
-    border: 4px solid #66bb6a !important;
-    box-shadow: 0 6px 25px rgba(102, 187, 106, 0.5) !important;
-    filter: brightness(0.95) contrast(1.15) !important;
+    border: 6px solid transparent !important;
+    background: linear-gradient(45deg, #ff5722, #9c27b0, #2196f3, #4caf50, #ffc107, #e91e63, #00bcd4) !important;
+    background-clip: padding-box !important;
+    border-radius: 50% !important;
+    box-shadow: 
+        0 0 30px rgba(76, 175, 80, 0.6),
+        0 0 60px rgba(156, 39, 176, 0.4),
+        0 0 90px rgba(33, 150, 243, 0.3) !important;
+    filter: brightness(1.1) contrast(1.2) saturate(1.1) !important;
     position: relative !important;
     z-index: 2 !important;
+    transition: all 0.5s ease !important;
+}
+
+body.dark-mode #my-hobbies img::before {
+    content: '' !important;
+    position: absolute !important;
+    top: -6px !important;
+    left: -6px !important;
+    right: -6px !important;
+    bottom: -6px !important;
+    background: linear-gradient(45deg, #ff5722, #9c27b0, #2196f3, #4caf50, #ffc107, #e91e63, #00bcd4) !important;
+    border-radius: 50% !important;
+    z-index: -1 !important;
+    animation: rainbow-rotate 3s linear infinite !important;
 }
 
 body.dark-mode #my-hobbies img:hover {
-    border-color: #4caf50 !important;
-    box-shadow: 0 8px 30px rgba(102, 187, 106, 0.7) !important;
-    transform: scale(1.02) !important;
-    transition: all 0.3s ease !important;
+    transform: scale(1.1) rotate(5deg) !important;
+    box-shadow: 
+        0 0 40px rgba(76, 175, 80, 0.8),
+        0 0 80px rgba(156, 39, 176, 0.6),
+        0 0 120px rgba(33, 150, 243, 0.4) !important;
+    filter: brightness(1.2) contrast(1.3) saturate(1.2) !important;
+}
+
+@keyframes rainbow-rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
