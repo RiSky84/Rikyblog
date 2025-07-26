@@ -665,7 +665,8 @@ function initializeContactForm() {
             // Check if form has real Formspree action (not placeholder)
             const hasValidFormspree = this.action && 
                                     this.action.includes('formspree.io') && 
-                                    !this.action.includes('YOUR_FORM_ID');
+                                    !this.action.includes('YOUR_FORM_ID') &&
+                                    !this.action.includes('YOUR_EMAIL@gmail.com');
             
             if (hasValidFormspree) {
                 // Real form submission with Formspree
@@ -708,10 +709,10 @@ function initializeContactForm() {
                 submitBtn.innerHTML = '<span>Setup Required</span>';
                 submitBtn.disabled = true;
                 
-                showNotification('⚙️ Formspree setup needed! Follow the setup guide.', 'info', 4000);
+                showNotification('⚙️ Contact form needs setup! Replace YOUR_EMAIL@gmail.com with your actual email.', 'info', 4000);
                 
                 setTimeout(() => {
-                    showNotification('📧 To get your own Form ID: 1) Go to formspree.io 2) Sign up 3) Create form 4) Replace form ID in HTML', 'info', 8000);
+                    showNotification('📧 Quick setup: Replace "YOUR_EMAIL@gmail.com" in index.html with your real Gmail address', 'info', 8000);
                 }, 4500);
                 
                 setTimeout(() => {
