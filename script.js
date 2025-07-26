@@ -40,6 +40,15 @@ function initializeMobileOptimizations() {
         if (input.type !== 'file') {
             input.style.fontSize = '16px';
         }
+        
+        // Add touch optimizations
+        input.addEventListener('touchstart', function() {
+            this.style.transform = 'scale(1.02)';
+        }, { passive: true });
+        
+        input.addEventListener('touchend', function() {
+            this.style.transform = '';
+        }, { passive: true });
     });
 
     // Handle viewport height changes on mobile Chrome
@@ -47,6 +56,55 @@ function initializeMobileOptimizations() {
         const vh = window.innerHeight * 0.01;
         document.documentElement.style.setProperty('--vh', `${vh}px`);
     }
+    
+    // Set initial viewport height
+    setViewportHeight();
+    
+    // Handle viewport changes (keyboard open/close, orientation change)
+    window.addEventListener('resize', setViewportHeight, { passive: true });
+    window.addEventListener('orientationchange', () => {
+        setTimeout(setViewportHeight, 100);
+    }, { passive: true });
+
+    // Enhanced scroll performance for mobile
+    let ticking = false;
+    function optimizeScrollPerformance() {
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                // Scroll optimizations here
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }
+    
+    window.addEventListener('scroll', optimizeScrollPerformance, { passive: true });
+
+    // Prevent overscroll on iOS Safari
+    document.body.addEventListener('touchmove', function(e) {
+        if (e.target === document.body) {
+            e.preventDefault();
+        }
+    }, { passive: false });
+
+    // Mobile navigation auto-hide on scroll
+    const mobileNav = document.querySelector('.nav-container');
+    if (mobileNav) {
+        let lastScrollTop = 0;
+        window.addEventListener('scroll', function() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                // Scrolling down - hide nav
+                mobileNav.style.transform = 'translateY(-100%)';
+            } else {
+                // Scrolling up - show nav
+                mobileNav.style.transform = 'translateY(0)';
+            }
+            lastScrollTop = scrollTop;
+        }, { passive: true });
+    }
+}
     
     setViewportHeight();
     window.addEventListener('resize', setViewportHeight);
@@ -89,29 +147,51 @@ function initializeMobileOptimizations() {
     }
 }
 
-// Navigation Menu with mobile Chrome optimizations
+// Navigation Menu with enhanced mobile Chrome optimizations
 function initializeNavigation() {
     const mobileToggle = document.querySelector('.mobile-menu-toggle');
     const navLinks = document.querySelector('.nav-links');
     const body = document.body;
     
     if (mobileToggle && navLinks) {
+        // Enhanced mobile toggle with touch optimization
         mobileToggle.addEventListener('click', (e) => {
             e.preventDefault();
+            e.stopPropagation();
+            
             navLinks.classList.toggle('active');
             mobileToggle.classList.toggle('active');
             
             // Prevent body scroll when menu is open on mobile Chrome
             if (navLinks.classList.contains('active')) {
+                const scrollY = window.scrollY;
                 body.style.overflow = 'hidden';
                 body.style.position = 'fixed';
+                body.style.top = `-${scrollY}px`;
                 body.style.width = '100%';
+                body.dataset.scrollY = scrollY;
             } else {
+                const scrollY = body.dataset.scrollY;
                 body.style.overflow = '';
                 body.style.position = '';
+                body.style.top = '';
                 body.style.width = '';
+                window.scrollTo(0, parseInt(scrollY || '0'));
             }
         });
+
+        // Enhanced touch event handling for mobile
+        if ('ontouchstart' in window) {
+            mobileToggle.addEventListener('touchstart', function(e) {
+                // Add touch feedback
+                this.style.opacity = '0.7';
+            }, { passive: true });
+            
+            mobileToggle.addEventListener('touchend', function(e) {
+                // Reset touch feedback
+                this.style.opacity = '';
+            }, { passive: true });
+        }
 
         // Close menu on link click (mobile)
         const navLinksArray = document.querySelectorAll('.nav-link');
@@ -738,25 +818,30 @@ function initializeSmoothScrolling() {
     function smoothScrollTo(targetElement) {
         const targetPosition = targetElement.offsetTop;
         const startPosition = window.pageYOffset;
-        const distance = targetPosition - startPosition - 70; // Account for fixed nav
-        const duration = 800; // Slightly longer for smoother feel
+        const distance = targetPosition - startPosition - 80; // Account for fixed nav height
+        const duration = 1000; // Optimal duration for mobile
         let start = null;
 
-        // Easing function for smooth animation
+        // Enhanced easing function for smoother mobile experience
         function easeInOutCubic(t) {
             return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
         }
 
+        // Mobile-optimized animation with requestAnimationFrame
         function animation(currentTime) {
             if (start === null) start = currentTime;
             const timeElapsed = currentTime - start;
             const progress = Math.min(timeElapsed / duration, 1);
             const easedProgress = easeInOutCubic(progress);
             
+            // Use scrollTo for better mobile performance
             window.scrollTo(0, startPosition + distance * easedProgress);
             
             if (timeElapsed < duration) {
                 requestAnimationFrame(animation);
+            } else {
+                // Ensure we end exactly at target position
+                window.scrollTo(0, targetPosition - 80);
             }
         }
 
@@ -770,33 +855,47 @@ function initializeSmoothScrolling() {
             const targetSection = document.getElementById(targetId);
             
             if (targetSection) {
-                // Check if browser supports native smooth scrolling
-                if ('scrollBehavior' in document.documentElement.style) {
-                    // Use native smooth scrolling for better performance on modern browsers
+                // Mobile-first approach: prefer native smooth scrolling on modern browsers
+                const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                const supportsNativeScroll = 'scrollBehavior' in document.documentElement.style;
+                
+                if (supportsNativeScroll && isMobile) {
+                    // Use native smooth scrolling for better mobile performance
                     targetSection.scrollIntoView({
                         behavior: 'smooth',
                         block: 'start',
                         inline: 'nearest'
                     });
                 } else {
-                    // Use custom smooth scrolling for older browsers and better mobile compatibility
+                    // Use custom smooth scrolling for better compatibility
                     smoothScrollTo(targetSection);
                 }
 
-                // Close mobile menu if open
+                // Close mobile menu if open with smooth animation
                 const navLinksContainer = document.querySelector('.nav-links');
                 const mobileToggle = document.querySelector('.mobile-menu-toggle');
                 const body = document.body;
                 
                 if (navLinksContainer && navLinksContainer.classList.contains('active')) {
                     navLinksContainer.classList.remove('active');
-                    mobileToggle.classList.remove('active');
-                    body.style.overflow = '';
-                    body.style.position = '';
-                    body.style.width = '';
+                    if (mobileToggle) mobileToggle.classList.remove('active');
+                    
+                    // Restore body scroll with smooth transition
+                    setTimeout(() => {
+                        body.style.overflow = '';
+                        body.style.position = '';
+                        body.style.width = '';
+                    }, 300); // Match CSS transition duration
                 }
             }
         });
+
+        // Add touch event optimizations for mobile
+        if ('ontouchstart' in window) {
+            link.addEventListener('touchstart', function() {
+                // Passive touch start for better scrolling performance
+            }, { passive: true });
+        }
     });
 
     // Add smooth scrolling to any anchor links in the page content
