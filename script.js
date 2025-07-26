@@ -1216,17 +1216,20 @@ function addGlitchEffects() {
 
 // Initialize all futuristic effects
 function initializeFuturisticEffects() {
-    console.log('🚀 Initializing futuristic effects...');
+    console.log('🚀 Initializing refined futuristic effects...');
     
     setTimeout(() => {
-        createQuantumParticles();
-        createStatusBar();
-        initializeFuturisticCursor();
-        createNeuralNetwork();
-        createMatrixRain();
-        addGlitchEffects();
+        // Removed overwhelming effects for cleaner look:
+        // createQuantumParticles(); // Too distracting
+        // createNeuralNetwork(); // Overwhelming visual noise
+        // createMatrixRain(); // Too much animation
         
-        console.log('✨ Futuristic effects loaded!');
+        // Keep only subtle futuristic elements:
+        createStatusBar();
+        initializeFuturisticCursor(); // Keep cursor effect as it's subtle
+        addGlitchEffects(); // Keep glitch as it's minimal
+        
+        console.log('✨ Refined futuristic effects loaded!');
     }, 1000);
 }
 
