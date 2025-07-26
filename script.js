@@ -1,6 +1,9 @@
-// Advanced Blog Features JavaScript
+// Advanced Blog Features JavaScript with Mobile Chrome Optimizations
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Mobile Chrome specific optimizations
+    initializeMobileOptimizations();
+    
     // Initialize all features
     initializeNavigation();
     initializeTypewriter();
@@ -15,39 +18,142 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeScrollAnimations();
 });
 
-// Navigation Menu
+// Mobile Chrome specific optimizations
+function initializeMobileOptimizations() {
+    // Prevent zoom on input focus (mobile Chrome)
+    const inputs = document.querySelectorAll('input, textarea, select');
+    inputs.forEach(input => {
+        if (input.type !== 'file') {
+            input.style.fontSize = '16px';
+        }
+    });
+
+    // Handle viewport height changes on mobile Chrome
+    function setViewportHeight() {
+        const vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+    }
+    
+    setViewportHeight();
+    window.addEventListener('resize', setViewportHeight);
+    window.addEventListener('orientationchange', () => {
+        setTimeout(setViewportHeight, 100);
+    });
+
+    // Optimize touch interactions
+    let touchStartY = 0;
+    document.addEventListener('touchstart', function(e) {
+        touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    document.addEventListener('touchmove', function(e) {
+        const touchY = e.touches[0].clientY;
+        const touchDiff = touchStartY - touchY;
+        
+        // Prevent bounce scrolling on iOS Safari and mobile Chrome
+        if (touchDiff > 0 && window.scrollY === 0) {
+            e.preventDefault();
+        }
+    }, { passive: false });
+
+    // Optimize for mobile Chrome's address bar
+    const mobileNav = document.querySelector('.nav-container');
+    if (mobileNav) {
+        let lastScrollTop = 0;
+        window.addEventListener('scroll', function() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                // Scrolling down - hide nav
+                mobileNav.style.transform = 'translateY(-100%)';
+            } else {
+                // Scrolling up - show nav
+                mobileNav.style.transform = 'translateY(0)';
+            }
+            lastScrollTop = scrollTop;
+        }, { passive: true });
+    }
+}
+
+// Navigation Menu with mobile Chrome optimizations
 function initializeNavigation() {
     const mobileToggle = document.querySelector('.mobile-menu-toggle');
     const navLinks = document.querySelector('.nav-links');
+    const body = document.body;
     
-    if (mobileToggle) {
-        mobileToggle.addEventListener('click', () => {
+    if (mobileToggle && navLinks) {
+        mobileToggle.addEventListener('click', (e) => {
+            e.preventDefault();
             navLinks.classList.toggle('active');
             mobileToggle.classList.toggle('active');
+            
+            // Prevent body scroll when menu is open on mobile Chrome
+            if (navLinks.classList.contains('active')) {
+                body.style.overflow = 'hidden';
+                body.style.position = 'fixed';
+                body.style.width = '100%';
+            } else {
+                body.style.overflow = '';
+                body.style.position = '';
+                body.style.width = '';
+            }
+        });
+
+        // Close menu on link click (mobile)
+        const navLinksArray = document.querySelectorAll('.nav-link');
+        navLinksArray.forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    navLinks.classList.remove('active');
+                    mobileToggle.classList.remove('active');
+                    body.style.overflow = '';
+                    body.style.position = '';
+                    body.style.width = '';
+                }
+            });
+        });
+
+        // Close menu on outside click
+        document.addEventListener('click', (e) => {
+            if (!mobileToggle.contains(e.target) && !navLinks.contains(e.target)) {
+                navLinks.classList.remove('active');
+                mobileToggle.classList.remove('active');
+                body.style.overflow = '';
+                body.style.position = '';
+                body.style.width = '';
+            }
         });
     }
 
-    // Active nav link highlighting
+    // Active nav link highlighting with throttling for mobile performance
     const navLinksArray = document.querySelectorAll('.nav-link');
     const sections = document.querySelectorAll('section, header');
+    let ticking = false;
 
-    window.addEventListener('scroll', () => {
-        let current = '';
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-            if (scrollY >= (sectionTop - 200)) {
-                current = section.getAttribute('id');
-            }
-        });
+    function updateActiveNav() {
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (scrollY >= (sectionTop - 200)) {
+                        current = section.getAttribute('id');
+                    }
+                });
 
-        navLinksArray.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href').includes(current)) {
-                link.classList.add('active');
-            }
-        });
-    });
+                navLinksArray.forEach(link => {
+                    link.classList.remove('active');
+                    if (current && link.getAttribute('href').includes(current)) {
+                        link.classList.add('active');
+                    }
+                });
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveNav, { passive: true });
 }
 
 // Typewriter Effect
@@ -224,24 +330,59 @@ function initializeShareButtons() {
     });
 }
 
-// Back to Top Button
+// Back to Top Button with mobile Chrome optimization
 function initializeBackToTop() {
     const backToTopBtn = document.getElementById('backToTop');
+    let ticking = false;
     
-    window.addEventListener('scroll', () => {
-        if (window.pageYOffset > 300) {
-            backToTopBtn.classList.add('visible');
+    if (!backToTopBtn) return;
+
+    function updateBackToTopButton() {
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                if (window.pageYOffset > 300) {
+                    backToTopBtn.classList.add('visible');
+                } else {
+                    backToTopBtn.classList.remove('visible');
+                }
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }
+
+    window.addEventListener('scroll', updateBackToTopButton, { passive: true });
+
+    backToTopBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        // Use smooth scrolling with fallback for mobile Chrome
+        if ('scrollBehavior' in document.documentElement.style) {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         } else {
-            backToTopBtn.classList.remove('visible');
+            // Polyfill for older mobile browsers
+            const scrollToTop = () => {
+                const c = document.documentElement.scrollTop || document.body.scrollTop;
+                if (c > 0) {
+                    window.requestAnimationFrame(scrollToTop);
+                    window.scrollTo(0, c - c / 8);
+                }
+            };
+            scrollToTop();
         }
     });
 
-    backToTopBtn.addEventListener('click', () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    });
+    // Add touch feedback for mobile
+    backToTopBtn.addEventListener('touchstart', function() {
+        this.style.transform = 'scale(0.95)';
+    }, { passive: true });
+
+    backToTopBtn.addEventListener('touchend', function() {
+        this.style.transform = '';
+    }, { passive: true });
 }
 
 // Contact Form
