@@ -17,9 +17,9 @@
     --gradient-matrix: linear-gradient(45deg, #000000, #1a1a2e, #16213e, #0f3460);
 }
 
-/* CSS Variables for Light/Dark Mode - Enhanced Crystal Clear Colors */
+/* CSS Variables for Light/Dark Mode - Enhanced with Neon Accents */
 :root {
-    /* Light mode colors - Crystal Clear & High Contrast */
+    /* Light mode colors - Crystal Clear with Neon Touches */
     --bg-color: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%);
     --text-color: #1e293b;
     --text-light: #64748b;
@@ -32,9 +32,19 @@
     --shadow-color: rgba(15, 23, 42, 0.08);
     --shadow-hover: rgba(15, 23, 42, 0.12);
     --shadow-strong: rgba(15, 23, 42, 0.15);
-    --accent-color: #3b82f6;
-    --accent-secondary: #2563eb;
-    --accent-light: #dbeafe;
+    
+    /* Neon accent colors for light mode */
+    --accent-color: #0ea5e9;
+    --accent-secondary: #0284c7;
+    --accent-light: #e0f2fe;
+    --neon-blue: #00d4ff;
+    --neon-cyan: #00f5ff;
+    --neon-purple: #a855f7;
+    --neon-green: #22c55e;
+    --neon-pink: #ec4899;
+    --neon-glow: rgba(0, 212, 255, 0.3);
+    --neon-glow-strong: rgba(0, 212, 255, 0.5);
+    
     --success-color: #10b981;
     --warning-color: #f59e0b;
     --error-color: #ef4444;
@@ -43,9 +53,9 @@
     --post-bg: rgba(255, 255, 255, 0.98);
     --input-bg: #ffffff;
     --input-border: #d1d5db;
-    --input-focus: #3b82f6;
-    --button-bg: #3b82f6;
-    --button-hover: #2563eb;
+    --input-focus: var(--neon-blue);
+    --button-bg: var(--neon-blue);
+    --button-hover: var(--neon-cyan);
     --button-text: #ffffff;
     --card-bg: #ffffff;
     --card-border: #e5e7eb;
@@ -232,9 +242,21 @@ header h1 {
     font-weight: 700;
     letter-spacing: 2px;
     color: #ffffff;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    text-shadow: 
+        0 2px 10px rgba(0, 0, 0, 0.3),
+        0 0 20px var(--neon-glow),
+        0 0 40px var(--neon-glow);
     position: relative;
     z-index: 2;
+    transition: all 0.3s ease;
+}
+
+/* Light mode specific neon glow for header */
+body:not(.dark-mode) header h1 {
+    text-shadow: 
+        0 2px 10px rgba(0, 0, 0, 0.3),
+        0 0 15px var(--neon-glow),
+        0 0 25px var(--neon-blue);
 }
 
 header p {
@@ -247,7 +269,7 @@ header p {
     position: relative;
     z-index: 2;
 }
-/* Enhanced Article Styling - Crystal Clear */
+/* Enhanced Article Styling - Crystal Clear with Neon Accents */
 article { 
     background: var(--card-bg);
     padding: 2em; 
@@ -263,11 +285,21 @@ article {
     transition: all 0.3s ease;
 }
 
+/* Light mode neon hover effect */
+body:not(.dark-mode) article:hover {
+    box-shadow: 
+        0 8px 30px var(--shadow-hover),
+        0 0 20px var(--neon-glow),
+        inset 0 0 1px var(--neon-blue);
+    border-left-color: var(--neon-blue);
+    transform: translateY(-2px);
+}
+
 article:hover {
     box-shadow: 0 8px 30px var(--shadow-hover);
     transform: translateY(-2px);
 }
-/* Enhanced Heading Styles - Crystal Clear */
+/* Enhanced Heading Styles - Crystal Clear with Neon Accents */
 h1, h2 { 
     color: var(--text-color); 
     text-shadow: none;
@@ -275,6 +307,7 @@ h1, h2 {
     font-weight: 700;
     letter-spacing: -0.5px;
     margin-bottom: 1rem;
+    transition: all 0.3s ease;
 }
 
 h1 {
@@ -285,6 +318,16 @@ h1 {
 h2 {
     font-size: 2rem;
     color: var(--accent-color);
+}
+
+/* Light mode neon glow for section headings */
+body:not(.dark-mode) section h2 {
+    text-shadow: 0 0 15px var(--neon-glow);
+}
+
+body:not(.dark-mode) section h2:hover {
+    text-shadow: 0 0 25px var(--neon-glow-strong);
+    color: var(--neon-blue);
 }
 
 /* Legacy header styles (kept for specificity) */
@@ -343,6 +386,16 @@ section {
     line-height: 1.8;
     transition: all 0.4s ease;
     position: relative;
+}
+
+/* Light mode neon section hover effect */
+body:not(.dark-mode) section:hover {
+    box-shadow: 
+        0 12px 40px var(--shadow-hover),
+        0 0 30px var(--neon-glow),
+        inset 0 0 1px var(--neon-blue);
+    border-left-color: var(--neon-cyan);
+    transform: translateY(-4px);
 }
 
 section:hover {
@@ -749,14 +802,14 @@ footer {
 
 .nav-link {
     text-decoration: none;
-    color: #2c3e50;
+    color: var(--text-color);
     font-weight: 500;
     transition: all 0.3s ease;
     position: relative;
     padding: 10px 15px;
     border-radius: 8px;
     /* Smooth interaction optimization */
-    will-change: color, background-color;
+    will-change: color, background-color, text-shadow;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     user-select: none;
@@ -764,8 +817,9 @@ footer {
 
 .nav-link:hover,
 .nav-link.active {
-    color: #3498db;
-    background: rgba(52, 152, 219, 0.05);
+    color: var(--neon-blue);
+    background: var(--accent-light);
+    text-shadow: 0 0 10px var(--neon-glow);
 }
 
 .nav-link::after {
@@ -775,7 +829,8 @@ footer {
     height: 2px;
     bottom: 5px;
     left: 50%;
-    background: #3498db;
+    background: var(--neon-blue);
+    box-shadow: 0 0 8px var(--neon-glow);
     transition: all 0.3s ease;
     transform: translateX(-50%);
 }
@@ -1233,6 +1288,24 @@ footer {
     gap: 8px;
     box-shadow: 0 4px 15px var(--shadow-color);
     font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Light mode neon button effect */
+body:not(.dark-mode) .submit-btn {
+    box-shadow: 
+        0 4px 15px var(--shadow-color),
+        0 0 20px var(--neon-glow);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Light mode neon button hover effect */
+body:not(.dark-mode) .submit-btn:hover {
+    background: var(--button-hover);
+    transform: translateY(-2px);
+    box-shadow: 
+        0 8px 30px var(--shadow-hover),
+        0 0 40px var(--neon-glow-strong);
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
 }
 
 .submit-btn:hover {
