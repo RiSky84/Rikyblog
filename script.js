@@ -696,39 +696,6 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeCrossTabSync();
 });
 
-// Global function to test Formspree directly (debug)
-function testFormspreeDirectly() {
-    const testData = new FormData();
-    testData.append('name', 'Test User');
-    testData.append('email', 'test@example.com');
-    testData.append('message', 'This is a test message to check if Formspree is working correctly.');
-    
-    fetch('https://formspree.io/f/meozgndw', {
-        method: 'POST',
-        body: testData,
-        headers: {
-            'Accept': 'application/json'
-        }
-    })
-    .then(response => {
-        console.log('Test response status:', response.status);
-        if (response.ok) {
-            showNotification('✅ Test successful! Formspree is working correctly.', 'success', 8000);
-        } else {
-            response.json().then(data => {
-                console.log('Error data:', data);
-                showNotification(`❌ Test failed: ${data.error || response.statusText}`, 'error', 8000);
-            }).catch(() => {
-                showNotification(`❌ Test failed with status ${response.status}`, 'error', 8000);
-            });
-        }
-    })
-    .catch(error => {
-        console.error('Test error:', error);
-        showNotification('❌ Network error during test. Check your connection.', 'error', 8000);
-    });
-}
-
 // Share Functionality
 function initializeShareButtons() {
     const shareButtons = document.querySelectorAll('.share-btn');
