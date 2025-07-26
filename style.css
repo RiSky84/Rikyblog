@@ -1013,6 +1013,55 @@ footer {
     border-bottom: 1px solid #e9ecef;
 }
 
+/* Blog Stats Display */
+.blog-stats {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.total-likes-display {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 30px;
+    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+    transition: all 0.3s ease;
+}
+
+.total-likes-display:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+}
+
+.stats-icon {
+    font-size: 1.3rem;
+    animation: heartBeat 2s ease-in-out infinite;
+}
+
+.total-likes-count {
+    font-size: 1.4rem;
+    font-weight: bold;
+    min-width: 30px;
+    text-align: center;
+}
+
+.stats-label {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+@keyframes heartBeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
 .search-container {
     max-width: 800px;
     margin: 0 auto;
@@ -1126,25 +1175,58 @@ footer {
     display: flex;
     align-items: center;
     gap: 8px;
+    position: relative;
+    user-select: none;
+}
+
+/* Prevent spam clicking */
+.like-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    pointer-events: none;
 }
 
 .like-btn:hover {
     background: #fee;
     color: #e74c3c;
+    transform: translateY(-2px);
 }
 
 .like-btn.liked {
+    color: #e74c3c;
+    background: rgba(231, 76, 60, 0.1);
+}
+
+.like-btn.liked:hover {
+    background: rgba(231, 76, 60, 0.2);
+}
+
+/* Like count animation */
+.like-count {
+    font-weight: 600;
+    min-width: 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.like-count.updating {
+    transform: scale(1.2);
     color: #e74c3c;
 }
 
 .share-btn:hover {
     background: #e3f2fd;
     color: #3498db;
+    transform: translateY(-2px);
 }
 
 .heart {
     font-size: 1.2rem;
     transition: all 0.3s ease;
+}
+
+.heart.pulse {
+    animation: heartPulse 0.6s ease;
 }
 
 @keyframes heartPulse {

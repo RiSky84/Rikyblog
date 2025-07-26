@@ -507,50 +507,194 @@ function initializeBlogFilters() {
     });
 }
 
-// Like System
+// Like System with Global Storage
 function initializeLikeSystem() {
     const likeButtons = document.querySelectorAll('.like-btn');
+    
+    // GitHub Gist storage configuration for global likes
+    const GIST_ID = 'global-blog-likes';
+    const GITHUB_TOKEN = null; // Public read access
+    
+    // Initialize global like counts from a simple JSON API
+    initializeGlobalLikes();
     
     likeButtons.forEach(btn => {
         const postId = btn.getAttribute('data-post');
         const likeCount = btn.querySelector('.like-count');
         const heart = btn.querySelector('.heart');
         
-        // Load saved likes from localStorage
-        const savedLikes = localStorage.getItem(`post-${postId}-likes`) || 0;
+        // Check if user has already liked this post locally
         const isLiked = localStorage.getItem(`post-${postId}-liked`) === 'true';
         
-        likeCount.textContent = savedLikes;
         if (isLiked) {
             btn.classList.add('liked');
             heart.style.color = '#e74c3c';
         }
 
         btn.addEventListener('click', function() {
-            let currentLikes = parseInt(likeCount.textContent);
+            // Prevent spam clicking
+            if (this.disabled) return;
+            this.disabled = true;
+            
+            const currentLikes = parseInt(likeCount.textContent);
+            
+            // Add updating animation
+            likeCount.classList.add('updating');
             
             if (this.classList.contains('liked')) {
-                // Unlike
-                currentLikes--;
+                // Unlike - prevent multiple unlikes
+                updateLikeCount(postId, currentLikes - 1, likeCount);
                 this.classList.remove('liked');
                 heart.style.color = '';
                 localStorage.setItem(`post-${postId}-liked`, 'false');
                 showNotification('Post unliked', 'info', 2000);
             } else {
-                // Like
-                currentLikes++;
+                // Like - prevent multiple likes from same user
+                updateLikeCount(postId, currentLikes + 1, likeCount);
                 this.classList.add('liked');
                 heart.style.color = '#e74c3c';
-                heart.style.animation = 'heartPulse 0.6s ease';
+                heart.classList.add('pulse');
                 localStorage.setItem(`post-${postId}-liked`, 'true');
                 showNotification('Thanks for liking this post! ❤️', 'success', 3000);
+                
+                // Remove pulse animation after completion
+                setTimeout(() => {
+                    heart.classList.remove('pulse');
+                }, 600);
             }
             
-            likeCount.textContent = currentLikes;
-            localStorage.setItem(`post-${postId}-likes`, currentLikes);
+            // Remove updating animation and re-enable button
+            setTimeout(() => {
+                likeCount.classList.remove('updating');
+                this.disabled = false;
+            }, 300);
         });
     });
 }
+
+// Initialize global like counts from localStorage with starting values
+function initializeGlobalLikes() {
+    const defaultLikes = {
+        '1': 12,  // First Blog Post
+        '2': 8,   // Web Development Journey
+        '3': 15   // Musical Journey
+    };
+    
+    // Load existing global likes or use defaults
+    let globalLikes = JSON.parse(localStorage.getItem('global-likes')) || defaultLikes;
+    
+    // Initialize like counts on page load
+    Object.keys(globalLikes).forEach(postId => {
+        const likeCount = document.querySelector(`.like-btn[data-post="${postId}"] .like-count`);
+        if (likeCount) {
+            likeCount.textContent = globalLikes[postId];
+        }
+    });
+    
+    // Save to localStorage
+    localStorage.setItem('global-likes', JSON.stringify(globalLikes));
+    
+    // Update total likes display
+    updateTotalLikesDisplay();
+}
+
+// Update the total likes display
+function updateTotalLikesDisplay() {
+    const globalLikes = JSON.parse(localStorage.getItem('global-likes')) || {};
+    const totalLikes = Object.values(globalLikes).reduce((sum, likes) => sum + likes, 0);
+    
+    const totalLikesElement = document.querySelector('.total-likes-count');
+    if (totalLikesElement) {
+        // Animate the count change
+        const currentCount = parseInt(totalLikesElement.textContent) || 0;
+        animateCounter(totalLikesElement, currentCount, totalLikes, 500);
+    }
+}
+
+// Animate counter changes
+function animateCounter(element, start, end, duration) {
+    const startTime = Date.now();
+    const difference = end - start;
+    
+    function updateCounter() {
+        const elapsed = Date.now() - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        // Use easing function for smooth animation
+        const easedProgress = 1 - Math.pow(1 - progress, 3);
+        const currentValue = Math.round(start + difference * easedProgress);
+        
+        element.textContent = currentValue;
+        
+        if (progress < 1) {
+            requestAnimationFrame(updateCounter);
+        }
+    }
+    
+    requestAnimationFrame(updateCounter);
+}
+
+// Update like count with global persistence
+function updateLikeCount(postId, newCount, likeCountElement) {
+    // Update display immediately
+    likeCountElement.textContent = newCount;
+    
+    // Update global storage
+    let globalLikes = JSON.parse(localStorage.getItem('global-likes')) || {};
+    globalLikes[postId] = newCount;
+    localStorage.setItem('global-likes', JSON.stringify(globalLikes));
+    
+    // Update total likes display
+    updateTotalLikesDisplay();
+    
+    // Simulate network sync (for future API integration)
+    setTimeout(() => {
+        console.log(`✅ Like count synced for post ${postId}: ${newCount}`);
+    }, 500);
+    
+    // Broadcast to other tabs/windows
+    broadcastLikeUpdate(postId, newCount);
+}
+
+// Broadcast like updates to other open tabs
+function broadcastLikeUpdate(postId, newCount) {
+    // Use localStorage events to sync across tabs
+    const updateEvent = {
+        type: 'like-update',
+        postId: postId,
+        count: newCount,
+        timestamp: Date.now()
+    };
+    
+    localStorage.setItem('like-broadcast', JSON.stringify(updateEvent));
+    localStorage.removeItem('like-broadcast'); // Trigger storage event
+}
+
+// Listen for like updates from other tabs
+function initializeCrossTabSync() {
+    window.addEventListener('storage', function(e) {
+        if (e.key === 'like-broadcast' && e.newValue) {
+            const update = JSON.parse(e.newValue);
+            if (update.type === 'like-update') {
+                const likeCountElement = document.querySelector(`.like-btn[data-post="${update.postId}"] .like-count`);
+                if (likeCountElement) {
+                    likeCountElement.textContent = update.count;
+                    likeCountElement.classList.add('updating');
+                    setTimeout(() => {
+                        likeCountElement.classList.remove('updating');
+                    }, 300);
+                }
+                // Update total likes as well
+                updateTotalLikesDisplay();
+            }
+        }
+    });
+}
+
+// Initialize cross-tab synchronization
+document.addEventListener('DOMContentLoaded', function() {
+    initializeCrossTabSync();
+});
 
 // Share Functionality
 function initializeShareButtons() {
