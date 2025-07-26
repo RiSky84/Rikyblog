@@ -26,11 +26,11 @@
 /* Dark mode colors */
 body.dark-mode {
     --bg-color: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 20%, #16213e 40%, #0f3460 60%, #533a7b 80%, #8b5a9b 100%);
-    --text-color: #e8e9ea;
-    --text-light: #b0b3b8;
+    --text-color: #f0f2f5;
+    --text-light: #c7ccd1;
     --bg-secondary: #1a1a2e;
     --bg-tertiary: #242942;
-    --border-color: #3a3b3c;
+    --border-color: #4a4b4c;
     --shadow-color: rgba(0, 0, 0, 0.4);
     --shadow-hover: rgba(0, 0, 0, 0.6);
     --accent-color: #64b5f6;
@@ -39,7 +39,7 @@ body.dark-mode {
     --nav-shadow: rgba(0, 0, 0, 0.3);
     --post-bg: rgba(36, 41, 66, 0.95);
     --input-bg: #242942;
-    --input-border: #3a3b3c;
+    --input-border: #4a4b4c;
     --button-bg: #64b5f6;
     --button-hover: #42a5f5;
 }
@@ -1631,4 +1631,84 @@ body.dark-mode .notification {
         padding: 10px 16px;
         font-size: 13px;
     }
+}
+
+/* Enhanced Dark Mode Text Visibility */
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6 {
+    color: #ffffff !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode p,
+body.dark-mode .post-content,
+body.dark-mode .blog-post p,
+body.dark-mode .contact-details p,
+body.dark-mode .about-me p {
+    color: #f0f2f5 !important;
+    line-height: 1.7;
+}
+
+body.dark-mode .nav-link {
+    color: #f0f2f5 !important;
+}
+
+body.dark-mode .nav-link:hover {
+    color: #64b5f6 !important;
+}
+
+body.dark-mode .post-meta,
+body.dark-mode .date,
+body.dark-mode .read-time {
+    color: #c7ccd1 !important;
+}
+
+body.dark-mode .tag {
+    background: rgba(100, 181, 246, 0.2);
+    color: #64b5f6 !important;
+    border: 1px solid rgba(100, 181, 246, 0.3);
+}
+
+body.dark-mode .stat-label {
+    color: #c7ccd1 !important;
+}
+
+body.dark-mode .stat-number {
+    color: #ffffff !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode .developer-credit,
+body.dark-mode .header-subtitle {
+    color: #c7ccd1 !important;
+}
+
+body.dark-mode .contact-details h3 {
+    color: #ffffff !important;
+}
+
+body.dark-mode .footer-content p {
+    color: #c7ccd1 !important;
+}
+
+body.dark-mode .youtube-description {
+    color: #c7ccd1 !important;
+}
+
+/* Enhanced input visibility in dark mode */
+body.dark-mode input,
+body.dark-mode textarea {
+    color: #f0f2f5 !important;
+    background: #242942 !important;
+    border-color: #4a4b4c !important;
+}
+
+body.dark-mode input::placeholder,
+body.dark-mode textarea::placeholder {
+    color: #c7ccd1 !important;
+    opacity: 0.8;
 }
