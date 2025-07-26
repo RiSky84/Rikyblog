@@ -1,6 +1,10 @@
 // Advanced Blog Features JavaScript with Mobile Chrome Optimizations
 
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('📄 DOM fully loaded');
+    console.log('🔍 Available buttons:', document.querySelectorAll('button'));
+    console.log('🎯 Dark mode toggle check:', document.querySelector('.dark-mode-toggle'));
+    
     // Mobile Chrome specific optimizations
     initializeMobileOptimizations();
     
@@ -164,29 +168,77 @@ function initializeDarkMode() {
     const body = document.body;
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
     
-    console.log('Dark mode toggle element found:', !!darkModeToggle);
+    console.log('🌙 Dark mode initialization started');
+    console.log('🔍 Dark mode toggle element found:', !!darkModeToggle);
+    console.log('🎯 Toggle element:', darkModeToggle);
+    
+    // Check if CSS is loaded properly
+    const testElement = document.createElement('div');
+    testElement.style.cssText = 'background: var(--bg-color); position: absolute; visibility: hidden;';
+    document.body.appendChild(testElement);
+    const computedStyle = window.getComputedStyle(testElement);
+    const cssLoaded = computedStyle.background.includes('gradient') || computedStyle.background !== '';
+    document.body.removeChild(testElement);
+    console.log('🎨 CSS Variables loaded:', cssLoaded);
+    
+    // Define updateToggleIcon function first
+    function updateToggleIcon(isDark) {
+        console.log('🎨 Updating toggle icon, isDark:', isDark);
+        if (darkModeToggle) {
+            const icon = darkModeToggle.querySelector('.theme-icon');
+            console.log('🎯 Theme icon element:', icon);
+            if (icon) {
+                const newIcon = isDark ? '☀️' : '🌙';
+                icon.textContent = newIcon;
+                console.log('✨ Icon updated to:', newIcon);
+                darkModeToggle.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+            } else {
+                console.error('❌ Theme icon element not found inside toggle button');
+            }
+        } else {
+            console.error('❌ Dark mode toggle not available for icon update');
+        }
+    }
     
     // Check for saved theme preference or default to system preference
     const savedTheme = localStorage.getItem('theme');
     const systemTheme = prefersDark.matches ? 'dark' : 'light';
     const currentTheme = savedTheme || systemTheme;
     
-    console.log('Current theme:', currentTheme);
+    console.log('💾 Saved theme:', savedTheme);
+    console.log('🖥️ System theme:', systemTheme);
+    console.log('✅ Current theme:', currentTheme);
     
     // Apply the theme
     if (currentTheme === 'dark') {
         body.classList.add('dark-mode');
         updateToggleIcon(true);
+    } else {
+        // Ensure light mode is properly set
+        body.classList.remove('dark-mode');
+        updateToggleIcon(false);
     }
     
     // Toggle functionality
     if (darkModeToggle) {
-        darkModeToggle.addEventListener('click', function() {
+        console.log('🎛️ Adding click event listener to dark mode toggle');
+        darkModeToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            console.log('🖱️ Dark mode toggle clicked!');
             body.classList.toggle('dark-mode');
             const isDark = body.classList.contains('dark-mode');
             
+            console.log('🌓 Theme switched to:', isDark ? 'dark' : 'light');
+            console.log('🎨 Body classes:', body.className);
+            
+            // Force a style recalculation
+            body.style.transition = 'all 0.3s ease';
+            
             // Save preference
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            console.log('💾 Theme preference saved:', isDark ? 'dark' : 'light');
             
             // Update toggle icon with animation
             updateToggleIcon(isDark);
@@ -198,14 +250,18 @@ function initializeDarkMode() {
                     'success', 
                     2000
                 );
+            } else {
+                console.log('⚠️ showNotification function not available');
             }
             
-            // Add smooth transition for theme change
-            body.style.transition = 'background-color 0.3s ease, color 0.3s ease';
+            // Reset transition after animation
             setTimeout(() => {
                 body.style.transition = '';
             }, 300);
         });
+    } else {
+        console.error('❌ Dark mode toggle button not found! Selector: .dark-mode-toggle');
+        console.log('🔍 Available buttons:', document.querySelectorAll('button'));
     }
     
     // Listen for system theme changes
@@ -220,16 +276,6 @@ function initializeDarkMode() {
             }
         }
     });
-    
-    function updateToggleIcon(isDark) {
-        if (darkModeToggle) {
-            const icon = darkModeToggle.querySelector('.theme-icon');
-            if (icon) {
-                icon.textContent = isDark ? '☀️' : '🌙';
-                darkModeToggle.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
-            }
-        }
-    }
 }
 
 // Notification System for better user feedback

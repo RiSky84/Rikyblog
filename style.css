@@ -597,7 +597,7 @@ footer {
 
 /* Dark Mode Toggle */
 .dark-mode-toggle {
-    background: none;
+    background: var(--accent-color);
     border: 2px solid var(--accent-color);
     border-radius: 50%;
     width: 45px;
@@ -608,19 +608,21 @@ footer {
     cursor: pointer;
     transition: all 0.3s ease;
     margin-left: 15px;
-    color: var(--accent-color);
+    color: white;
     font-size: 1.2rem;
+    box-shadow: 0 2px 10px rgba(100, 181, 246, 0.3);
+    position: relative;
 }
 
 .dark-mode-toggle:hover {
-    background: var(--accent-color);
-    color: var(--bg-tertiary);
+    background: var(--button-hover);
     transform: rotate(15deg) scale(1.1);
-    box-shadow: 0 0 15px rgba(100, 181, 246, 0.4);
+    box-shadow: 0 0 20px rgba(100, 181, 246, 0.6);
 }
 
 .dark-mode-toggle .theme-icon {
     transition: transform 0.3s ease;
+    font-size: 1.1rem;
 }
 
 .dark-mode-toggle:hover .theme-icon {
