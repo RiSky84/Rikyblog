@@ -937,3 +937,257 @@ function createFloatingShapes() {
 
 // Initialize floating shapes
 setTimeout(createFloatingShapes, 1000);
+
+// ===== ULTRA-FUTURISTIC SCI-FI ENHANCEMENTS =====
+
+// Quantum Particle System
+function createQuantumParticles() {
+    const particleContainer = document.createElement('div');
+    particleContainer.className = 'quantum-particles';
+    document.body.appendChild(particleContainer);
+    
+    for (let i = 0; i < 20; i++) {
+        const particle = document.createElement('div');
+        particle.style.cssText = `
+            position: absolute;
+            width: ${Math.random() * 4 + 2}px;
+            height: ${Math.random() * 4 + 2}px;
+            background: ${['#00ffff', '#8a2be2', '#39ff14', '#ff1493'][Math.floor(Math.random() * 4)]};
+            border-radius: 50%;
+            left: ${Math.random() * 100}%;
+            top: ${Math.random() * 100}%;
+            box-shadow: 0 0 ${Math.random() * 20 + 10}px currentColor;
+            animation: quantum-drift ${Math.random() * 10 + 10}s linear infinite;
+            opacity: ${Math.random() * 0.8 + 0.2};
+        `;
+        particleContainer.appendChild(particle);
+    }
+}
+
+// Holographic Status Bar
+function createStatusBar() {
+    const statusBar = document.createElement('div');
+    statusBar.className = 'status-bar';
+    document.body.appendChild(statusBar);
+}
+
+// Futuristic Cursor Tracking
+function initializeFuturisticCursor() {
+    let cursor = document.querySelector('.futuristic-cursor');
+    if (!cursor) {
+        cursor = document.createElement('div');
+        cursor.className = 'futuristic-cursor';
+        cursor.style.cssText = `
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, #00ffff, transparent);
+            border: 2px solid #00ffff;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 99999;
+            mix-blend-mode: difference;
+            transition: transform 0.1s ease;
+        `;
+        document.body.appendChild(cursor);
+    }
+
+    document.addEventListener('mousemove', (e) => {
+        cursor.style.left = e.clientX - 10 + 'px';
+        cursor.style.top = e.clientY - 10 + 'px';
+    });
+
+    // Enhanced cursor interactions
+    document.querySelectorAll('button, a, input, textarea').forEach(element => {
+        element.addEventListener('mouseenter', () => {
+            cursor.style.transform = 'scale(2)';
+            cursor.style.background = 'radial-gradient(circle, #39ff14, transparent)';
+            cursor.style.borderColor = '#39ff14';
+        });
+        
+        element.addEventListener('mouseleave', () => {
+            cursor.style.transform = 'scale(1)';
+            cursor.style.background = 'radial-gradient(circle, #00ffff, transparent)';
+            cursor.style.borderColor = '#00ffff';
+        });
+    });
+}
+
+// Neural Network Effect
+function createNeuralNetwork() {
+    const canvas = document.createElement('canvas');
+    canvas.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -8;
+        opacity: 0.3;
+    `;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    document.body.appendChild(canvas);
+    
+    const ctx = canvas.getContext('2d');
+    const nodes = [];
+    
+    // Create nodes
+    for (let i = 0; i < 50; i++) {
+        nodes.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            vx: (Math.random() - 0.5) * 0.5,
+            vy: (Math.random() - 0.5) * 0.5,
+            color: ['#00ffff', '#8a2be2', '#39ff14', '#ff1493'][Math.floor(Math.random() * 4)]
+        });
+    }
+    
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // Update and draw nodes
+        nodes.forEach((node, i) => {
+            node.x += node.vx;
+            node.y += node.vy;
+            
+            // Bounce off edges
+            if (node.x < 0 || node.x > canvas.width) node.vx *= -1;
+            if (node.y < 0 || node.y > canvas.height) node.vy *= -1;
+            
+            // Draw node
+            ctx.beginPath();
+            ctx.arc(node.x, node.y, 2, 0, Math.PI * 2);
+            ctx.fillStyle = node.color;
+            ctx.fill();
+            
+            // Draw connections
+            nodes.slice(i + 1).forEach(otherNode => {
+                const dx = node.x - otherNode.x;
+                const dy = node.y - otherNode.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                
+                if (distance < 150) {
+                    ctx.beginPath();
+                    ctx.moveTo(node.x, node.y);
+                    ctx.lineTo(otherNode.x, otherNode.y);
+                    ctx.strokeStyle = node.color;
+                    ctx.globalAlpha = (150 - distance) / 150 * 0.5;
+                    ctx.stroke();
+                    ctx.globalAlpha = 1;
+                }
+            });
+        });
+        
+        requestAnimationFrame(animate);
+    }
+    
+    animate();
+    
+    // Resize handler
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+}
+
+// Matrix Rain Effect
+function createMatrixRain() {
+    const canvas = document.createElement('canvas');
+    canvas.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -9;
+        opacity: 0.1;
+    `;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    document.body.appendChild(canvas);
+    
+    const ctx = canvas.getContext('2d');
+    const chars = '01010101010101ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()';
+    const columns = canvas.width / 20;
+    const drops = [];
+    
+    for (let i = 0; i < columns; i++) {
+        drops[i] = 1;
+    }
+    
+    function drawMatrix() {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        ctx.fillStyle = '#39ff14';
+        ctx.font = '15px Courier New';
+        
+        for (let i = 0; i < drops.length; i++) {
+            const char = chars[Math.floor(Math.random() * chars.length)];
+            ctx.fillText(char, i * 20, drops[i] * 20);
+            
+            if (drops[i] * 20 > canvas.height && Math.random() > 0.975) {
+                drops[i] = 0;
+            }
+            drops[i]++;
+        }
+    }
+    
+    setInterval(drawMatrix, 50);
+}
+
+// Holographic Glitch Effect for Headers
+function addGlitchEffects() {
+    const headers = document.querySelectorAll('h1, h2, h3');
+    headers.forEach(header => {
+        header.addEventListener('mouseenter', () => {
+            header.style.animation = 'glitch-effect 0.3s ease-in-out';
+        });
+        
+        header.addEventListener('animationend', () => {
+            header.style.animation = '';
+        });
+    });
+    
+    // Add glitch keyframes if not exists
+    if (!document.querySelector('#glitch-styles')) {
+        const glitchStyles = document.createElement('style');
+        glitchStyles.id = 'glitch-styles';
+        glitchStyles.textContent = `
+            @keyframes glitch-effect {
+                0%, 100% { transform: translate(0); }
+                20% { transform: translate(-2px, 2px); }
+                40% { transform: translate(-2px, -2px); }
+                60% { transform: translate(2px, 2px); }
+                80% { transform: translate(2px, -2px); }
+            }
+        `;
+        document.head.appendChild(glitchStyles);
+    }
+}
+
+// Initialize all futuristic effects
+function initializeFuturisticEffects() {
+    console.log('🚀 Initializing futuristic effects...');
+    
+    setTimeout(() => {
+        createQuantumParticles();
+        createStatusBar();
+        initializeFuturisticCursor();
+        createNeuralNetwork();
+        createMatrixRain();
+        addGlitchEffects();
+        
+        console.log('✨ Futuristic effects loaded!');
+    }, 1000);
+}
+
+// Initialize futuristic effects when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeFuturisticEffects);
+} else {
+    initializeFuturisticEffects();
+}

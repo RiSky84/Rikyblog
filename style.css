@@ -178,6 +178,7 @@ body {
         line-height: 1.6;
     }
 }
+/* Enhanced Header with Neural Network Pattern */
 header { 
     text-align: center; 
     margin-bottom: 2em; 
@@ -196,6 +197,27 @@ header {
     overflow: hidden;
 }
 
+/* Neural Network Background Pattern */
+header::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 20% 80%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(138, 43, 226, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(57, 255, 20, 0.05) 0%, transparent 50%);
+    z-index: 1;
+    animation: neural-pulse 6s ease-in-out infinite;
+}
+
+@keyframes neural-pulse {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.05); }
+}
+
 header::before {
     content: '';
     position: absolute;
@@ -203,11 +225,12 @@ header::before {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.1), transparent);
-    animation: scan-line 3s infinite;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.15), transparent);
+    animation: quantum-scan 4s infinite;
+    z-index: 2;
 }
 
-@keyframes scan-line {
+@keyframes quantum-scan {
     0% { left: -100%; }
     100% { left: 100%; }
 }
@@ -295,7 +318,7 @@ h2 {
     border: 2px solid #d4c5b9;
 }
 
-/* Futuristic Section Styling */
+/* Advanced Section Enhancement with Sci-Fi Elements */
 section {
     background: rgba(10, 10, 15, 0.8);
     backdrop-filter: blur(20px) saturate(180%);
@@ -319,6 +342,34 @@ section {
     overflow: hidden;
 }
 
+/* Sci-Fi Corner Indicators */
+section::after {
+    content: '';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--neon-blue);
+    border-left: none;
+    border-bottom: none;
+    animation: corner-pulse 3s ease-in-out infinite;
+}
+
+@keyframes corner-pulse {
+    0%, 100% { 
+        opacity: 0.6; 
+        transform: scale(1);
+        border-color: var(--neon-blue);
+    }
+    50% { 
+        opacity: 1; 
+        transform: scale(1.2);
+        border-color: var(--neon-green);
+    }
+}
+
+/* Data Stream Effect */
 section::before {
     content: '';
     position: absolute;
@@ -326,14 +377,27 @@ section::before {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(45deg, 
-        rgba(0, 255, 255, 0.03) 0%, 
-        transparent 25%, 
-        rgba(138, 43, 226, 0.03) 50%, 
-        transparent 75%, 
-        rgba(57, 255, 20, 0.03) 100%);
+    background: 
+        linear-gradient(45deg, 
+            rgba(0, 255, 255, 0.03) 0%, 
+            transparent 25%, 
+            rgba(138, 43, 226, 0.03) 50%, 
+            transparent 75%, 
+            rgba(57, 255, 20, 0.03) 100%),
+        repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 98px,
+            rgba(0, 255, 255, 0.02) 100px
+        );
     pointer-events: none;
     z-index: 1;
+    animation: data-stream 8s linear infinite;
+}
+
+@keyframes data-stream {
+    0% { background-position: 0px 0px, 0px 0px; }
+    100% { background-position: 100px 100px, 200px 0px; }
 }
 
 section:hover {
@@ -2315,6 +2379,87 @@ body.dark-mode #my-hobbies img:hover {
 
 /* ===== ADVANCED FUTURISTIC ENHANCEMENTS - Next-Gen UI System ===== */
 
+/* Quantum Particle System */
+.quantum-particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -5;
+    overflow: hidden;
+}
+
+.quantum-particles::before,
+.quantum-particles::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--neon-blue);
+    border-radius: 50%;
+    box-shadow: 
+        0 0 10px var(--neon-blue),
+        100px 200px 0 var(--neon-purple),
+        200px 400px 0 var(--neon-green),
+        300px 100px 0 var(--neon-pink),
+        450px 300px 0 var(--neon-blue),
+        600px 150px 0 var(--neon-purple),
+        750px 350px 0 var(--neon-green),
+        850px 250px 0 var(--neon-pink),
+        950px 450px 0 var(--neon-blue),
+        1050px 50px 0 var(--neon-purple);
+    animation: quantum-float 15s ease-in-out infinite;
+}
+
+.quantum-particles::after {
+    animation-delay: -7.5s;
+    animation-duration: 20s;
+}
+
+@keyframes quantum-float {
+    0%, 100% { 
+        transform: translateY(0px) rotate(0deg); 
+        opacity: 0.8;
+    }
+    25% { 
+        transform: translateY(-100px) rotate(90deg); 
+        opacity: 1;
+    }
+    50% { 
+        transform: translateY(-200px) rotate(180deg); 
+        opacity: 0.6;
+    }
+    75% { 
+        transform: translateY(-150px) rotate(270deg); 
+        opacity: 1;
+    }
+}
+
+/* Floating UI Panels */
+.floating-panel {
+    position: fixed;
+    background: rgba(10, 10, 15, 0.85);
+    backdrop-filter: blur(25px) saturate(200%);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 
+        0 20px 40px rgba(0, 255, 255, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    z-index: 1000;
+    transform: translateY(0);
+    transition: all 0.4s ease;
+}
+
+.floating-panel:hover {
+    transform: translateY(-10px);
+    box-shadow: 
+        0 30px 60px rgba(0, 255, 255, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
 /* Holographic Text Effects */
 .holographic-text {
     background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple), var(--neon-green), var(--neon-pink));
@@ -2576,4 +2721,194 @@ header h1:hover {
         0% { transform: translate(0, 0); }
         100% { transform: translate(40px, 40px); }
     }
+}
+
+/* ===== ULTRA-FUTURISTIC SCI-FI ELEMENTS ===== */
+
+/* Quantum Loading Rings */
+body::before {
+    content: '';
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border: 3px solid transparent;
+    border-top: 3px solid var(--neon-blue);
+    border-right: 3px solid var(--neon-purple);
+    border-radius: 50%;
+    z-index: 9999;
+    pointer-events: none;
+    animation: quantum-spin 2s linear infinite;
+}
+
+@keyframes quantum-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Holographic Status Bar */
+html::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, 
+        var(--neon-blue) 0%, 
+        var(--neon-purple) 25%, 
+        var(--neon-green) 50%, 
+        var(--neon-pink) 75%, 
+        var(--neon-blue) 100%);
+    z-index: 10000;
+    animation: status-pulse 3s ease-in-out infinite;
+}
+
+@keyframes status-pulse {
+    0%, 100% { opacity: 0.8; height: 3px; }
+    50% { opacity: 1; height: 5px; }
+}
+
+/* Advanced Typography with Cyber Effect */
+h1, h2, h3 {
+    position: relative;
+    font-weight: 800;
+}
+
+h1::before, h2::before, h3::before {
+    content: '[SYSTEM ACTIVE]';
+    position: absolute;
+    top: -25px;
+    left: 0;
+    font-size: 0.4em;
+    color: var(--neon-green);
+    font-family: 'Courier New', monospace;
+    animation: system-blink 2s infinite;
+    opacity: 0.7;
+}
+
+h2::before { content: '[MODULE LOADED]'; }
+h3::before { content: '[DATA READY]'; }
+
+@keyframes system-blink {
+    0%, 50% { opacity: 0.7; }
+    25%, 75% { opacity: 1; }
+}
+
+/* Floating Data Connections */
+section {
+    position: relative;
+}
+
+section:nth-child(odd)::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    right: 50%;
+    width: 2px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--neon-blue), transparent);
+    animation: data-flow 3s ease-in-out infinite;
+}
+
+section:nth-child(even)::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    width: 2px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--neon-purple), transparent);
+    animation: data-flow 3s ease-in-out infinite reverse;
+}
+
+@keyframes data-flow {
+    0%, 100% { 
+        opacity: 0.3; 
+        transform: scaleY(0.5); 
+    }
+    50% { 
+        opacity: 1; 
+        transform: scaleY(1.2); 
+    }
+}
+
+/* Terminal-like Text Selection */
+::selection {
+    background: rgba(0, 255, 255, 0.3);
+    color: #ffffff;
+    text-shadow: 0 0 10px var(--neon-blue);
+}
+
+::-moz-selection {
+    background: rgba(0, 255, 255, 0.3);
+    color: #ffffff;
+    text-shadow: 0 0 10px var(--neon-blue);
+}
+
+/* Advanced Loading State */
+@keyframes quantum-load {
+    0% { 
+        box-shadow: 0 0 0 0 rgba(0, 255, 255, 0.7);
+        transform: scale(1);
+    }
+    70% { 
+        box-shadow: 0 0 0 20px rgba(0, 255, 255, 0);
+        transform: scale(1.1);
+    }
+    100% { 
+        box-shadow: 0 0 0 0 rgba(0, 255, 255, 0);
+        transform: scale(1);
+    }
+}
+
+/* Enhance existing elements with quantum effects */
+button:active, .btn:active, input[type="submit"]:active {
+    animation: quantum-load 0.6s ease-out;
+}
+
+/* Neural Network Connecting Lines */
+body {
+    position: relative;
+}
+
+body > *:not(script):not(style) {
+    position: relative;
+    z-index: 10;
+}
+
+/* Sci-Fi Cursor */
+* {
+    cursor: none;
+}
+
+body {
+    cursor: none;
+}
+
+html {
+    cursor: none;
+}
+
+/* Custom Futuristic Cursor */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle, var(--neon-blue), transparent);
+    border: 2px solid var(--neon-blue);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99999;
+    mix-blend-mode: difference;
+    animation: cursor-pulse 2s ease-in-out infinite;
+}
+
+@keyframes cursor-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.5); opacity: 1; }
 }
