@@ -91,8 +91,24 @@ html {
     height: 100%;
 }
 
+/* Enhanced smooth scrolling for all devices */
+html, body {
+    scroll-behavior: smooth;
+}
+
+/* Smooth scrolling with better performance */
+@supports (scroll-behavior: smooth) {
+    html {
+        scroll-behavior: smooth;
+    }
+}
+
 @media (prefers-reduced-motion: no-preference) {
     html {
+        scroll-behavior: smooth;
+    }
+    
+    * {
         scroll-behavior: smooth;
     }
 }
@@ -1209,14 +1225,20 @@ footer {
 .submit-btn {
     background: linear-gradient(45deg, var(--button-bg), var(--button-hover));
     color: white;
-    padding: 15px 40px;
+    padding: 12px 30px;
     border: none;
-    border-radius: 50px;
-    font-size: 1.1rem;
+    border-radius: 30px;
+    font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    width: 100%;
+    width: auto;
+    max-width: 200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 }
 
 .submit-btn:hover {
@@ -1705,10 +1727,12 @@ body.dark-mode .notification {
 
     .submit-btn {
         font-size: 16px;
-        padding: 18px 25px;
-        min-height: 54px;
-        border-radius: 27px;
+        padding: 14px 20px;
+        min-height: 48px;
+        border-radius: 24px;
         -webkit-tap-highlight-color: transparent;
+        max-width: 180px;
+        width: auto;
     }
 
     .submit-btn:active {
