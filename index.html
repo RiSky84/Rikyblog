@@ -301,11 +301,11 @@
             -->
             <form class="contact-form" action="https://formspree.io/f/meozgndw" method="POST" accept-charset="UTF-8">
                 <!-- Enhanced Formspree configuration -->
-                <input type="hidden" name="_subject" value="🚀 New Contact Form Message - Riky Rabha's Blog">
+                <input type="hidden" name="_subject" value="New Contact Form Message - Riky Rabha's Blog">
                 <input type="hidden" name="_next" value="https://risky84.github.io/Rikyblog/?message=sent">
                 <input type="hidden" name="_captcha" value="false">
                 <input type="hidden" name="_cc" value="rikyrabha@gmail.com">
-                <input type="hidden" name="_autoresponse" value="Thank you for contacting Riky Rabha! I'll get back to you soon. 🎉">
+                <input type="hidden" name="_autoresponse" value="Thank you for contacting Riky Rabha! I'll get back to you soon.">
                 
                 <div class="form-group">
                     <input type="text" id="name" name="name" placeholder="Your Name" required maxlength="100">
@@ -316,7 +316,7 @@
                     <label for="email">Email</label>
                 </div>
                 <div class="form-group">
-                    <input type="text" id="subject" name="_subject" placeholder="Subject (Optional)" maxlength="200">
+                    <input type="text" id="subject" name="subject" placeholder="Subject (Optional)" maxlength="200">
                     <label for="subject">Subject</label>
                 </div>
                 <div class="form-group">
@@ -328,6 +328,11 @@
                     <svg viewBox="0 0 24 24">
                         <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
                     </svg>
+                </button>
+                
+                <!-- Debug button (remove after fixing) -->
+                <button type="button" class="debug-btn" onclick="testFormspreeDirectly()" style="margin-top: 10px; padding: 8px 16px; background: #f39c12; color: white; border: none; border-radius: 20px; cursor: pointer;">
+                    🔧 Test Form Connection
                 </button>
             </form>
         </div>
@@ -342,4 +347,3 @@
 
 </body>
 </html>
-re

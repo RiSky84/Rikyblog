@@ -696,6 +696,39 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeCrossTabSync();
 });
 
+// Global function to test Formspree directly (debug)
+function testFormspreeDirectly() {
+    const testData = new FormData();
+    testData.append('name', 'Test User');
+    testData.append('email', 'test@example.com');
+    testData.append('message', 'This is a test message to check if Formspree is working correctly.');
+    
+    fetch('https://formspree.io/f/meozgndw', {
+        method: 'POST',
+        body: testData,
+        headers: {
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => {
+        console.log('Test response status:', response.status);
+        if (response.ok) {
+            showNotification('✅ Test successful! Formspree is working correctly.', 'success', 8000);
+        } else {
+            response.json().then(data => {
+                console.log('Error data:', data);
+                showNotification(`❌ Test failed: ${data.error || response.statusText}`, 'error', 8000);
+            }).catch(() => {
+                showNotification(`❌ Test failed with status ${response.status}`, 'error', 8000);
+            });
+        }
+    })
+    .catch(error => {
+        console.error('Test error:', error);
+        showNotification('❌ Network error during test. Check your connection.', 'error', 8000);
+    });
+}
+
 // Share Functionality
 function initializeShareButtons() {
     const shareButtons = document.querySelectorAll('.share-btn');
@@ -856,33 +889,33 @@ function initializeContactForm() {
             const action = contactForm.action;
             const hasValidFormspree = action && 
                                     action.includes('formspree.io') && 
-                                    !action.includes('YOUR_FORM_ID') &&
-                                    !action.includes('YOUR_EMAIL@gmail.com');
+                                    action.includes('meozgndw'); // Check for specific form ID
             
             if (!hasValidFormspree) {
                 console.warn('⚠️ Email system not configured properly!');
                 showNotification('📧 Email system needs setup - check EMAIL_FIX_GUIDE.md', 'warning', 8000);
             } else {
-                console.log('✅ Email system configured correctly');
+                console.log('✅ Email system configured correctly with Formspree ID: meozgndw');
             }
             
             return hasValidFormspree;
         };
 
         // Check configuration on load
-        setTimeout(checkEmailConfig, 1000);
+        setTimeout(() => {
+            checkEmailConfig();
+            // Test Formspree endpoint
+            testFormspreeEndpoint();
+        }, 1000);
 
         contactForm.addEventListener('submit', function(e) {
+            e.preventDefault(); // Always prevent default to handle via JavaScript
+            
             const submitBtn = this.querySelector('.submit-btn');
             const originalText = submitBtn.innerHTML;
             const isConfigured = checkEmailConfig();
             
             if (isConfigured) {
-                // Real form submission with Formspree
-                submitBtn.innerHTML = '<span>📧 Sending to rikyrabha@gmail.com...</span>';
-                submitBtn.disabled = true;
-                showNotification('📧 Sending your message to Riky\'s Gmail...', 'info', 3000);
-                
                 // Enhanced form validation
                 const formData = new FormData(this);
                 const name = formData.get('name')?.trim();
@@ -890,68 +923,63 @@ function initializeContactForm() {
                 const message = formData.get('message')?.trim();
                 
                 if (!name || name.length < 2) {
-                    e.preventDefault();
                     showNotification('❌ Please enter your full name (at least 2 characters)', 'error', 4000);
-                    submitBtn.innerHTML = originalText;
-                    submitBtn.disabled = false;
                     return;
                 }
                 
                 if (!email || !isValidEmail(email)) {
-                    e.preventDefault();
                     showNotification('❌ Please enter a valid email address', 'error', 4000);
-                    submitBtn.innerHTML = originalText;
-                    submitBtn.disabled = false;
                     return;
                 }
                 
                 if (!message || message.length < 10) {
-                    e.preventDefault();
                     showNotification('❌ Please enter a message (at least 10 characters)', 'error', 4000);
-                    submitBtn.innerHTML = originalText;
-                    submitBtn.disabled = false;
                     return;
                 }
                 
-                // Add timestamp and user info for better email tracking
-                const hiddenInput = document.createElement('input');
-                hiddenInput.type = 'hidden';
-                hiddenInput.name = '_timestamp';
-                hiddenInput.value = new Date().toISOString();
-                this.appendChild(hiddenInput);
+                // Show sending state
+                submitBtn.innerHTML = '<span>📧 Sending...</span>';
+                submitBtn.disabled = true;
+                showNotification('📧 Sending your message...', 'info', 3000);
                 
-                const browserInfo = document.createElement('input');
-                browserInfo.type = 'hidden';
-                browserInfo.name = '_browser_info';
-                browserInfo.value = `${navigator.userAgent.split(' ')[0]} on ${navigator.platform}`;
-                this.appendChild(browserInfo);
-                
-                // Success feedback after form submission
-                setTimeout(() => {
-                    showNotification('✅ Message sent successfully to rikyrabha@gmail.com! 🎉', 'success', 8000);
-                    showNotification('📧 Riky will reply to your email address soon!', 'info', 6000);
-                    
-                    // Reset form after successful submission
-                    setTimeout(() => {
+                // Submit to Formspree via fetch API for better error handling
+                fetch(this.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        showNotification('✅ Message sent successfully! 🎉', 'success', 8000);
+                        showNotification('📧 Riky will reply to your email address soon!', 'info', 6000);
                         this.reset();
-                        submitBtn.innerHTML = originalText;
-                        submitBtn.disabled = false;
-                    }, 2000);
-                }, 1000);
+                    } else {
+                        response.json().then(data => {
+                            if (data.errors && data.errors.length > 0) {
+                                showNotification(`❌ Error: ${data.errors[0].message}`, 'error', 6000);
+                            } else {
+                                showNotification('❌ Failed to send message. Please try again.', 'error', 6000);
+                            }
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Form submission error:', error);
+                    showNotification('❌ Network error. Please check your connection and try again.', 'error', 6000);
+                })
+                .finally(() => {
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                });
                 
-                return; // Allow natural form submission
             } else {
                 // Form needs setup - prevent submission and show instructions
-                e.preventDefault();
-                
                 submitBtn.innerHTML = '<span>Setup Required</span>';
                 submitBtn.disabled = true;
                 
-                showNotification('⚙️ Contact form needs setup! Replace YOUR_EMAIL@gmail.com with your actual email.', 'info', 4000);
-                
-                setTimeout(() => {
-                    showNotification('📧 Quick setup: Replace "YOUR_EMAIL@gmail.com" in index.html with your real Gmail address', 'info', 8000);
-                }, 4500);
+                showNotification('⚙️ Contact form needs setup! Check EMAIL_SETUP_GUIDE.md', 'info', 6000);
                 
                 setTimeout(() => {
                     submitBtn.innerHTML = originalText;
@@ -965,6 +993,32 @@ function initializeContactForm() {
     function isValidEmail(email) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
+    }
+    
+    // Test Formspree endpoint function
+    function testFormspreeEndpoint() {
+        const formAction = contactForm.action;
+        if (formAction && formAction.includes('formspree.io')) {
+            // Test with a HEAD request to check if endpoint exists
+            fetch(formAction, {
+                method: 'HEAD'
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('✅ Formspree endpoint is accessible');
+                } else if (response.status === 405) {
+                    // Method not allowed is expected for HEAD request, but endpoint exists
+                    console.log('✅ Formspree endpoint exists (405 expected for HEAD)');
+                } else {
+                    console.warn(`⚠️ Formspree endpoint issue: ${response.status}`);
+                    showNotification(`⚠️ Form endpoint returned status ${response.status}. Check EMAIL_SETUP_GUIDE.md`, 'warning', 8000);
+                }
+            })
+            .catch(error => {
+                console.warn('⚠️ Could not test Formspree endpoint:', error);
+                showNotification('⚠️ Network issue detected. Check your internet connection.', 'warning', 6000);
+            });
+        }
     }
 }
 
