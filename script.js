@@ -105,47 +105,6 @@ function initializeMobileOptimizations() {
         }, { passive: true });
     }
 }
-    
-    setViewportHeight();
-    window.addEventListener('resize', setViewportHeight);
-    window.addEventListener('orientationchange', () => {
-        setTimeout(setViewportHeight, 100);
-    });
-
-    // Optimize touch interactions
-    let touchStartY = 0;
-    document.addEventListener('touchstart', function(e) {
-        touchStartY = e.touches[0].clientY;
-    }, { passive: true });
-
-    document.addEventListener('touchmove', function(e) {
-        const touchY = e.touches[0].clientY;
-        const touchDiff = touchStartY - touchY;
-        
-        // Prevent bounce scrolling on iOS Safari and mobile Chrome
-        if (touchDiff > 0 && window.scrollY === 0) {
-            e.preventDefault();
-        }
-    }, { passive: false });
-
-    // Optimize for mobile Chrome's address bar
-    const mobileNav = document.querySelector('.nav-container');
-    if (mobileNav) {
-        let lastScrollTop = 0;
-        window.addEventListener('scroll', function() {
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            
-            if (scrollTop > lastScrollTop && scrollTop > 100) {
-                // Scrolling down - hide nav
-                mobileNav.style.transform = 'translateY(-100%)';
-            } else {
-                // Scrolling up - show nav
-                mobileNav.style.transform = 'translateY(0)';
-            }
-            lastScrollTop = scrollTop;
-        }, { passive: true });
-    }
-}
 
 // Navigation Menu with enhanced mobile Chrome optimizations
 function initializeNavigation() {
@@ -200,9 +159,14 @@ function initializeNavigation() {
                 if (window.innerWidth <= 768) {
                     navLinks.classList.remove('active');
                     mobileToggle.classList.remove('active');
+                    const scrollY = body.dataset.scrollY;
                     body.style.overflow = '';
                     body.style.position = '';
+                    body.style.top = '';
                     body.style.width = '';
+                    if (scrollY) {
+                        window.scrollTo(0, parseInt(scrollY));
+                    }
                 }
             });
         });
@@ -212,9 +176,14 @@ function initializeNavigation() {
             if (!mobileToggle.contains(e.target) && !navLinks.contains(e.target)) {
                 navLinks.classList.remove('active');
                 mobileToggle.classList.remove('active');
+                const scrollY = body.dataset.scrollY;
                 body.style.overflow = '';
                 body.style.position = '';
+                body.style.top = '';
                 body.style.width = '';
+                if (scrollY) {
+                    window.scrollTo(0, parseInt(scrollY));
+                }
             }
         });
     }
@@ -881,10 +850,15 @@ function initializeSmoothScrolling() {
                     if (mobileToggle) mobileToggle.classList.remove('active');
                     
                     // Restore body scroll with smooth transition
+                    const scrollY = body.dataset.scrollY;
                     setTimeout(() => {
                         body.style.overflow = '';
                         body.style.position = '';
+                        body.style.top = '';
                         body.style.width = '';
+                        if (scrollY) {
+                            window.scrollTo(0, parseInt(scrollY));
+                        }
                     }, 300); // Match CSS transition duration
                 }
             }
