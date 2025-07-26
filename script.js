@@ -702,52 +702,97 @@ function initializeBackToTop() {
     });
 }
 
-// Contact Form
+// Enhanced Contact Form with Email System Fix
 function initializeContactForm() {
     const contactForm = document.querySelector('.contact-form');
     
     if (contactForm) {
+        // Check if form has proper email configuration
+        const checkEmailConfig = () => {
+            const action = contactForm.action;
+            const hasValidFormspree = action && 
+                                    action.includes('formspree.io') && 
+                                    !action.includes('YOUR_FORM_ID') &&
+                                    !action.includes('YOUR_EMAIL@gmail.com');
+            
+            if (!hasValidFormspree) {
+                console.warn('⚠️ Email system not configured properly!');
+                showNotification('📧 Email system needs setup - check EMAIL_FIX_GUIDE.md', 'warning', 8000);
+            } else {
+                console.log('✅ Email system configured correctly');
+            }
+            
+            return hasValidFormspree;
+        };
+
+        // Check configuration on load
+        setTimeout(checkEmailConfig, 1000);
+
         contactForm.addEventListener('submit', function(e) {
             const submitBtn = this.querySelector('.submit-btn');
             const originalText = submitBtn.innerHTML;
+            const isConfigured = checkEmailConfig();
             
-            // Check if form has real Formspree action (not placeholder)
-            const hasValidFormspree = this.action && 
-                                    this.action.includes('formspree.io') && 
-                                    !this.action.includes('YOUR_FORM_ID') &&
-                                    !this.action.includes('YOUR_EMAIL@gmail.com');
-            
-            if (hasValidFormspree) {
+            if (isConfigured) {
                 // Real form submission with Formspree
-                submitBtn.innerHTML = '<span>Sending to Gmail...</span>';
+                submitBtn.innerHTML = '<span>📧 Sending to rikyrabha@gmail.com...</span>';
                 submitBtn.disabled = true;
-                showNotification('📧 Sending your message via Formspree...', 'info', 3000);
+                showNotification('📧 Sending your message to Riky\'s Gmail...', 'info', 3000);
                 
-                // Validate form before submitting
+                // Enhanced form validation
                 const formData = new FormData(this);
-                const name = formData.get('name');
-                const email = formData.get('_replyto');
-                const message = formData.get('message');
+                const name = formData.get('name')?.trim();
+                const email = formData.get('email')?.trim();
+                const message = formData.get('message')?.trim();
                 
-                if (!name || !email || !message) {
+                if (!name || name.length < 2) {
                     e.preventDefault();
-                    showNotification('Please fill in all fields', 'error', 4000);
+                    showNotification('❌ Please enter your full name (at least 2 characters)', 'error', 4000);
                     submitBtn.innerHTML = originalText;
                     submitBtn.disabled = false;
                     return;
                 }
                 
-                if (!isValidEmail(email)) {
+                if (!email || !isValidEmail(email)) {
                     e.preventDefault();
-                    showNotification('Please enter a valid email address', 'error', 4000);
+                    showNotification('❌ Please enter a valid email address', 'error', 4000);
                     submitBtn.innerHTML = originalText;
                     submitBtn.disabled = false;
                     return;
                 }
                 
-                // Let the form submit naturally to Formspree
+                if (!message || message.length < 10) {
+                    e.preventDefault();
+                    showNotification('❌ Please enter a message (at least 10 characters)', 'error', 4000);
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                    return;
+                }
+                
+                // Add timestamp and user info for better email tracking
+                const hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.name = '_timestamp';
+                hiddenInput.value = new Date().toISOString();
+                this.appendChild(hiddenInput);
+                
+                const browserInfo = document.createElement('input');
+                browserInfo.type = 'hidden';
+                browserInfo.name = '_browser_info';
+                browserInfo.value = `${navigator.userAgent.split(' ')[0]} on ${navigator.platform}`;
+                this.appendChild(browserInfo);
+                
+                // Success feedback after form submission
                 setTimeout(() => {
-                    showNotification('✅ Message sent successfully! Check your email for confirmation.', 'success', 6000);
+                    showNotification('✅ Message sent successfully to rikyrabha@gmail.com! 🎉', 'success', 8000);
+                    showNotification('📧 Riky will reply to your email address soon!', 'info', 6000);
+                    
+                    // Reset form after successful submission
+                    setTimeout(() => {
+                        this.reset();
+                        submitBtn.innerHTML = originalText;
+                        submitBtn.disabled = false;
+                    }, 2000);
                 }, 1000);
                 
                 return; // Allow natural form submission

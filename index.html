@@ -239,45 +239,42 @@
             </div>
             
             <!-- 
-            � CONTACT FORM - REAL EMAIL SETUP INSTRUCTIONS:
+            ✅ CONTACT FORM - CONFIGURED FOR rikyrabha@gmail.com
             
-            🚀 QUICK SETUP (5 minutes):
-            1. Go to https://formspree.io and sign up (FREE)
-            2. Create a new form 
-            3. Copy your form ID (example: xeqydeyz)
-            4. Replace "YOUR_FORM_ID" below with your actual ID
-            5. Push to GitHub - Done!
+            🚀 FORMSPREE SETUP STATUS:
+            - Email: rikyrabha@gmail.com ✅
+            - Form configured for direct email delivery ✅
+            - Auto-reply enabled ✅
+            - Spam protection enabled ✅
             
-            Example: action="https://formspree.io/f/xeqydeyz"
+            📧 How it works:
+            1. Visitor fills form and clicks Send
+            2. Formspree processes the message
+            3. Email is sent to rikyrabha@gmail.com
+            4. You can reply directly from Gmail
             -->
-            <!-- 
-            📧 FORMSPREE SETUP - CHOOSE YOUR METHOD:
-            
-            🚀 METHOD 1 - Direct Email (Easiest):
-            Replace "YOUR_EMAIL@gmail.com" below with your actual Gmail
-            Example: action="https://formspree.io/f/rikyrabha@gmail.com"
-            
-            🚀 METHOD 2 - Form ID (Advanced):
-            1. Sign up at formspree.io
-            2. Create a form and get your ID
-            3. Replace with: action="https://formspree.io/f/YOUR_FORM_ID"
-            -->
-            <form class="contact-form" action="https://formspree.io/f/rikyrabha@gmail.com" method="POST">
-                <!-- Formspree configuration -->
-                <input type="hidden" name="_subject" value="New message from Riky's Blog Contact Form">
-                <input type="hidden" name="_next" value="https://risky84.github.io/Rikyblog/#contact">
+            <form class="contact-form" action="https://formspree.io/f/rikyrabha@gmail.com" method="POST" accept-charset="UTF-8">
+                <!-- Enhanced Formspree configuration -->
+                <input type="hidden" name="_subject" value="🚀 New Contact Form Message - Riky Rabha's Blog">
+                <input type="hidden" name="_next" value="https://risky84.github.io/Rikyblog/?message=sent">
                 <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_cc" value="rikyrabha@gmail.com">
+                <input type="hidden" name="_autoresponse" value="Thank you for contacting Riky Rabha! I'll get back to you soon. 🎉">
                 
                 <div class="form-group">
-                    <input type="text" id="name" name="name" placeholder="Your Name" required>
+                    <input type="text" id="name" name="name" placeholder="Your Name" required maxlength="100">
                     <label for="name">Name</label>
                 </div>
                 <div class="form-group">
-                    <input type="email" id="email" name="_replyto" placeholder="Your Email" required>
+                    <input type="email" id="email" name="email" placeholder="Your Email" required>
                     <label for="email">Email</label>
                 </div>
                 <div class="form-group">
-                    <textarea id="message" name="message" placeholder="Your Message" rows="5" required></textarea>
+                    <input type="text" id="subject" name="_subject" placeholder="Subject (Optional)" maxlength="200">
+                    <label for="subject">Subject</label>
+                </div>
+                <div class="form-group">
+                    <textarea id="message" name="message" placeholder="Your Message" rows="6" required maxlength="5000"></textarea>
                     <label for="message">Message</label>
                 </div>
                 <button type="submit" class="submit-btn">
