@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize all features
     initializeNavigation();
     initializeDarkMode();
+    initializeNotificationSystem();
     initializeTypewriter();
     initializeStats();
     initializeSearch();
@@ -186,6 +187,13 @@ function initializeDarkMode() {
             // Update toggle icon with animation
             updateToggleIcon(isDark);
             
+            // Show notification
+            showNotification(
+                `Switched to ${isDark ? 'dark' : 'light'} mode ${isDark ? '🌙' : '☀️'}`, 
+                'success', 
+                2000
+            );
+            
             // Add smooth transition for theme change
             body.style.transition = 'background-color 0.3s ease, color 0.3s ease';
             setTimeout(() => {
@@ -216,6 +224,100 @@ function initializeDarkMode() {
             }
         }
     }
+}
+
+// Notification System for better user feedback
+function initializeNotificationSystem() {
+    // Create notification container if it doesn't exist
+    if (!document.getElementById('notification-container')) {
+        const container = document.createElement('div');
+        container.id = 'notification-container';
+        container.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+            pointer-events: none;
+        `;
+        document.body.appendChild(container);
+    }
+}
+
+// Show notification function
+function showNotification(message, type = 'success', duration = 3000) {
+    const container = document.getElementById('notification-container');
+    if (!container) return;
+
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.innerHTML = `
+        <div class="notification-content">
+            <span class="notification-icon">${type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️'}</span>
+            <span class="notification-message">${message}</span>
+        </div>
+    `;
+    
+    // Styling
+    notification.style.cssText = `
+        background: ${type === 'success' ? 'linear-gradient(135deg, #4CAF50, #45a049)' : 
+                   type === 'error' ? 'linear-gradient(135deg, #f44336, #da190b)' : 
+                   'linear-gradient(135deg, #2196F3, #1976D2)'};
+        color: white;
+        padding: 16px 24px;
+        border-radius: 12px;
+        margin-bottom: 10px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        transform: translateX(400px);
+        transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        pointer-events: auto;
+        cursor: pointer;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,0.2);
+        font-family: 'Merriweather', sans-serif;
+        font-size: 14px;
+        min-width: 280px;
+        max-width: 400px;
+    `;
+
+    notification.querySelector('.notification-content').style.cssText = `
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    `;
+
+    notification.querySelector('.notification-icon').style.cssText = `
+        font-size: 18px;
+        flex-shrink: 0;
+    `;
+
+    container.appendChild(notification);
+
+    // Animate in
+    setTimeout(() => {
+        notification.style.transform = 'translateX(0)';
+    }, 100);
+
+    // Auto remove
+    const removeTimeout = setTimeout(() => {
+        removeNotification(notification);
+    }, duration);
+
+    // Click to dismiss
+    notification.addEventListener('click', () => {
+        clearTimeout(removeTimeout);
+        removeNotification(notification);
+    });
+}
+
+// Remove notification function
+function removeNotification(notification) {
+    notification.style.transform = 'translateX(400px)';
+    notification.style.opacity = '0';
+    setTimeout(() => {
+        if (notification.parentNode) {
+            notification.parentNode.removeChild(notification);
+        }
+    }, 400);
 }
 
 // Typewriter Effect
@@ -350,6 +452,7 @@ function initializeLikeSystem() {
                 this.classList.remove('liked');
                 heart.style.color = '';
                 localStorage.setItem(`post-${postId}-liked`, 'false');
+                showNotification('Post unliked', 'info', 2000);
             } else {
                 // Like
                 currentLikes++;
@@ -357,6 +460,7 @@ function initializeLikeSystem() {
                 heart.style.color = '#e74c3c';
                 heart.style.animation = 'heartPulse 0.6s ease';
                 localStorage.setItem(`post-${postId}-liked`, 'true');
+                showNotification('Thanks for liking this post! ❤️', 'success', 3000);
             }
             
             likeCount.textContent = currentLikes;
@@ -378,18 +482,56 @@ function initializeShareButtons() {
                 navigator.share({
                     title: title,
                     url: url
+                }).then(() => {
+                    showNotification('Post shared successfully! 🎉', 'success');
+                }).catch((error) => {
+                    if (error.name !== 'AbortError') {
+                        console.log('Share failed:', error);
+                        // Fallback to clipboard
+                        copyToClipboard(url);
+                    }
                 });
             } else {
                 // Fallback: copy to clipboard
-                navigator.clipboard.writeText(url).then(() => {
-                    this.innerHTML = '<span>✓ Copied!</span>';
-                    setTimeout(() => {
-                        this.innerHTML = '<span>📤 Share</span>';
-                    }, 2000);
-                });
+                copyToClipboard(url);
             }
         });
     });
+
+    // Clipboard copy function
+    function copyToClipboard(text) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification('Link copied to clipboard! 📋', 'success');
+            }).catch(() => {
+                // Fallback for older browsers
+                fallbackCopyToClipboard(text);
+            });
+        } else {
+            fallbackCopyToClipboard(text);
+        }
+    }
+
+    // Fallback clipboard copy for older browsers
+    function fallbackCopyToClipboard(text) {
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-999999px';
+        textArea.style.top = '-999999px';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        
+        try {
+            document.execCommand('copy');
+            showNotification('Link copied to clipboard! 📋', 'success');
+        } catch (err) {
+            showNotification('Could not copy link. Please copy manually.', 'error');
+        }
+        
+        document.body.removeChild(textArea);
+    }
 }
 
 // Back to Top Button with enhanced smooth scrolling
@@ -487,14 +629,33 @@ function initializeContactForm() {
             
             const submitBtn = this.querySelector('.submit-btn');
             const originalText = submitBtn.innerHTML;
+            const formData = new FormData(this);
+            
+            // Validate form
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const message = formData.get('message');
+            
+            if (!name || !email || !message) {
+                showNotification('Please fill in all fields', 'error');
+                return;
+            }
+            
+            if (!isValidEmail(email)) {
+                showNotification('Please enter a valid email address', 'error');
+                return;
+            }
             
             submitBtn.innerHTML = '<span>Sending...</span>';
             submitBtn.disabled = true;
+            
+            showNotification('Sending your message...', 'info', 2000);
             
             // Simulate form submission
             setTimeout(() => {
                 submitBtn.innerHTML = '<span>✓ Sent!</span>';
                 this.reset();
+                showNotification('Message sent successfully! I\'ll get back to you soon. 📧', 'success', 5000);
                 
                 setTimeout(() => {
                     submitBtn.innerHTML = originalText;
@@ -502,6 +663,12 @@ function initializeContactForm() {
                 }, 3000);
             }, 2000);
         });
+    }
+
+    // Email validation function
+    function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
     }
 }
 
