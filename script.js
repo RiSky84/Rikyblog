@@ -662,53 +662,62 @@ function initializeContactForm() {
             const submitBtn = this.querySelector('.submit-btn');
             const originalText = submitBtn.innerHTML;
             
-            // Check if form has real Formspree action
-            const hasFormspreeAction = this.action && this.action.includes('formspree.io') && !this.action.includes('YOUR_FORM_ID');
+            // Check if form has real Formspree action (not placeholder)
+            const hasValidFormspree = this.action && 
+                                    this.action.includes('formspree.io') && 
+                                    !this.action.includes('YOUR_FORM_ID');
             
-            if (hasFormspreeAction) {
+            if (hasValidFormspree) {
                 // Real form submission with Formspree
                 submitBtn.innerHTML = '<span>Sending to Gmail...</span>';
                 submitBtn.disabled = true;
-                showNotification('📧 Sending your message to Riky\'s Gmail...', 'info', 3000);
+                showNotification('📧 Sending your message via Formspree...', 'info', 3000);
                 
-                // Let the form submit naturally to Formspree
-                // No e.preventDefault() - this allows real email sending
-                return;
-            } else {
-                // Form needs setup - prevent submission and show instructions
-                e.preventDefault();
-                
+                // Validate form before submitting
                 const formData = new FormData(this);
-                
-                // Validate form first
                 const name = formData.get('name');
-                const email = formData.get('_replyto') || formData.get('email');
+                const email = formData.get('_replyto');
                 const message = formData.get('message');
                 
                 if (!name || !email || !message) {
+                    e.preventDefault();
                     showNotification('Please fill in all fields', 'error', 4000);
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
                     return;
                 }
                 
                 if (!isValidEmail(email)) {
+                    e.preventDefault();
                     showNotification('Please enter a valid email address', 'error', 4000);
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
                     return;
                 }
                 
-                // Show setup instructions
+                // Let the form submit naturally to Formspree
+                setTimeout(() => {
+                    showNotification('✅ Message sent successfully! Check your email for confirmation.', 'success', 6000);
+                }, 1000);
+                
+                return; // Allow natural form submission
+            } else {
+                // Form needs setup - prevent submission and show instructions
+                e.preventDefault();
+                
                 submitBtn.innerHTML = '<span>Setup Required</span>';
                 submitBtn.disabled = true;
                 
-                showNotification('⚙️ Form needs email setup! Check the setup guide.', 'info', 3000);
+                showNotification('⚙️ Formspree setup needed! Follow the setup guide.', 'info', 4000);
                 
                 setTimeout(() => {
-                    showNotification('📧 To receive real emails: 1) Sign up at formspree.io 2) Replace YOUR_FORM_ID in HTML 3) Push to GitHub', 'info', 8000);
-                }, 3500);
+                    showNotification('📧 To get your own Form ID: 1) Go to formspree.io 2) Sign up 3) Create form 4) Replace form ID in HTML', 'info', 8000);
+                }, 4500);
                 
                 setTimeout(() => {
                     submitBtn.innerHTML = originalText;
                     submitBtn.disabled = false;
-                }, 5000);
+                }, 6000);
             }
         });
     }
