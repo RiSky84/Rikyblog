@@ -508,6 +508,12 @@ footer {
     height: 70px;
 }
 
+.nav-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
 .logo {
     font-family: 'Playfair Display', serif;
     font-size: 1.8rem;

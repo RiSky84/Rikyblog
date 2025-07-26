@@ -164,10 +164,14 @@ function initializeDarkMode() {
     const body = document.body;
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
     
+    console.log('Dark mode toggle element found:', !!darkModeToggle);
+    
     // Check for saved theme preference or default to system preference
     const savedTheme = localStorage.getItem('theme');
     const systemTheme = prefersDark.matches ? 'dark' : 'light';
     const currentTheme = savedTheme || systemTheme;
+    
+    console.log('Current theme:', currentTheme);
     
     // Apply the theme
     if (currentTheme === 'dark') {
@@ -187,12 +191,14 @@ function initializeDarkMode() {
             // Update toggle icon with animation
             updateToggleIcon(isDark);
             
-            // Show notification
-            showNotification(
-                `Switched to ${isDark ? 'dark' : 'light'} mode ${isDark ? '🌙' : '☀️'}`, 
-                'success', 
-                2000
-            );
+            // Show notification only if function exists
+            if (typeof showNotification === 'function') {
+                showNotification(
+                    `Switched to ${isDark ? 'dark' : 'light'} mode ${isDark ? '🌙' : '☀️'}`, 
+                    'success', 
+                    2000
+                );
+            }
             
             // Add smooth transition for theme change
             body.style.transition = 'background-color 0.3s ease, color 0.3s ease';
