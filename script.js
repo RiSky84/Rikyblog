@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize all features
     initializeNavigation();
+    initializeDarkMode();
     initializeTypewriter();
     initializeStats();
     initializeSearch();
@@ -154,6 +155,67 @@ function initializeNavigation() {
     }
 
     window.addEventListener('scroll', updateActiveNav, { passive: true });
+}
+
+// Dark Mode Toggle
+function initializeDarkMode() {
+    const darkModeToggle = document.querySelector('.dark-mode-toggle');
+    const body = document.body;
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    
+    // Check for saved theme preference or default to system preference
+    const savedTheme = localStorage.getItem('theme');
+    const systemTheme = prefersDark.matches ? 'dark' : 'light';
+    const currentTheme = savedTheme || systemTheme;
+    
+    // Apply the theme
+    if (currentTheme === 'dark') {
+        body.classList.add('dark-mode');
+        updateToggleIcon(true);
+    }
+    
+    // Toggle functionality
+    if (darkModeToggle) {
+        darkModeToggle.addEventListener('click', function() {
+            body.classList.toggle('dark-mode');
+            const isDark = body.classList.contains('dark-mode');
+            
+            // Save preference
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            
+            // Update toggle icon with animation
+            updateToggleIcon(isDark);
+            
+            // Add smooth transition for theme change
+            body.style.transition = 'background-color 0.3s ease, color 0.3s ease';
+            setTimeout(() => {
+                body.style.transition = '';
+            }, 300);
+        });
+    }
+    
+    // Listen for system theme changes
+    prefersDark.addEventListener('change', (e) => {
+        if (!localStorage.getItem('theme')) {
+            if (e.matches) {
+                body.classList.add('dark-mode');
+                updateToggleIcon(true);
+            } else {
+                body.classList.remove('dark-mode');
+                updateToggleIcon(false);
+            }
+        }
+    });
+    
+    function updateToggleIcon(isDark) {
+        if (darkModeToggle) {
+            const icon = darkModeToggle.querySelector('.theme-icon');
+            if (icon) {
+                icon.textContent = isDark ? '☀️' : '🌙';
+                darkModeToggle.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+            }
+        }
+    }
 }
 
 // Typewriter Effect

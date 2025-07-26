@@ -1,6 +1,49 @@
 /* Google Fonts Import for Advanced Typography */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400;1,600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Merriweather:wght@300;400;700&display=swap');
 
+/* CSS Variables for Light/Dark Mode */
+:root {
+    /* Light mode colors */
+    --bg-color: linear-gradient(135deg, #2c3e50 0%, #34495e 20%, #5d4e75 40%, #8b7d6b 60%, #d4c5b9 80%, #f8f9fa 100%);
+    --text-color: #2c3e50;
+    --text-light: #666;
+    --bg-secondary: #f8f9fa;
+    --bg-tertiary: #ffffff;
+    --border-color: #e9ecef;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --shadow-hover: rgba(0, 0, 0, 0.15);
+    --accent-color: #3498db;
+    --accent-secondary: #2980b9;
+    --nav-bg: rgba(255, 255, 255, 0.95);
+    --nav-shadow: rgba(0, 0, 0, 0.1);
+    --post-bg: rgba(255, 255, 255, 0.95);
+    --input-bg: #ffffff;
+    --input-border: #ddd;
+    --button-bg: #3498db;
+    --button-hover: #2980b9;
+}
+
+/* Dark mode colors */
+body.dark-mode {
+    --bg-color: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 20%, #16213e 40%, #0f3460 60%, #533a7b 80%, #8b5a9b 100%);
+    --text-color: #e8e9ea;
+    --text-light: #b0b3b8;
+    --bg-secondary: #1a1a2e;
+    --bg-tertiary: #242942;
+    --border-color: #3a3b3c;
+    --shadow-color: rgba(0, 0, 0, 0.4);
+    --shadow-hover: rgba(0, 0, 0, 0.6);
+    --accent-color: #64b5f6;
+    --accent-secondary: #42a5f5;
+    --nav-bg: rgba(26, 26, 46, 0.95);
+    --nav-shadow: rgba(0, 0, 0, 0.3);
+    --post-bg: rgba(36, 41, 66, 0.95);
+    --input-bg: #242942;
+    --input-border: #3a3b3c;
+    --button-bg: #64b5f6;
+    --button-hover: #42a5f5;
+}
+
 /* Mobile Chrome and Universal Optimizations */
 * {
     box-sizing: border-box;
@@ -41,13 +84,14 @@ html {
 body { 
     font-family: 'Times New Roman', Times, Georgia, 'Libre Baskerville', serif; 
     margin: 2em; 
-    background: linear-gradient(135deg, #2c3e50 0%, #34495e 20%, #5d4e75 40%, #8b7d6b 60%, #d4c5b9 80%, #f8f9fa 100%), url('Dev.webp') no-repeat center center fixed;
+    background: var(--bg-color), url('Dev.webp') no-repeat center center fixed;
     background-size: cover;
-    color: #2c3e50;
+    color: var(--text-color);
     font-size: 1.1em;
     line-height: 1.7;
     letter-spacing: 0.3px;
     min-height: 100vh;
+    transition: background 0.3s ease, color 0.3s ease;
     min-height: 100dvh; /* Dynamic viewport height for mobile Chrome */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -143,24 +187,25 @@ h2 {
 
 /* Blue, Brown, White Multi-Shade Theme Sections */
 section {
-    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 30%, #e9ecef 70%, #d4c5b9 100%);
+    background: var(--bg-tertiary);
     margin: 2em 0;
     padding: 2em;
     border-radius: 15px;
-    box-shadow: 0 6px 20px rgba(44, 62, 80, 0.15);
-    border-left: 5px solid #3498db;
-    border-right: 2px solid #8b7d6b;
-    border-top: 1px solid #d4c5b9;
-    border-bottom: 2px solid #5d4e75;
-    color: #2c3e50;
+    box-shadow: 0 6px 20px var(--shadow-color);
+    border-left: 5px solid var(--accent-color);
+    border-right: 2px solid var(--border-color);
+    border-top: 1px solid var(--border-color);
+    border-bottom: 2px solid var(--border-color);
+    color: var(--text-color);
     font-family: 'Libre Baskerville', 'Times New Roman', Times, serif;
     font-size: 1.05em;
     line-height: 1.7;
+    transition: all 0.3s ease;
 }
 
 section h2 {
     font-family: 'Playfair Display', 'Times New Roman', Times, serif;
-    color: #2c3e50;
+    color: var(--text-color);
     font-size: 2em;
     margin-bottom: 1em;
 }
@@ -442,7 +487,7 @@ footer {
     position: fixed;
     top: 0;
     width: 100%;
-    background: rgba(255, 255, 255, 0.95);
+    background: var(--nav-bg);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     z-index: 1000;
@@ -542,6 +587,38 @@ footer {
     background: #3498db;
     transition: all 0.3s ease;
     border-radius: 2px;
+}
+
+/* Dark Mode Toggle */
+.dark-mode-toggle {
+    background: none;
+    border: 2px solid var(--accent-color);
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 15px;
+    color: var(--accent-color);
+    font-size: 1.2rem;
+}
+
+.dark-mode-toggle:hover {
+    background: var(--accent-color);
+    color: var(--bg-tertiary);
+    transform: rotate(15deg) scale(1.1);
+    box-shadow: 0 0 15px rgba(100, 181, 246, 0.4);
+}
+
+.dark-mode-toggle .theme-icon {
+    transition: transform 0.3s ease;
+}
+
+.dark-mode-toggle:hover .theme-icon {
+    transform: rotate(-15deg);
 }
 
 /* Animated Header Styles */
@@ -670,18 +747,19 @@ footer {
 .search-input {
     width: 100%;
     padding: 15px 20px;
-    border: 2px solid #e9ecef;
+    border: 2px solid var(--input-border);
     border-radius: 50px;
     font-size: 1.1rem;
     transition: all 0.3s ease;
-    background: white;
+    background: var(--input-bg);
+    color: var(--text-color);
     box-sizing: border-box;
 }
 
 .search-input:focus {
     outline: none;
-    border-color: #3498db;
-    box-shadow: 0 0 20px rgba(52, 152, 219, 0.1);
+    border-color: var(--accent-color);
+    box-shadow: 0 0 20px rgba(100, 181, 246, 0.1);
 }
 
 .filter-tabs {
@@ -711,18 +789,20 @@ footer {
 
 /* Enhanced Blog Post Styles */
 .blog-post {
-    background: white;
+    background: var(--post-bg);
+    color: var(--text-color);
     padding: 40px;
     margin: 30px 0;
     border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    box-shadow: 0 5px 20px var(--shadow-color);
     transition: all 0.3s ease;
     position: relative;
+    border: 1px solid var(--border-color);
 }
 
 .blog-post:hover {
     transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    box-shadow: 0 15px 40px var(--shadow-hover);
 }
 
 .post-meta {
@@ -731,7 +811,7 @@ footer {
     align-items: center;
     margin-bottom: 20px;
     padding-bottom: 15px;
-    border-bottom: 1px solid #e9ecef;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .post-date {
@@ -880,19 +960,21 @@ footer {
 .form-group textarea {
     width: 100%;
     padding: 15px;
-    border: 2px solid #e9ecef;
+    border: 2px solid var(--input-border);
     border-radius: 10px;
     font-size: 1rem;
     transition: all 0.3s ease;
     font-family: inherit;
     box-sizing: border-box;
+    background: var(--input-bg);
+    color: var(--text-color);
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: #3498db;
-    box-shadow: 0 0 15px rgba(52, 152, 219, 0.1);
+    border-color: var(--accent-color);
+    box-shadow: 0 0 15px rgba(100, 181, 246, 0.1);
 }
 
 .form-group textarea {
@@ -901,7 +983,7 @@ footer {
 }
 
 .submit-btn {
-    background: linear-gradient(45deg, #3498db, #2980b9);
+    background: linear-gradient(45deg, var(--button-bg), var(--button-hover));
     color: white;
     padding: 15px 40px;
     border: none;
@@ -915,7 +997,7 @@ footer {
 
 .submit-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(52, 152, 219, 0.3);
+    box-shadow: 0 8px 25px rgba(100, 181, 246, 0.3);
 }
 
 .submit-btn:disabled {
@@ -1019,7 +1101,7 @@ footer {
         width: 100%;
         height: calc(100vh - 70px);
         height: calc(100dvh - 70px); /* Dynamic viewport height for mobile Chrome */
-        background: rgba(255, 255, 255, 0.98);
+        background: var(--nav-bg);
         backdrop-filter: blur(15px);
         -webkit-backdrop-filter: blur(15px);
         flex-direction: column;
@@ -1092,6 +1174,16 @@ footer {
 
     .mobile-menu-toggle.active span:nth-child(3) {
         transform: rotate(-45deg) translate(7px, -6px);
+    }
+
+    /* Dark mode toggle mobile styles */
+    .dark-mode-toggle {
+        width: 40px;
+        height: 40px;
+        margin-left: 10px;
+        font-size: 1rem;
+        min-height: 44px;
+        min-width: 44px;
     }
 
     /* Header optimizations for mobile Chrome */
