@@ -1856,3 +1856,174 @@ body.dark-mode .submit-btn:hover {
     box-shadow: 0 6px 20px rgba(100, 181, 246, 0.4) !important;
     transform: translateY(-2px);
 }
+
+/* Enhanced Dark Mode Section Styling */
+
+/* About Me Section Dark Mode */
+body.dark-mode #about-me {
+    background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 30%, #16213e 70%, #0f3460 100%) !important;
+    border-left: 5px solid #64b5f6 !important;
+    border-right: 2px solid #533a7b !important;
+    border-top: 1px solid #8b5a9b !important;
+    border-bottom: 2px solid #42a5f5 !important;
+    position: relative;
+    overflow: hidden;
+}
+
+body.dark-mode #about-me::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 30% 70%, rgba(100, 181, 246, 0.08) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+/* Blog Posts Section Dark Mode */
+body.dark-mode #blog-posts {
+    background: linear-gradient(135deg, #16213e 0%, #0f3460 30%, #533a7b 70%, #8b5a9b 100%) !important;
+    border-left: 5px solid #ba68c8 !important;
+    border-right: 2px solid #64b5f6 !important;
+    border-top: 1px solid #42a5f5 !important;
+    border-bottom: 2px solid #9c27b0 !important;
+    position: relative;
+    overflow: hidden;
+}
+
+body.dark-mode #blog-posts::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 70% 30%, rgba(186, 104, 200, 0.08) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+/* Hobbies Section Dark Mode */
+body.dark-mode #my-hobbies {
+    background: linear-gradient(135deg, #0f3460 0%, #533a7b 30%, #8b5a9b 70%, #1a1a2e 100%) !important;
+    border-left: 5px solid #66bb6a !important;
+    border-right: 2px solid #ba68c8 !important;
+    border-top: 1px solid #4caf50 !important;
+    border-bottom: 2px solid #2e7d32 !important;
+    position: relative;
+    overflow: hidden;
+}
+
+body.dark-mode #my-hobbies::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(102, 187, 106, 0.08) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+body.dark-mode #my-hobbies ul li {
+    color: #f0f2f5 !important;
+    background: rgba(102, 187, 106, 0.1) !important;
+    padding: 8px 15px;
+    margin: 5px 0;
+    border-radius: 20px;
+    border-left: 3px solid #66bb6a;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+body.dark-mode #my-hobbies ul li:hover {
+    background: rgba(102, 187, 106, 0.2) !important;
+    transform: translateX(10px);
+    box-shadow: 0 4px 12px rgba(102, 187, 106, 0.3);
+}
+
+/* Enhanced YouTube Section Dark Mode */
+body.dark-mode #youtube-channel {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 30%, #0f3460 70%, #533a7b 100%) !important;
+    border-left: 5px solid #ff4444 !important;
+    border-right: 2px solid #cc0000 !important;
+    border-top: 1px solid #ff6666 !important;
+    border-bottom: 2px solid #990000 !important;
+    position: relative;
+    overflow: hidden;
+}
+
+body.dark-mode #youtube-channel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 60% 40%, rgba(255, 68, 68, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 20% 80%, rgba(204, 0, 0, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+body.dark-mode .youtube-button {
+    background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%) !important;
+    box-shadow: 0 4px 15px rgba(255, 68, 68, 0.4) !important;
+    border: 1px solid rgba(255, 102, 102, 0.3) !important;
+}
+
+body.dark-mode .youtube-button:hover {
+    background: linear-gradient(135deg, #ff6666 0%, #ff1a1a 100%) !important;
+    box-shadow: 0 6px 25px rgba(255, 68, 68, 0.6) !important;
+    border-color: rgba(255, 102, 102, 0.5) !important;
+    transform: translateY(-3px) scale(1.02);
+}
+
+body.dark-mode .youtube-description {
+    color: #f0f2f5 !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Enhanced Section Headers in Dark Mode */
+body.dark-mode #about-me h2,
+body.dark-mode #blog-posts h2,
+body.dark-mode #my-hobbies h2,
+body.dark-mode #youtube-channel h2 {
+    position: relative;
+    z-index: 2;
+}
+
+body.dark-mode #about-me h2 {
+    color: #64b5f6 !important;
+    text-shadow: 0 2px 4px rgba(100, 181, 246, 0.5);
+}
+
+body.dark-mode #blog-posts h2 {
+    color: #ba68c8 !important;
+    text-shadow: 0 2px 4px rgba(186, 104, 200, 0.5);
+}
+
+body.dark-mode #my-hobbies h2 {
+    color: #66bb6a !important;
+    text-shadow: 0 2px 4px rgba(102, 187, 106, 0.5);
+}
+
+body.dark-mode #youtube-channel h2 {
+    color: #ff4444 !important;
+    text-shadow: 0 2px 4px rgba(255, 68, 68, 0.5);
+}
+
+/* Enhanced Content in Dark Mode */
+body.dark-mode #about-me p,
+body.dark-mode #blog-posts p,
+body.dark-mode #my-hobbies p,
+body.dark-mode #youtube-channel p {
+    position: relative;
+    z-index: 2;
+}
+
+/* Image Enhancement in Dark Mode */
+body.dark-mode #my-hobbies img {
+    border: 3px solid #66bb6a !important;
+    box-shadow: 0 4px 20px rgba(102, 187, 106, 0.3) !important;
+    filter: brightness(0.9) contrast(1.1);
+}
