@@ -30,6 +30,9 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeContactForm();
     initializeSmoothScrolling();
     initializeScrollAnimations();
+    initializeSkillsBars();
+    initializeTimelineAnimations();
+    initializeNewsletterForm();
 });
 
 // Mobile Chrome specific optimizations with theme-aware smooth scrolling
@@ -1343,6 +1346,141 @@ function createFloatingShapes() {
 
 // Initialize floating shapes
 setTimeout(createFloatingShapes, 1000);
+
+// Skills Progress Bars Animation
+function initializeSkillsBars() {
+    const skillBars = document.querySelectorAll('.skill-progress');
+    
+    const animateSkillBar = (bar) => {
+        const level = bar.getAttribute('data-level');
+        bar.style.width = '0%';
+        
+        setTimeout(() => {
+            bar.style.width = level + '%';
+        }, 300);
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateSkillBar(entry.target);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.3
+    });
+
+    skillBars.forEach(bar => {
+        observer.observe(bar);
+    });
+}
+
+// Timeline Animations
+function initializeTimelineAnimations() {
+    const timelineItems = document.querySelectorAll('.timeline-item');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateX(0)';
+            }
+        });
+    }, {
+        threshold: 0.2
+    });
+
+    timelineItems.forEach((item, index) => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateX(-50px)';
+        item.style.transition = `opacity 0.6s ease ${index * 0.2}s, transform 0.6s ease ${index * 0.2}s`;
+        observer.observe(item);
+    });
+}
+
+// Newsletter Form Functionality
+function initializeNewsletterForm() {
+    const newsletterForm = document.querySelector('.newsletter-form');
+    
+    if (newsletterForm) {
+        newsletterForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitBtn = this.querySelector('.newsletter-btn');
+            const emailInput = this.querySelector('.newsletter-email');
+            const originalText = submitBtn.innerHTML;
+            const email = emailInput.value.trim();
+            
+            // Validate email
+            if (!email || !isValidEmail(email)) {
+                showNotification('❌ Please enter a valid email address', 'error', 4000);
+                return;
+            }
+            
+            // Show sending state
+            submitBtn.innerHTML = '<span>Subscribing...</span>';
+            submitBtn.disabled = true;
+            showNotification('📧 Subscribing you to updates...', 'info', 3000);
+            
+            // Submit to Formspree
+            const formData = new FormData(this);
+            
+            fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    showNotification('🎉 Successfully subscribed! Welcome to the community!', 'success', 8000);
+                    showNotification('📧 Check your email for a confirmation message', 'info', 6000);
+                    emailInput.value = '';
+                    
+                    // Update stats (visual only)
+                    updateNewsletterStats();
+                } else {
+                    response.json().then(data => {
+                        if (data.errors && data.errors.length > 0) {
+                            showNotification(`❌ Error: ${data.errors[0].message}`, 'error', 6000);
+                        } else {
+                            showNotification('❌ Failed to subscribe. Please try again.', 'error', 6000);
+                        }
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Newsletter subscription error:', error);
+                showNotification('❌ Network error. Please check your connection and try again.', 'error', 6000);
+            })
+            .finally(() => {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            });
+        });
+    }
+}
+
+// Update newsletter stats (visual enhancement)
+function updateNewsletterStats() {
+    const statNumbers = document.querySelectorAll('.newsletter-stats .stat-number');
+    
+    statNumbers.forEach(stat => {
+        if (stat.textContent.includes('+')) {
+            const currentNum = parseInt(stat.textContent);
+            const newNum = currentNum + 1;
+            animateCounter(stat, currentNum, newNum, 1000);
+        }
+    });
+}
+
+// Email validation helper function
+function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
 
 // ===== ULTRA-FUTURISTIC SCI-FI ENHANCEMENTS =====
 
