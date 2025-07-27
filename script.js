@@ -3,20 +3,20 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log('📄 DOM fully loaded');
     console.log('🔍 Available buttons:', document.querySelectorAll('button'));
-    console.log('🎯 Dark mode toggle check:', document.querySelector('.dark-mode-toggle'));
     
-    // CREATE A CLEAN, VISIBLE DARK MODE TOGGLE
+    // CREATE ONLY ONE CLEAN, VISIBLE DARK MODE TOGGLE
     createCleanDarkModeToggle();
     
-    // Debug: Check if dark mode toggle button exists
-    const darkModeToggle = document.querySelector('.dark-mode-toggle');
-    if (darkModeToggle) {
-        console.log('✅ Dark mode toggle found!');
-        console.log('🎨 Toggle button styles:', window.getComputedStyle(darkModeToggle));
-        console.log('📍 Toggle button position:', darkModeToggle.getBoundingClientRect());
-    } else {
-        console.error('❌ Dark mode toggle NOT found!');
-    }
+    // Debug: Check if the floating dark mode toggle exists
+    setTimeout(() => {
+        const floatingToggle = document.getElementById('frontDarkToggle');
+        if (floatingToggle) {
+            console.log('✅ Floating dark mode toggle found!');
+            console.log('📍 Toggle position:', floatingToggle.getBoundingClientRect());
+        } else {
+            console.error('❌ Floating dark mode toggle NOT found!');
+        }
+    }, 500);
     
     // Mobile Chrome specific optimizations
     initializeMobileOptimizations();
@@ -627,21 +627,22 @@ function initializeDarkMode() {
 
 // Create a clean, guaranteed visible dark mode toggle
 function createCleanDarkModeToggle() {
-    console.log('🎨 Creating clean dark mode toggle...');
+    console.log('🎨 Creating SINGLE clean dark mode toggle...');
     
-    // Remove any existing emergency or problematic toggles
-    const existingEmergency = document.getElementById('emergency-dark-toggle');
-    if (existingEmergency) {
-        existingEmergency.remove();
-        console.log('🗑️ Removed existing emergency toggle');
-    }
+    // Remove any existing toggles to prevent duplicates
+    const existingToggles = [
+        document.getElementById('emergency-dark-toggle'),
+        document.getElementById('frontDarkToggle'),
+        document.querySelector('.dark-mode-toggle'),
+        document.querySelector('.front-dark-toggle')
+    ];
     
-    // Remove any existing clean toggles
-    const existingClean = document.getElementById('frontDarkToggle');
-    if (existingClean) {
-        existingClean.remove();
-        console.log('🗑️ Removed existing front toggle');
-    }
+    existingToggles.forEach((toggle, index) => {
+        if (toggle) {
+            toggle.remove();
+            console.log(`🗑️ Removed existing toggle ${index + 1}`);
+        }
+    });
     
     // Create a PROMINENT, FIXED-POSITION toggle at the bottom-right
     const toggleContainer = document.createElement('div');
