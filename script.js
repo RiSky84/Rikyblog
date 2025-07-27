@@ -633,12 +633,14 @@ function createCleanDarkModeToggle() {
     const existingEmergency = document.getElementById('emergency-dark-toggle');
     if (existingEmergency) {
         existingEmergency.remove();
+        console.log('🗑️ Removed existing emergency toggle');
     }
     
     // Remove any existing clean toggles
-    const existingClean = document.getElementById('cleanDarkToggle');
+    const existingClean = document.getElementById('frontDarkToggle');
     if (existingClean) {
         existingClean.remove();
+        console.log('🗑️ Removed existing front toggle');
     }
     
     // Create a PROMINENT, FIXED-POSITION toggle at the bottom-right
@@ -653,6 +655,12 @@ function createCleanDarkModeToggle() {
     document.body.insertBefore(toggleContainer, document.body.firstChild);
     
     const toggle = document.getElementById('frontDarkToggle');
+    console.log('🎯 Toggle element created:', toggle);
+    
+    if (!toggle) {
+        console.error('❌ Failed to create toggle element!');
+        return;
+    }
     
     // Apply PROMINENT, ALWAYS-VISIBLE styling at bottom-right
     toggle.style.cssText = `
@@ -716,75 +724,138 @@ function createCleanDarkModeToggle() {
     `;
     document.head.appendChild(style);
     
-    // Add enhanced hover effects
-    toggle.addEventListener('mouseenter', function() {
-        this.style.animationPlayState = 'paused';
-        this.style.background = '#2980b9';
-        this.style.transform = 'scale(1.1)';
-        this.style.boxShadow = '0 6px 25px rgba(41, 128, 185, 0.6), 0 0 30px rgba(41, 128, 185, 0.8)';
-    });
-    
-    toggle.addEventListener('mouseleave', function() {
-        const isDark = document.body.classList.contains('dark-mode');
-        this.style.animationPlayState = 'running';
-        this.style.background = isDark ? '#34495e' : '#3498db';
-        this.style.transform = 'scale(1)';
-        this.style.boxShadow = isDark ? 
-            '0 4px 20px rgba(52, 73, 94, 0.4), 0 0 0 0 rgba(52, 73, 94, 0.6)' : 
-            '0 4px 20px rgba(52, 152, 219, 0.4), 0 0 0 0 rgba(52, 152, 219, 0.6)';
-    });
-    
-    // Add click functionality with enhanced feedback
-    toggle.addEventListener('click', function() {
-        const isDark = document.body.classList.contains('dark-mode');
-        const willBeDark = !isDark;
+    // Enhanced click functionality with detailed logging
+    toggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        console.log('🖱️ Toggle clicked!');
+        
+        const currentlyDark = document.body.classList.contains('dark-mode');
+        const willBeDark = !currentlyDark;
+        
+        console.log('🌓 Current mode:', currentlyDark ? 'dark' : 'light');
+        console.log('🌓 Switching to:', willBeDark ? 'dark' : 'light');
         
         // Add click animation
         this.style.transform = 'scale(0.9)';
+        this.style.transition = 'transform 0.1s ease';
+        
         setTimeout(() => {
             this.style.transform = 'scale(1)';
+            this.style.transition = 'all 0.3s ease';
         }, 150);
         
-        // Toggle theme
+        // Toggle theme classes
         if (willBeDark) {
             document.body.classList.add('dark-mode');
+            document.documentElement.classList.add('dark-mode'); // Also add to html element
             this.querySelector('.toggle-icon').textContent = '☀️';
-            this.style.background = '#34495e';
-            this.style.borderColor = '#ecf0f1';
+            this.style.background = '#34495e !important';
+            this.style.borderColor = '#ecf0f1 !important';
+            console.log('🌙 Switched to DARK mode');
         } else {
             document.body.classList.remove('dark-mode');
+            document.documentElement.classList.remove('dark-mode'); // Also remove from html element
             this.querySelector('.toggle-icon').textContent = '🌙';
-            this.style.background = '#3498db';
-            this.style.borderColor = '#ffffff';
+            this.style.background = '#3498db !important';
+            this.style.borderColor = '#ffffff !important';
+            console.log('☀️ Switched to LIGHT mode');
         }
         
-        // Save preference
+        // Save preference to localStorage
         localStorage.setItem('theme', willBeDark ? 'dark' : 'light');
+        console.log('💾 Theme saved to localStorage:', willBeDark ? 'dark' : 'light');
         
-        // Show prominent notification
+        // Show notification
         if (typeof showNotification === 'function') {
             showNotification(`🎨 Switched to ${willBeDark ? 'dark' : 'light'} mode ${willBeDark ? '🌙' : '☀️'}`, 'success', 3000);
+        } else {
+            console.log('📢 Notification function not available');
         }
         
-        console.log('🎨 Front toggle activated! Theme:', willBeDark ? 'dark' : 'light');
+        // Force update of any theme-dependent elements
+        updateThemeElements(willBeDark);
+        
+        console.log('✅ Theme switch completed successfully!');
     });
     
-    // Apply saved theme
+    // Add hover effects
+    toggle.addEventListener('mouseenter', function() {
+        console.log('🖱️ Toggle hover started');
+        this.style.animationPlayState = 'paused';
+        this.style.background = '#2980b9 !important';
+        this.style.transform = 'scale(1.1)';
+        this.style.boxShadow = '0 6px 25px rgba(41, 128, 185, 0.6), 0 0 30px rgba(41, 128, 185, 0.8) !important';
+    });
+    
+    toggle.addEventListener('mouseleave', function() {
+        console.log('🖱️ Toggle hover ended');
+        const isDark = document.body.classList.contains('dark-mode');
+        this.style.animationPlayState = 'running';
+        this.style.background = (isDark ? '#34495e' : '#3498db') + ' !important';
+        this.style.transform = 'scale(1)';
+        this.style.boxShadow = isDark ? 
+            '0 4px 20px rgba(52, 73, 94, 0.4), 0 0 0 0 rgba(52, 73, 94, 0.6) !important' : 
+            '0 4px 20px rgba(52, 152, 219, 0.4), 0 0 0 0 rgba(52, 152, 219, 0.6) !important';
+    });
+    
+    // Apply saved theme on load
     const savedTheme = localStorage.getItem('theme');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const shouldBeDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
     
+    console.log('💾 Saved theme:', savedTheme);
+    console.log('🖥️ System prefers dark:', prefersDark);
+    console.log('✅ Should be dark:', shouldBeDark);
+    
     if (shouldBeDark) {
         document.body.classList.add('dark-mode');
+        document.documentElement.classList.add('dark-mode');
         toggle.querySelector('.toggle-icon').textContent = '☀️';
-        toggle.style.background = '#34495e';
-        toggle.style.borderColor = '#ecf0f1';
+        toggle.style.background = '#34495e !important';
+        toggle.style.borderColor = '#ecf0f1 !important';
+        updateThemeElements(true);
+        console.log('🌙 Applied dark mode on load');
+    } else {
+        document.body.classList.remove('dark-mode');
+        document.documentElement.classList.remove('dark-mode');
+        toggle.querySelector('.toggle-icon').textContent = '🌙';
+        toggle.style.background = '#3498db !important';
+        toggle.style.borderColor = '#ffffff !important';
+        updateThemeElements(false);
+        console.log('☀️ Applied light mode on load');
     }
     
     console.log('✅ BOTTOM-RIGHT dark mode toggle created and positioned prominently!');
     console.log('📍 Toggle position:', toggle.getBoundingClientRect());
+    console.log('🎨 Toggle styles applied:', window.getComputedStyle(toggle));
     
     return toggle;
+}
+
+// Helper function to update theme-dependent elements
+function updateThemeElements(isDark) {
+    console.log('🎨 Updating theme elements, isDark:', isDark);
+    
+    // Update CSS custom properties if they exist
+    const root = document.documentElement;
+    if (isDark) {
+        root.style.setProperty('--bg-color', '#2c3e50');
+        root.style.setProperty('--text-color', '#ecf0f1');
+        root.style.setProperty('--accent-color', '#00d4ff');
+    } else {
+        root.style.setProperty('--bg-color', '#ffffff');
+        root.style.setProperty('--text-color', '#2c3e50');
+        root.style.setProperty('--accent-color', '#3498db');
+    }
+    
+    // Trigger any theme-dependent animations or updates
+    if (typeof optimizeScrollPerformance === 'function') {
+        optimizeScrollPerformance();
+    }
+    
+    console.log('✅ Theme elements updated');
 }
 
 // Notification System for better user feedback
