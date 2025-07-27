@@ -641,7 +641,7 @@ function createCleanDarkModeToggle() {
         existingClean.remove();
     }
     
-    // Create a PROMINENT, FIXED-POSITION toggle at the top-front
+    // Create a PROMINENT, FIXED-POSITION toggle at the bottom-right
     const toggleContainer = document.createElement('div');
     toggleContainer.innerHTML = `
         <button class="front-dark-toggle" id="frontDarkToggle" aria-label="Toggle dark mode">
@@ -654,11 +654,11 @@ function createCleanDarkModeToggle() {
     
     const toggle = document.getElementById('frontDarkToggle');
     
-    // Apply PROMINENT, ALWAYS-VISIBLE styling
+    // Apply PROMINENT, ALWAYS-VISIBLE styling at bottom-right
     toggle.style.cssText = `
         position: fixed !important;
-        top: 20px !important;
-        right: 20px !important;
+        bottom: 30px !important;
+        right: 30px !important;
         background: #3498db !important;
         border: 3px solid #ffffff !important;
         border-radius: 50% !important;
@@ -706,8 +706,8 @@ function createCleanDarkModeToggle() {
         /* Mobile responsive styles */
         @media (max-width: 768px) {
             #frontDarkToggle {
-                top: 15px !important;
-                right: 15px !important;
+                bottom: 20px !important;
+                right: 20px !important;
                 width: 55px !important;
                 height: 55px !important;
                 font-size: 20px !important;
@@ -781,7 +781,7 @@ function createCleanDarkModeToggle() {
         toggle.style.borderColor = '#ecf0f1';
     }
     
-    console.log('✅ FRONT dark mode toggle created and positioned prominently!');
+    console.log('✅ BOTTOM-RIGHT dark mode toggle created and positioned prominently!');
     console.log('📍 Toggle position:', toggle.getBoundingClientRect());
     
     return toggle;
