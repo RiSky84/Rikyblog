@@ -5,47 +5,8 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('🔍 Available buttons:', document.querySelectorAll('button'));
     console.log('🎯 Dark mode toggle check:', document.querySelector('.dark-mode-toggle'));
     
-    // EMERGENCY VISIBILITY TEST - Add a very visible toggle at the top
-    const emergencyToggle = document.createElement('div');
-    emergencyToggle.innerHTML = `
-        <button id="emergency-dark-toggle" style="
-            position: fixed !important;
-            top: 10px !important;
-            right: 10px !important;
-            z-index: 99999 !important;
-            background: #ff4444 !important;
-            color: white !important;
-            border: 3px solid #ffffff !important;
-            border-radius: 50% !important;
-            width: 60px !important;
-            height: 60px !important;
-            font-size: 20px !important;
-            cursor: pointer !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            box-shadow: 0 0 20px rgba(255, 68, 68, 0.8) !important;
-        ">🌙</button>
-    `;
-    document.body.appendChild(emergencyToggle);
-    
-    // Add functionality to emergency toggle
-    const emergencyBtn = document.getElementById('emergency-dark-toggle');
-    emergencyBtn.addEventListener('click', function() {
-        const isDark = document.body.classList.toggle('dark-mode');
-        this.innerHTML = isDark ? '☀️' : '🌙';
-        localStorage.setItem('theme', isDark ? 'dark' : 'light');
-        console.log('🚨 Emergency toggle activated! Theme:', isDark ? 'dark' : 'light');
-        showNotification(`Emergency toggle: Switched to ${isDark ? 'dark' : 'light'} mode!`, 'success');
-        
-        // Try to sync with main toggle if it exists
-        const mainToggle = document.querySelector('.dark-mode-toggle .theme-icon');
-        if (mainToggle) {
-            mainToggle.textContent = isDark ? '☀️' : '🌙';
-        }
-    });
-    
-    console.log('🚨 Emergency dark mode toggle added to top-right corner');
+    // CREATE A CLEAN, VISIBLE DARK MODE TOGGLE
+    createCleanDarkModeToggle();
     
     // Debug: Check if dark mode toggle button exists
     const darkModeToggle = document.querySelector('.dark-mode-toggle');
@@ -62,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize all features
     initializeNavigation();
-    initializeDarkMode();
+    // Skip the complex dark mode initialization, clean toggle handles everything
     initializeNotificationSystem();
     
     // Test notification to ensure system is working
@@ -686,98 +647,132 @@ function initializeDarkMode() {
     updateScrollPerformanceForTheme();
 }
 
-// Enhanced function to create dark mode toggle if it doesn't exist
-function createDarkModeToggle() {
-    console.log('🔧 Creating dark mode toggle button...');
+// Create a clean, guaranteed visible dark mode toggle
+function createCleanDarkModeToggle() {
+    console.log('🎨 Creating clean dark mode toggle...');
     
+    // Remove any existing emergency or problematic toggles
+    const existingEmergency = document.getElementById('emergency-dark-toggle');
+    if (existingEmergency) {
+        existingEmergency.remove();
+    }
+    
+    // Find or create the nav-controls container
     let navControls = document.querySelector('.nav-controls');
     if (!navControls) {
-        console.log('⚠️ Nav controls container not found, creating it...');
-        // Create nav-controls if it doesn't exist
-        const navContainer = document.querySelector('.nav-container') || document.querySelector('nav');
-        if (navContainer) {
+        const nav = document.querySelector('nav') || document.querySelector('.nav-container');
+        if (nav) {
             navControls = document.createElement('div');
             navControls.className = 'nav-controls';
-            navControls.style.cssText = `
-                display: flex !important;
-                align-items: center !important;
-                gap: 15px !important;
-                position: relative !important;
-                z-index: 1000 !important;
-                visibility: visible !important;
-                opacity: 1 !important;
-            `;
-            navContainer.appendChild(navControls);
-        } else {
-            console.error('❌ No suitable navigation container found!');
-            return;
+            nav.appendChild(navControls);
         }
     }
     
-    // Remove existing toggle if present but not working
+    if (!navControls) {
+        console.error('❌ Could not find or create nav-controls container');
+        return;
+    }
+    
+    // Remove existing dark mode toggle if present
     const existingToggle = navControls.querySelector('.dark-mode-toggle');
     if (existingToggle) {
         existingToggle.remove();
-        console.log('🗑️ Removed non-functional existing toggle');
     }
     
-    // Create the enhanced toggle button
-    const toggleButton = document.createElement('button');
-    toggleButton.className = 'dark-mode-toggle';
-    toggleButton.setAttribute('aria-label', 'Switch to dark mode');
-    toggleButton.style.cssText = `
-        background: linear-gradient(135deg, #3498db, #2980b9) !important;
-        border: 2px solid #ffffff !important;
-        border-radius: 50% !important;
-        width: 48px !important;
-        height: 48px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        cursor: pointer !important;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
-        color: white !important;
-        font-size: 1.3rem !important;
-        box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3) !important;
-        position: relative !important;
-        z-index: 9999 !important;
-        opacity: 1 !important;
-        visibility: visible !important;
+    // Create the new clean toggle
+    const toggleContainer = document.createElement('div');
+    toggleContainer.innerHTML = `
+        <button class="clean-dark-toggle" id="cleanDarkToggle" aria-label="Toggle dark mode">
+            <span class="toggle-icon">🌙</span>
+        </button>
     `;
     
-    const themeIcon = document.createElement('span');
-    themeIcon.className = 'theme-icon';
-    themeIcon.textContent = '🌙';
-    themeIcon.style.cssText = `
-        font-size: 1.2rem !important;
-        position: relative !important;
-        z-index: 2 !important;
-        display: inline-block !important;
+    // Insert at the beginning of nav-controls
+    navControls.insertBefore(toggleContainer, navControls.firstChild);
+    
+    const toggle = document.getElementById('cleanDarkToggle');
+    
+    // Apply clean, modern styling
+    toggle.style.cssText = `
+        background: #3498db;
+        border: none;
+        border-radius: 25px;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 18px;
+        color: white;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 10px rgba(52, 152, 219, 0.3);
+        margin-right: 15px;
+        position: relative;
+        z-index: 1000;
+        opacity: 1;
+        visibility: visible;
     `;
     
-    toggleButton.appendChild(themeIcon);
-    navControls.appendChild(toggleButton);
-    
-    console.log('✅ Dark mode toggle created successfully!');
-    console.log('🎯 New toggle element:', toggleButton);
-    console.log('📍 Toggle position:', toggleButton.getBoundingClientRect());
-    
-    // Add immediate hover effects for visibility testing
-    toggleButton.addEventListener('mouseenter', function() {
-        this.style.transform = 'scale(1.1) !important';
-        this.style.background = 'linear-gradient(135deg, #2980b9, #3498db) !important';
-        console.log('🖱️ Toggle hover detected!');
+    // Add hover effects
+    toggle.addEventListener('mouseenter', function() {
+        this.style.background = '#2980b9';
+        this.style.transform = 'scale(1.05)';
+        this.style.boxShadow = '0 4px 15px rgba(52, 152, 219, 0.4)';
     });
     
-    toggleButton.addEventListener('mouseleave', function() {
-        this.style.transform = 'scale(1) !important';
-        this.style.background = 'linear-gradient(135deg, #3498db, #2980b9) !important';
+    toggle.addEventListener('mouseleave', function() {
+        const isDark = document.body.classList.contains('dark-mode');
+        this.style.background = isDark ? '#34495e' : '#3498db';
+        this.style.transform = 'scale(1)';
+        this.style.boxShadow = isDark ? '0 2px 10px rgba(52, 73, 94, 0.3)' : '0 2px 10px rgba(52, 152, 219, 0.3)';
     });
     
-    // Re-initialize dark mode with the new button
-    setTimeout(() => {
-        initializeDarkMode();
-    }, 200);
+    // Add click functionality
+    toggle.addEventListener('click', function() {
+        const isDark = document.body.classList.contains('dark-mode');
+        const willBeDark = !isDark;
+        
+        // Toggle theme
+        if (willBeDark) {
+            document.body.classList.add('dark-mode');
+            this.querySelector('.toggle-icon').textContent = '☀️';
+            this.style.background = '#34495e';
+            this.style.boxShadow = '0 2px 10px rgba(52, 73, 94, 0.3)';
+        } else {
+            document.body.classList.remove('dark-mode');
+            this.querySelector('.toggle-icon').textContent = '🌙';
+            this.style.background = '#3498db';
+            this.style.boxShadow = '0 2px 10px rgba(52, 152, 219, 0.3)';
+        }
+        
+        // Save preference
+        localStorage.setItem('theme', willBeDark ? 'dark' : 'light');
+        
+        // Show notification
+        if (typeof showNotification === 'function') {
+            showNotification(`Switched to ${willBeDark ? 'dark' : 'light'} mode ${willBeDark ? '🌙' : '☀️'}`, 'success', 2500);
+        }
+        
+        console.log('🎨 Clean toggle activated! Theme:', willBeDark ? 'dark' : 'light');
+    });
+    
+    // Apply saved theme
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const shouldBeDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
+    
+    if (shouldBeDark) {
+        document.body.classList.add('dark-mode');
+        toggle.querySelector('.toggle-icon').textContent = '☀️';
+        toggle.style.background = '#34495e';
+        toggle.style.boxShadow = '0 2px 10px rgba(52, 73, 94, 0.3)';
+    }
+    
+    console.log('✅ Clean dark mode toggle created and styled!');
+    console.log('📍 Toggle position:', toggle.getBoundingClientRect());
+    
+    return toggle;
 }
 
 // Notification System for better user feedback
