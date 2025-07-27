@@ -657,104 +657,138 @@ function createCleanDarkModeToggle() {
         existingEmergency.remove();
     }
     
-    // Find or create the nav-controls container
-    let navControls = document.querySelector('.nav-controls');
-    if (!navControls) {
-        const nav = document.querySelector('nav') || document.querySelector('.nav-container');
-        if (nav) {
-            navControls = document.createElement('div');
-            navControls.className = 'nav-controls';
-            nav.appendChild(navControls);
-        }
+    // Remove any existing clean toggles
+    const existingClean = document.getElementById('cleanDarkToggle');
+    if (existingClean) {
+        existingClean.remove();
     }
     
-    if (!navControls) {
-        console.error('❌ Could not find or create nav-controls container');
-        return;
-    }
-    
-    // Remove existing dark mode toggle if present
-    const existingToggle = navControls.querySelector('.dark-mode-toggle');
-    if (existingToggle) {
-        existingToggle.remove();
-    }
-    
-    // Create the new clean toggle
+    // Create a PROMINENT, FIXED-POSITION toggle at the top-front
     const toggleContainer = document.createElement('div');
     toggleContainer.innerHTML = `
-        <button class="clean-dark-toggle" id="cleanDarkToggle" aria-label="Toggle dark mode">
+        <button class="front-dark-toggle" id="frontDarkToggle" aria-label="Toggle dark mode">
             <span class="toggle-icon">🌙</span>
         </button>
     `;
     
-    // Insert at the beginning of nav-controls
-    navControls.insertBefore(toggleContainer, navControls.firstChild);
+    // Insert at the very beginning of body to ensure it's at the front
+    document.body.insertBefore(toggleContainer, document.body.firstChild);
     
-    const toggle = document.getElementById('cleanDarkToggle');
+    const toggle = document.getElementById('frontDarkToggle');
     
-    // Apply clean, modern styling
+    // Apply PROMINENT, ALWAYS-VISIBLE styling
     toggle.style.cssText = `
-        background: #3498db;
-        border: none;
-        border-radius: 25px;
-        width: 50px;
-        height: 50px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        font-size: 18px;
-        color: white;
-        transition: all 0.3s ease;
-        box-shadow: 0 2px 10px rgba(52, 152, 219, 0.3);
-        margin-right: 15px;
-        position: relative;
-        z-index: 1000;
-        opacity: 1;
-        visibility: visible;
+        position: fixed !important;
+        top: 20px !important;
+        right: 20px !important;
+        background: #3498db !important;
+        border: 3px solid #ffffff !important;
+        border-radius: 50% !important;
+        width: 60px !important;
+        height: 60px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        cursor: pointer !important;
+        font-size: 24px !important;
+        color: white !important;
+        transition: all 0.3s ease !important;
+        box-shadow: 0 4px 20px rgba(52, 152, 219, 0.4), 0 0 0 0 rgba(52, 152, 219, 0.6) !important;
+        z-index: 99999 !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        backdrop-filter: blur(10px) !important;
+        -webkit-backdrop-filter: blur(10px) !important;
+        animation: pulseGlow 3s ease-in-out infinite !important;
     `;
     
-    // Add hover effects
+    // Add CSS animation for the glow effect
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes pulseGlow {
+            0%, 100% { 
+                box-shadow: 0 4px 20px rgba(52, 152, 219, 0.4), 0 0 0 0 rgba(52, 152, 219, 0.6);
+            }
+            50% { 
+                box-shadow: 0 4px 30px rgba(52, 152, 219, 0.6), 0 0 20px rgba(52, 152, 219, 0.8);
+                transform: scale(1.05);
+            }
+        }
+        
+        body.dark-mode @keyframes pulseGlow {
+            0%, 100% { 
+                box-shadow: 0 4px 20px rgba(52, 73, 94, 0.4), 0 0 0 0 rgba(52, 73, 94, 0.6);
+            }
+            50% { 
+                box-shadow: 0 4px 30px rgba(52, 73, 94, 0.6), 0 0 20px rgba(52, 73, 94, 0.8);
+                transform: scale(1.05);
+            }
+        }
+        
+        /* Mobile responsive styles */
+        @media (max-width: 768px) {
+            #frontDarkToggle {
+                top: 15px !important;
+                right: 15px !important;
+                width: 55px !important;
+                height: 55px !important;
+                font-size: 20px !important;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+    
+    // Add enhanced hover effects
     toggle.addEventListener('mouseenter', function() {
+        this.style.animationPlayState = 'paused';
         this.style.background = '#2980b9';
-        this.style.transform = 'scale(1.05)';
-        this.style.boxShadow = '0 4px 15px rgba(52, 152, 219, 0.4)';
+        this.style.transform = 'scale(1.1)';
+        this.style.boxShadow = '0 6px 25px rgba(41, 128, 185, 0.6), 0 0 30px rgba(41, 128, 185, 0.8)';
     });
     
     toggle.addEventListener('mouseleave', function() {
         const isDark = document.body.classList.contains('dark-mode');
+        this.style.animationPlayState = 'running';
         this.style.background = isDark ? '#34495e' : '#3498db';
         this.style.transform = 'scale(1)';
-        this.style.boxShadow = isDark ? '0 2px 10px rgba(52, 73, 94, 0.3)' : '0 2px 10px rgba(52, 152, 219, 0.3)';
+        this.style.boxShadow = isDark ? 
+            '0 4px 20px rgba(52, 73, 94, 0.4), 0 0 0 0 rgba(52, 73, 94, 0.6)' : 
+            '0 4px 20px rgba(52, 152, 219, 0.4), 0 0 0 0 rgba(52, 152, 219, 0.6)';
     });
     
-    // Add click functionality
+    // Add click functionality with enhanced feedback
     toggle.addEventListener('click', function() {
         const isDark = document.body.classList.contains('dark-mode');
         const willBeDark = !isDark;
+        
+        // Add click animation
+        this.style.transform = 'scale(0.9)';
+        setTimeout(() => {
+            this.style.transform = 'scale(1)';
+        }, 150);
         
         // Toggle theme
         if (willBeDark) {
             document.body.classList.add('dark-mode');
             this.querySelector('.toggle-icon').textContent = '☀️';
             this.style.background = '#34495e';
-            this.style.boxShadow = '0 2px 10px rgba(52, 73, 94, 0.3)';
+            this.style.borderColor = '#ecf0f1';
         } else {
             document.body.classList.remove('dark-mode');
             this.querySelector('.toggle-icon').textContent = '🌙';
             this.style.background = '#3498db';
-            this.style.boxShadow = '0 2px 10px rgba(52, 152, 219, 0.3)';
+            this.style.borderColor = '#ffffff';
         }
         
         // Save preference
         localStorage.setItem('theme', willBeDark ? 'dark' : 'light');
         
-        // Show notification
+        // Show prominent notification
         if (typeof showNotification === 'function') {
-            showNotification(`Switched to ${willBeDark ? 'dark' : 'light'} mode ${willBeDark ? '🌙' : '☀️'}`, 'success', 2500);
+            showNotification(`🎨 Switched to ${willBeDark ? 'dark' : 'light'} mode ${willBeDark ? '🌙' : '☀️'}`, 'success', 3000);
         }
         
-        console.log('🎨 Clean toggle activated! Theme:', willBeDark ? 'dark' : 'light');
+        console.log('🎨 Front toggle activated! Theme:', willBeDark ? 'dark' : 'light');
     });
     
     // Apply saved theme
@@ -766,10 +800,10 @@ function createCleanDarkModeToggle() {
         document.body.classList.add('dark-mode');
         toggle.querySelector('.toggle-icon').textContent = '☀️';
         toggle.style.background = '#34495e';
-        toggle.style.boxShadow = '0 2px 10px rgba(52, 73, 94, 0.3)';
+        toggle.style.borderColor = '#ecf0f1';
     }
     
-    console.log('✅ Clean dark mode toggle created and styled!');
+    console.log('✅ FRONT dark mode toggle created and positioned prominently!');
     console.log('📍 Toggle position:', toggle.getBoundingClientRect());
     
     return toggle;
