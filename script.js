@@ -617,7 +617,7 @@ function initializeDarkMode() {
 
 // Create a simple, guaranteed working toggle
 function createSimpleWorkingToggle() {
-    console.log('🎨 Creating SIMPLE working toggle...');
+    console.log('🎨 Creating SWITCH-STYLE toggle near welcome text...');
     
     // Remove ALL existing toggles
     const allExistingToggles = document.querySelectorAll('[id*="toggle"], [class*="toggle"], [id*="Toggle"], [class*="Toggle"]');
@@ -628,55 +628,113 @@ function createSimpleWorkingToggle() {
         }
     });
     
-    // Create the simple toggle HTML
+    // Find the welcome text element
+    const welcomeElement = document.querySelector('.typewriter');
+    if (!welcomeElement) {
+        console.error('❌ Could not find welcome text element');
+        return;
+    }
+    
+    // Create the switch-style toggle HTML
     const toggleHTML = `
-        <div id="simpleToggle" style="
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 60px;
-            height: 60px;
-            background: #3498db;
-            border: 3px solid white;
-            border-radius: 50%;
+        <div id="themeSwitchContainer" style="
+            position: absolute;
+            top: -10px;
+            right: 0px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 24px;
-            color: white;
-            z-index: 99999;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
-        ">🌙</div>
+            gap: 10px;
+            z-index: 1000;
+        ">
+            <span id="themeLabel" style="
+                font-size: 14px;
+                font-weight: 500;
+                color: #666;
+                margin-right: 8px;
+            ">🌙 Dark</span>
+            
+            <label id="themeSwitch" style="
+                position: relative;
+                display: inline-block;
+                width: 60px;
+                height: 30px;
+                cursor: pointer;
+            ">
+                <input type="checkbox" id="themeSwitchInput" style="
+                    opacity: 0;
+                    width: 0;
+                    height: 0;
+                ">
+                <span id="switchSlider" style="
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background-color: #34495e;
+                    transition: 0.3s;
+                    border-radius: 30px;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+                ">
+                    <span id="switchButton" style="
+                        position: absolute;
+                        content: '';
+                        height: 24px;
+                        width: 24px;
+                        left: 3px;
+                        bottom: 3px;
+                        background-color: white;
+                        transition: 0.3s;
+                        border-radius: 50%;
+                        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 12px;
+                    ">🌙</span>
+                </span>
+            </label>
+        </div>
     `;
     
-    // Insert into body
-    document.body.insertAdjacentHTML('beforeend', toggleHTML);
+    // Make the header-content relative positioned to contain the absolute toggle
+    const headerContent = welcomeElement.closest('.header-content');
+    if (headerContent) {
+        headerContent.style.position = 'relative';
+    }
     
-    const toggle = document.getElementById('simpleToggle');
-    console.log('✅ Simple toggle created:', toggle);
+    // Insert the toggle near the welcome text
+    welcomeElement.insertAdjacentHTML('afterend', toggleHTML);
     
-    if (!toggle) {
-        console.error('❌ Failed to create simple toggle');
+    const toggleInput = document.getElementById('themeSwitchInput');
+    const switchSlider = document.getElementById('switchSlider');
+    const switchButton = document.getElementById('switchButton');
+    const themeLabel = document.getElementById('themeLabel');
+    
+    console.log('✅ Switch-style toggle created');
+    
+    if (!toggleInput || !switchSlider || !switchButton) {
+        console.error('❌ Failed to create switch toggle elements');
         return;
     }
     
     // Add click functionality
-    toggle.addEventListener('click', function() {
-        console.log('🖱️ Simple toggle clicked!');
+    toggleInput.addEventListener('change', function() {
+        console.log('🖱️ Switch toggle clicked!');
         
         const body = document.body;
-        const isCurrentlyDark = body.classList.contains('dark-mode');
+        const isChecked = this.checked;
         
-        if (isCurrentlyDark) {
+        if (isChecked) {
             // Switch to LIGHT mode
             body.classList.remove('dark-mode');
             body.style.background = '#ffffff';
             body.style.color = '#333333';
-            this.innerHTML = '🌙';
-            this.style.background = '#3498db';
-            this.style.borderColor = 'white';
+            switchSlider.style.backgroundColor = '#3498db';
+            switchButton.style.transform = 'translateX(30px)';
+            switchButton.innerHTML = '☀️';
+            themeLabel.innerHTML = '☀️ Light';
+            themeLabel.style.color = '#3498db';
             localStorage.setItem('theme', 'light');
             console.log('☀️ Switched to LIGHT mode');
         } else {
@@ -684,53 +742,51 @@ function createSimpleWorkingToggle() {
             body.classList.add('dark-mode');
             body.style.background = '#2c3e50';
             body.style.color = '#ffffff';
-            this.innerHTML = '☀️';
-            this.style.background = '#34495e';
-            this.style.borderColor = '#ecf0f1';
+            switchSlider.style.backgroundColor = '#34495e';
+            switchButton.style.transform = 'translateX(0px)';
+            switchButton.innerHTML = '🌙';
+            themeLabel.innerHTML = '🌙 Dark';
+            themeLabel.style.color = '#ecf0f1';
             localStorage.setItem('theme', 'dark');
             console.log('🌙 Switched to DARK mode');
         }
-        
-        // Add click animation
-        this.style.transform = 'scale(0.9)';
-        setTimeout(() => {
-            this.style.transform = 'scale(1)';
-        }, 150);
     });
     
     // Add hover effects
-    toggle.addEventListener('mouseenter', function() {
-        this.style.transform = 'scale(1.1)';
-        this.style.boxShadow = '0 6px 20px rgba(0,0,0,0.3)';
+    switchSlider.addEventListener('mouseenter', function() {
+        this.style.boxShadow = '0 4px 12px rgba(0,0,0,0.3)';
     });
     
-    toggle.addEventListener('mouseleave', function() {
-        this.style.transform = 'scale(1)';
-        this.style.boxShadow = '0 4px 15px rgba(0,0,0,0.2)';
+    switchSlider.addEventListener('mouseleave', function() {
+        this.style.boxShadow = '0 2px 8px rgba(0,0,0,0.2)';
     });
     
     // Apply saved theme
     const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        document.body.classList.add('dark-mode');
-        document.body.style.background = '#2c3e50';
-        document.body.style.color = '#ffffff';
-        toggle.innerHTML = '☀️';
-        toggle.style.background = '#34495e';
-        toggle.style.borderColor = '#ecf0f1';
-        console.log('🌙 Applied saved DARK mode');
-    } else {
+    if (savedTheme === 'light') {
+        toggleInput.checked = true;
         document.body.classList.remove('dark-mode');
         document.body.style.background = '#ffffff';
         document.body.style.color = '#333333';
-        toggle.innerHTML = '🌙';
-        toggle.style.background = '#3498db';
-        toggle.style.borderColor = 'white';
-        console.log('☀️ Applied LIGHT mode (default)');
+        switchSlider.style.backgroundColor = '#3498db';
+        switchButton.style.transform = 'translateX(30px)';
+        switchButton.innerHTML = '☀️';
+        themeLabel.innerHTML = '☀️ Light';
+        themeLabel.style.color = '#3498db';
+    } else {
+        toggleInput.checked = false;
+        document.body.classList.add('dark-mode');
+        document.body.style.background = '#2c3e50';
+        document.body.style.color = '#ffffff';
+        switchSlider.style.backgroundColor = '#34495e';
+        switchButton.style.transform = 'translateX(0px)';
+        switchButton.innerHTML = '🌙';
+        themeLabel.innerHTML = '🌙 Dark';
+        themeLabel.style.color = '#ecf0f1';
     }
     
-    console.log('✅ Simple working toggle is ready!');
-    return toggle;
+    console.log('✅ Switch-style toggle setup complete!');
+    return document.getElementById('themeSwitchContainer');
 }
 
 // Notification System for better user feedback
