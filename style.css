@@ -114,36 +114,69 @@ p, h1, h2, h3, h4, h5, h6, span, div.post-content, textarea, input[type="text"],
     user-select: text;
 }
 
-/* Mobile smooth scrolling optimization */
+/* Mobile Chrome smooth scrolling optimization for both themes */
 html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto; /* Let JavaScript handle smooth scrolling for better control */
     -webkit-overflow-scrolling: touch;
     overflow-x: hidden;
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
     scroll-padding-top: 70px; /* Account for fixed navigation */
     height: 100%;
+    /* Mobile Chrome specific optimizations */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-perspective: 1000px;
+    perspective: 1000px;
 }
 
-/* Enhanced smooth scrolling for all devices */
+/* Enhanced smooth scrolling for mobile Chrome */
 html, body {
-    scroll-behavior: smooth;
+    scroll-behavior: auto; /* JavaScript will handle smooth scrolling */
+    /* Hardware acceleration for mobile Chrome */
+    transform: translateZ(0);
+    will-change: scroll-position;
 }
 
-/* Smooth scrolling with better performance */
+/* Mobile Chrome theme-aware scroll optimizations */
+body:not(.dark-mode) {
+    /* Light mode optimizations */
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    scroll-snap-type: y proximity;
+}
+
+body.dark-mode {
+    /* Dark mode optimizations */
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    scroll-snap-type: y proximity;
+    /* Enhanced dark mode scroll performance */
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+}
+
+/* Smooth scrolling with better mobile Chrome performance */
 @supports (scroll-behavior: smooth) {
     html {
-        scroll-behavior: smooth;
+        scroll-behavior: auto; /* Override for JavaScript control */
     }
 }
 
 @media (prefers-reduced-motion: no-preference) {
     html {
-        scroll-behavior: smooth;
+        scroll-behavior: auto; /* JavaScript handles smoothness */
     }
     
-    * {
-        scroll-behavior: smooth;
+    /* Mobile Chrome specific performance */
+    section, nav, main, article {
+        will-change: transform;
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
     }
 }
 
@@ -156,6 +189,36 @@ html, body {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
+    }
+    
+    /* Disable smooth scrolling for accessibility */
+    .smooth-scroll-disabled * {
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Mobile Chrome specific scroll snap optimization */
+@media screen and (max-width: 768px) {
+    section {
+        scroll-snap-align: start;
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+    
+    /* Theme-aware mobile scroll enhancements */
+    body:not(.dark-mode) section {
+        scroll-margin-top: 80px;
+        -webkit-scroll-snap-coordinate: 0 0;
+        scroll-snap-coordinate: 0 0;
+    }
+    
+    body.dark-mode section {
+        scroll-margin-top: 80px;
+        -webkit-scroll-snap-coordinate: 0 0;
+        scroll-snap-coordinate: 0 0;
+        /* Dark mode specific acceleration */
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
     }
 }
 

@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeScrollAnimations();
 });
 
-// Mobile Chrome specific optimizations
+// Mobile Chrome specific optimizations with theme-aware smooth scrolling
 function initializeMobileOptimizations() {
     // Prevent zoom on input focus (mobile Chrome)
     const inputs = document.querySelectorAll('input, textarea, select');
@@ -41,37 +41,74 @@ function initializeMobileOptimizations() {
             input.style.fontSize = '16px';
         }
         
-        // Add touch optimizations
+        // Add touch optimizations with theme awareness
         input.addEventListener('touchstart', function() {
+            const isDarkMode = document.body.classList.contains('dark-mode');
             this.style.transform = 'scale(1.02)';
+            // Theme-aware touch feedback
+            if (isDarkMode) {
+                this.style.boxShadow = '0 0 10px rgba(0, 255, 255, 0.3)';
+            } else {
+                this.style.boxShadow = '0 0 10px rgba(52, 152, 219, 0.3)';
+            }
         }, { passive: true });
         
         input.addEventListener('touchend', function() {
             this.style.transform = '';
+            this.style.boxShadow = '';
         }, { passive: true });
     });
 
-    // Handle viewport height changes on mobile Chrome
+    // Handle viewport height changes on mobile Chrome with theme awareness
     function setViewportHeight() {
         const vh = window.innerHeight * 0.01;
         document.documentElement.style.setProperty('--vh', `${vh}px`);
+        
+        // Theme-aware viewport optimizations
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        if (isDarkMode) {
+            document.documentElement.style.setProperty('--scroll-accent', '#00ffff');
+        } else {
+            document.documentElement.style.setProperty('--scroll-accent', '#3498db');
+        }
     }
     
     // Set initial viewport height
     setViewportHeight();
     
-    // Handle viewport changes (keyboard open/close, orientation change)
-    window.addEventListener('resize', setViewportHeight, { passive: true });
+    // Handle viewport changes with debouncing for better performance
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(setViewportHeight, 100);
+    }, { passive: true });
+    
     window.addEventListener('orientationchange', () => {
-        setTimeout(setViewportHeight, 100);
+        setTimeout(setViewportHeight, 150);
     }, { passive: true });
 
-    // Enhanced scroll performance for mobile
+    // Enhanced scroll performance for mobile Chrome with theme support
     let ticking = false;
     function optimizeScrollPerformance() {
         if (!ticking) {
             requestAnimationFrame(() => {
-                // Scroll optimizations here
+                // Theme-aware scroll optimizations
+                const isDarkMode = document.body.classList.contains('dark-mode');
+                const scrollableElements = document.querySelectorAll('section, nav, main');
+                
+                scrollableElements.forEach(element => {
+                    element.style.willChange = 'transform';
+                    element.style.transform = 'translateZ(0)';
+                    
+                    // Apply theme-specific performance optimizations
+                    if (isDarkMode) {
+                        element.style.backfaceVisibility = 'hidden';
+                    } else {
+                        element.style.backfaceVisibility = 'hidden';
+                        element.style.perspective = '1000px';
+                    }
+                });
+                
                 ticking = false;
             });
             ticking = true;
@@ -80,29 +117,85 @@ function initializeMobileOptimizations() {
     
     window.addEventListener('scroll', optimizeScrollPerformance, { passive: true });
 
-    // Prevent overscroll on iOS Safari
+    // Prevent overscroll on mobile Chrome with theme-aware handling
     document.body.addEventListener('touchmove', function(e) {
         if (e.target === document.body) {
             e.preventDefault();
         }
     }, { passive: false });
 
-    // Mobile navigation auto-hide on scroll
+    // Mobile Chrome navigation auto-hide on scroll with smooth theme transitions
     const mobileNav = document.querySelector('.nav-container');
     if (mobileNav) {
         let lastScrollTop = 0;
+        let scrollTimeout;
+        
         window.addEventListener('scroll', function() {
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            
-            if (scrollTop > lastScrollTop && scrollTop > 100) {
-                // Scrolling down - hide nav
-                mobileNav.style.transform = 'translateY(-100%)';
-            } else {
-                // Scrolling up - show nav
-                mobileNav.style.transform = 'translateY(0)';
-            }
-            lastScrollTop = scrollTop;
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const isDarkMode = document.body.classList.contains('dark-mode');
+                
+                // Enhanced smooth nav hiding with theme awareness
+                if (scrollTop > lastScrollTop && scrollTop > 100) {
+                    // Scrolling down - hide nav with theme-aware animation
+                    mobileNav.style.transform = 'translateY(-100%)';
+                    mobileNav.style.transition = 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+                    
+                    if (isDarkMode) {
+                        mobileNav.style.boxShadow = '0 2px 20px rgba(0, 255, 255, 0.1)';
+                    } else {
+                        mobileNav.style.boxShadow = '0 2px 20px rgba(52, 152, 219, 0.1)';
+                    }
+                } else {
+                    // Scrolling up - show nav with smooth animation
+                    mobileNav.style.transform = 'translateY(0)';
+                    mobileNav.style.transition = 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+                    
+                    if (isDarkMode) {
+                        mobileNav.style.boxShadow = '0 2px 20px rgba(0, 255, 255, 0.2)';
+                    } else {
+                        mobileNav.style.boxShadow = '0 2px 20px rgba(52, 152, 219, 0.2)';
+                    }
+                }
+                lastScrollTop = scrollTop;
+            }, 10); // Small delay for smoother performance
         }, { passive: true });
+    }
+
+    // Mobile Chrome specific smooth scroll polyfill
+    if (/Android.*Chrome/i.test(navigator.userAgent) && /Mobile/i.test(navigator.userAgent)) {
+        // Override native scrollIntoView for better mobile Chrome performance
+        Element.prototype.smoothScrollIntoView = function(options = {}) {
+            const targetElement = this;
+            const targetPosition = targetElement.offsetTop;
+            const startPosition = window.pageYOffset;
+            const distance = targetPosition - startPosition - (options.offset || 80);
+            const duration = options.duration || 800;
+            let start = null;
+
+            function easeInOutQuart(t) {
+                return t < 0.5 ? 8 * t * t * t * t : 1 - 8 * (--t) * t * t * t;
+            }
+
+            function animation(currentTime) {
+                if (start === null) start = currentTime;
+                const timeElapsed = currentTime - start;
+                const progress = Math.min(timeElapsed / duration, 1);
+                const easedProgress = easeInOutQuart(progress);
+                
+                const newPosition = startPosition + distance * easedProgress;
+                window.scrollTo(0, newPosition);
+                
+                if (timeElapsed < duration) {
+                    requestAnimationFrame(animation);
+                } else {
+                    window.scrollTo(0, targetPosition - (options.offset || 80));
+                }
+            }
+
+            requestAnimationFrame(animation);
+        };
     }
 }
 
@@ -989,32 +1082,33 @@ function initializeContactForm() {
     }
 }
 
-// Smooth Scrolling with enhanced mobile and desktop support
+// Smooth Scrolling with enhanced mobile Chrome optimization for both themes
 function initializeSmoothScrolling() {
     const navLinks = document.querySelectorAll('.nav-link');
     
-    // Enhanced smooth scrolling function with mobile optimization
-    function smoothScrollTo(targetElement) {
+    // Enhanced mobile Chrome smooth scrolling function
+    function mobileOptimizedScrollTo(targetElement) {
         const targetPosition = targetElement.offsetTop;
         const startPosition = window.pageYOffset;
         const distance = targetPosition - startPosition - 80; // Account for fixed nav height
-        const duration = 1000; // Optimal duration for mobile
+        const duration = 800; // Optimized for mobile Chrome performance
         let start = null;
 
-        // Enhanced easing function for smoother mobile experience
-        function easeInOutCubic(t) {
-            return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+        // Mobile Chrome optimized easing function
+        function easeInOutQuart(t) {
+            return t < 0.5 ? 8 * t * t * t * t : 1 - 8 * (--t) * t * t * t;
         }
 
-        // Mobile-optimized animation with requestAnimationFrame
+        // High-performance animation for mobile Chrome
         function animation(currentTime) {
             if (start === null) start = currentTime;
             const timeElapsed = currentTime - start;
             const progress = Math.min(timeElapsed / duration, 1);
-            const easedProgress = easeInOutCubic(progress);
+            const easedProgress = easeInOutQuart(progress);
             
-            // Use scrollTo for better mobile performance
-            window.scrollTo(0, startPosition + distance * easedProgress);
+            // Use scrollTo for consistent mobile Chrome behavior
+            const newPosition = startPosition + distance * easedProgress;
+            window.scrollTo(0, newPosition);
             
             if (timeElapsed < duration) {
                 requestAnimationFrame(animation);
@@ -1027,6 +1121,13 @@ function initializeSmoothScrolling() {
         requestAnimationFrame(animation);
     }
 
+    // Detect mobile Chrome specifically
+    function isMobileChrome() {
+        const userAgent = navigator.userAgent;
+        return /Android.*Chrome/i.test(userAgent) && /Mobile/i.test(userAgent);
+    }
+
+    // Handle scroll for both dark and light modes
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
@@ -1034,58 +1135,120 @@ function initializeSmoothScrolling() {
             const targetSection = document.getElementById(targetId);
             
             if (targetSection) {
-                // Mobile-first approach: prefer native smooth scrolling on modern browsers
-                const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-                const supportsNativeScroll = 'scrollBehavior' in document.documentElement.style;
+                // Force hardware acceleration for smooth scrolling
+                document.body.style.transform = 'translateZ(0)';
+                targetSection.style.transform = 'translateZ(0)';
                 
-                if (supportsNativeScroll && isMobile) {
-                    // Use native smooth scrolling for better mobile performance
+                // Mobile Chrome specific handling
+                if (isMobileChrome()) {
+                    // Disable any existing CSS scroll behavior temporarily
+                    const htmlElement = document.documentElement;
+                    const originalScrollBehavior = htmlElement.style.scrollBehavior;
+                    htmlElement.style.scrollBehavior = 'auto';
+                    
+                    // Use our optimized scroll function
+                    mobileOptimizedScrollTo(targetSection);
+                    
+                    // Restore original scroll behavior after animation
+                    setTimeout(() => {
+                        htmlElement.style.scrollBehavior = originalScrollBehavior;
+                        document.body.style.transform = '';
+                        targetSection.style.transform = '';
+                    }, 850);
+                } else if ('scrollBehavior' in document.documentElement.style) {
+                    // Use native smooth scrolling for other browsers
                     targetSection.scrollIntoView({
                         behavior: 'smooth',
                         block: 'start',
                         inline: 'nearest'
                     });
                 } else {
-                    // Use custom smooth scrolling for better compatibility
-                    smoothScrollTo(targetSection);
+                    // Fallback for older browsers
+                    mobileOptimizedScrollTo(targetSection);
                 }
 
-                // Close mobile menu if open with smooth animation
+                // Enhanced mobile menu closing with smooth animation
                 const navLinksContainer = document.querySelector('.nav-links');
                 const mobileToggle = document.querySelector('.mobile-menu-toggle');
                 const body = document.body;
                 
                 if (navLinksContainer && navLinksContainer.classList.contains('active')) {
+                    // Add closing animation
+                    navLinksContainer.style.transition = 'transform 0.3s ease-out';
                     navLinksContainer.classList.remove('active');
-                    if (mobileToggle) mobileToggle.classList.remove('active');
                     
-                    // Restore body scroll with smooth transition
+                    if (mobileToggle) {
+                        mobileToggle.classList.remove('active');
+                        mobileToggle.style.transition = 'all 0.3s ease-out';
+                    }
+                    
+                    // Restore body scroll with theme-aware handling
                     const scrollY = body.dataset.scrollY;
                     setTimeout(() => {
                         body.style.overflow = '';
                         body.style.position = '';
                         body.style.top = '';
                         body.style.width = '';
+                        body.style.transition = 'all 0.3s ease-out';
+                        
                         if (scrollY) {
-                            window.scrollTo(0, parseInt(scrollY));
+                            // Smooth restoration of scroll position
+                            const targetScroll = parseInt(scrollY);
+                            const currentScroll = window.pageYOffset;
+                            const scrollDiff = targetScroll - currentScroll;
+                            
+                            if (Math.abs(scrollDiff) > 10) {
+                                // Animate back to original position if significant difference
+                                let animStart = null;
+                                function restoreAnimation(timestamp) {
+                                    if (!animStart) animStart = timestamp;
+                                    const progress = Math.min((timestamp - animStart) / 200, 1);
+                                    const easedProgress = easeInOutQuart(progress);
+                                    
+                                    window.scrollTo(0, currentScroll + scrollDiff * easedProgress);
+                                    
+                                    if (progress < 1) {
+                                        requestAnimationFrame(restoreAnimation);
+                                    }
+                                }
+                                requestAnimationFrame(restoreAnimation);
+                            } else {
+                                window.scrollTo(0, targetScroll);
+                            }
                         }
-                    }, 300); // Match CSS transition duration
+                    }, 100);
                 }
             }
         });
 
-        // Add touch event optimizations for mobile
+        // Enhanced touch events for mobile Chrome
         if ('ontouchstart' in window) {
-            link.addEventListener('touchstart', function() {
-                // Passive touch start for better scrolling performance
+            link.addEventListener('touchstart', function(e) {
+                // Add visual feedback for touch
+                this.style.transform = 'scale(0.98)';
+                this.style.transition = 'transform 0.1s ease';
+                
+                // Ensure smooth scrolling works in both dark and light modes
+                const isDarkMode = document.body.classList.contains('dark-mode');
+                if (isDarkMode) {
+                    this.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+                } else {
+                    this.style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
+                }
+            }, { passive: true });
+            
+            link.addEventListener('touchend', function(e) {
+                // Reset visual feedback
+                this.style.transform = '';
+                this.style.backgroundColor = '';
             }, { passive: true });
         }
     });
 
-    // Add smooth scrolling to any anchor links in the page content
+    // Handle any anchor links in content with mobile Chrome optimization
     const allAnchorLinks = document.querySelectorAll('a[href^="#"]');
     allAnchorLinks.forEach(link => {
-        if (!link.classList.contains('nav-link')) { // Avoid duplicate listeners
+        if (!link.classList.contains('nav-link')) {
             link.addEventListener('click', function(e) {
                 const targetId = this.getAttribute('href').substring(1);
                 const targetSection = document.getElementById(targetId);
@@ -1093,19 +1256,52 @@ function initializeSmoothScrolling() {
                 if (targetSection) {
                     e.preventDefault();
                     
-                    if ('scrollBehavior' in document.documentElement.style) {
+                    if (isMobileChrome()) {
+                        mobileOptimizedScrollTo(targetSection);
+                    } else if ('scrollBehavior' in document.documentElement.style) {
                         targetSection.scrollIntoView({
                             behavior: 'smooth',
                             block: 'start',
                             inline: 'nearest'
                         });
                     } else {
-                        smoothScrollTo(targetSection);
+                        mobileOptimizedScrollTo(targetSection);
                     }
                 }
             });
         }
     });
+
+    // Theme-aware scroll performance optimization
+    function optimizeScrollPerformance() {
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        const scrollableElements = document.querySelectorAll('section, article, nav');
+        
+        scrollableElements.forEach(element => {
+            // Enable hardware acceleration based on theme
+            element.style.willChange = 'transform';
+            element.style.backfaceVisibility = 'hidden';
+            element.style.perspective = '1000px';
+            
+            // Theme-specific optimizations
+            if (isDarkMode) {
+                element.style.transform = 'translateZ(0)';
+            } else {
+                element.style.transform = 'translate3d(0, 0, 0)';
+            }
+        });
+    }
+
+    // Apply optimizations on theme change
+    const darkModeToggle = document.querySelector('.dark-mode-toggle');
+    if (darkModeToggle) {
+        darkModeToggle.addEventListener('click', () => {
+            setTimeout(optimizeScrollPerformance, 100);
+        });
+    }
+
+    // Initial optimization
+    optimizeScrollPerformance();
 }
 
 // Scroll Animations
