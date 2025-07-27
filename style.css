@@ -844,12 +844,27 @@ footer {
     z-index: 100;
 }
 
-/* Debug styles to make sure the dark mode toggle is visible */
+/* Enhanced Debug styles to force dark mode toggle visibility */
 .nav-controls .dark-mode-toggle {
     opacity: 1 !important;
     visibility: visible !important;
     position: relative !important;
     display: flex !important;
+    z-index: 9999 !important;
+    background: linear-gradient(135deg, #3498db, #2980b9) !important;
+    border: 2px solid #ffffff !important;
+    box-shadow: 0 0 10px rgba(52, 152, 219, 0.5) !important;
+}
+
+/* Force nav-controls to be visible */
+.nav-controls {
+    display: flex !important;
+    align-items: center !important;
+    gap: 15px !important;
+    position: relative !important;
+    z-index: 1000 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 .logo {
