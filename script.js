@@ -288,11 +288,15 @@ function initializeMobileOptimizations() {
     console.log('📱 Enhanced mobile optimizations initialized with theme awareness');
 }
 
-// Navigation Menu with enhanced mobile Chrome optimizations
+// Navigation Menu with enhanced mobile optimization
 function initializeNavigation() {
     const mobileToggle = document.querySelector('.mobile-menu-toggle');
     const navLinks = document.querySelector('.nav-links');
     const body = document.body;
+    
+    console.log('🧭 Initializing navigation...');
+    console.log('📱 Mobile toggle found:', !!mobileToggle);
+    console.log('🔗 Nav links found:', !!navLinks);
     
     if (mobileToggle && navLinks) {
         // Enhanced mobile toggle with touch optimization
@@ -300,39 +304,22 @@ function initializeNavigation() {
             e.preventDefault();
             e.stopPropagation();
             
-            navLinks.classList.toggle('active');
-            mobileToggle.classList.toggle('active');
+            console.log('📱 Mobile menu toggle clicked');
             
-            // Prevent body scroll when menu is open on mobile Chrome
-            if (navLinks.classList.contains('active')) {
-                const scrollY = window.scrollY;
-                body.style.overflow = 'hidden';
-                body.style.position = 'fixed';
-                body.style.top = `-${scrollY}px`;
-                body.style.width = '100%';
-                body.dataset.scrollY = scrollY;
-            } else {
-                const scrollY = body.dataset.scrollY;
+            const isActive = navLinks.classList.contains('active');
+            
+            if (isActive) {
+                navLinks.classList.remove('active');
+                mobileToggle.classList.remove('active');
                 body.style.overflow = '';
-                body.style.position = '';
-                body.style.top = '';
-                body.style.width = '';
-                window.scrollTo(0, parseInt(scrollY || '0'));
+                console.log('📱 Mobile menu closed');
+            } else {
+                navLinks.classList.add('active');
+                mobileToggle.classList.add('active');
+                body.style.overflow = 'hidden'; // Prevent background scrolling
+                console.log('📱 Mobile menu opened');
             }
         });
-
-        // Enhanced touch event handling for mobile
-        if ('ontouchstart' in window) {
-            mobileToggle.addEventListener('touchstart', function(e) {
-                // Add touch feedback
-                this.style.opacity = '0.7';
-            }, { passive: true });
-            
-            mobileToggle.addEventListener('touchend', function(e) {
-                // Reset touch feedback
-                this.style.opacity = '';
-            }, { passive: true });
-        }
 
         // Close menu on link click (mobile)
         const navLinksArray = document.querySelectorAll('.nav-link');
@@ -341,14 +328,8 @@ function initializeNavigation() {
                 if (window.innerWidth <= 768) {
                     navLinks.classList.remove('active');
                     mobileToggle.classList.remove('active');
-                    const scrollY = body.dataset.scrollY;
                     body.style.overflow = '';
-                    body.style.position = '';
-                    body.style.top = '';
-                    body.style.width = '';
-                    if (scrollY) {
-                        window.scrollTo(0, parseInt(scrollY));
-                    }
+                    console.log('📱 Mobile menu closed via link click');
                 }
             });
         });
@@ -358,19 +339,14 @@ function initializeNavigation() {
             if (!mobileToggle.contains(e.target) && !navLinks.contains(e.target)) {
                 navLinks.classList.remove('active');
                 mobileToggle.classList.remove('active');
-                const scrollY = body.dataset.scrollY;
                 body.style.overflow = '';
-                body.style.position = '';
-                body.style.top = '';
-                body.style.width = '';
-                if (scrollY) {
-                    window.scrollTo(0, parseInt(scrollY));
-                }
             }
         });
+    } else {
+        console.warn('⚠️ Mobile navigation elements not found');
     }
 
-    // Active nav link highlighting with throttling for mobile performance
+    // Active nav link highlighting
     const navLinksArray = document.querySelectorAll('.nav-link');
     const sections = document.querySelectorAll('section, header');
     let ticking = false;
@@ -399,6 +375,8 @@ function initializeNavigation() {
     }
 
     window.addEventListener('scroll', updateActiveNav, { passive: true });
+    
+    console.log('✅ Navigation initialized successfully');
 }
 
 // Enhanced Dark Mode Toggle with PC and Mobile Optimization
