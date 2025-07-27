@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeNewsletterForm();
 });
 
-// Mobile Chrome specific optimizations with theme-aware smooth scrolling
+// Enhanced Mobile Chrome optimizations with superior theme-aware smooth scrolling
 function initializeMobileOptimizations() {
     // Prevent zoom on input focus (mobile Chrome)
     const inputs = document.querySelectorAll('input, textarea, select');
@@ -44,72 +44,116 @@ function initializeMobileOptimizations() {
             input.style.fontSize = '16px';
         }
         
-        // Add touch optimizations with theme awareness
+        // Enhanced touch optimizations with theme awareness and haptic feedback
         input.addEventListener('touchstart', function() {
             const isDarkMode = document.body.classList.contains('dark-mode');
             this.style.transform = 'scale(1.02)';
-            // Theme-aware touch feedback
+            this.style.transition = 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)';
+            
+            // Enhanced theme-aware touch feedback with better colors
             if (isDarkMode) {
-                this.style.boxShadow = '0 0 10px rgba(0, 255, 255, 0.3)';
+                this.style.boxShadow = '0 0 15px rgba(0, 255, 255, 0.4), 0 0 30px rgba(0, 255, 255, 0.2)';
+                this.style.borderColor = '#00ffff';
             } else {
-                this.style.boxShadow = '0 0 10px rgba(52, 152, 219, 0.3)';
+                this.style.boxShadow = '0 0 15px rgba(52, 152, 219, 0.4), 0 0 30px rgba(52, 152, 219, 0.2)';
+                this.style.borderColor = '#3498db';
+            }
+            
+            // Add subtle haptic feedback if available
+            if (navigator.vibrate) {
+                navigator.vibrate(25);
             }
         }, { passive: true });
         
         input.addEventListener('touchend', function() {
             this.style.transform = '';
             this.style.boxShadow = '';
+            this.style.borderColor = '';
+            this.style.transition = '';
         }, { passive: true });
     });
 
-    // Handle viewport height changes on mobile Chrome with theme awareness
+    // Enhanced viewport height management with theme awareness
     function setViewportHeight() {
         const vh = window.innerHeight * 0.01;
         document.documentElement.style.setProperty('--vh', `${vh}px`);
         
-        // Theme-aware viewport optimizations
+        // Enhanced theme-aware viewport optimizations
         const isDarkMode = document.body.classList.contains('dark-mode');
+        const root = document.documentElement;
+        
         if (isDarkMode) {
-            document.documentElement.style.setProperty('--scroll-accent', '#00ffff');
+            root.style.setProperty('--scroll-accent', '#00ffff');
+            root.style.setProperty('--mobile-glow', 'rgba(0, 255, 255, 0.3)');
+            root.style.setProperty('--theme-transition', '0.4s cubic-bezier(0.4, 0, 0.2, 1)');
         } else {
-            document.documentElement.style.setProperty('--scroll-accent', '#3498db');
+            root.style.setProperty('--scroll-accent', '#3498db');
+            root.style.setProperty('--mobile-glow', 'rgba(52, 152, 219, 0.3)');
+            root.style.setProperty('--theme-transition', '0.3s cubic-bezier(0.4, 0, 0.2, 1)');
         }
+        
+        // Update mobile-specific CSS custom properties
+        root.style.setProperty('--mobile-nav-height', '60px');
+        root.style.setProperty('--mobile-safe-area', 'env(safe-area-inset-bottom, 0px)');
     }
     
     // Set initial viewport height
     setViewportHeight();
     
-    // Handle viewport changes with debouncing for better performance
+    // Enhanced viewport change handling with better debouncing
     let resizeTimeout;
+    let orientationTimeout;
+    
     window.addEventListener('resize', () => {
         clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(setViewportHeight, 100);
+        resizeTimeout = setTimeout(() => {
+            setViewportHeight();
+            // Trigger scroll performance update after viewport change
+            if (typeof optimizeScrollPerformance === 'function') {
+                optimizeScrollPerformance();
+            }
+        }, 150);
     }, { passive: true });
     
     window.addEventListener('orientationchange', () => {
-        setTimeout(setViewportHeight, 150);
+        clearTimeout(orientationTimeout);
+        orientationTimeout = setTimeout(() => {
+            setViewportHeight();
+            // Force layout recalculation after orientation change
+            document.body.style.height = '100.1%';
+            setTimeout(() => {
+                document.body.style.height = '';
+            }, 100);
+        }, 200);
     }, { passive: true });
 
-    // Enhanced scroll performance for mobile Chrome with theme support
+    // Superior scroll performance for mobile Chrome with enhanced theme support
     let ticking = false;
     function optimizeScrollPerformance() {
         if (!ticking) {
             requestAnimationFrame(() => {
-                // Theme-aware scroll optimizations
+                // Enhanced theme-aware scroll optimizations
                 const isDarkMode = document.body.classList.contains('dark-mode');
-                const scrollableElements = document.querySelectorAll('section, nav, main');
+                const scrollableElements = document.querySelectorAll('section, nav, main, article, header');
                 
                 scrollableElements.forEach(element => {
-                    element.style.willChange = 'transform';
+                    // Force hardware acceleration with better properties
+                    element.style.willChange = 'transform, opacity';
                     element.style.transform = 'translateZ(0)';
+                    element.style.backfaceVisibility = 'hidden';
+                    element.style.webkitBackfaceVisibility = 'hidden'; // iOS Safari
                     
-                    // Apply theme-specific performance optimizations
+                    // Enhanced theme-specific performance optimizations
                     if (isDarkMode) {
-                        element.style.backfaceVisibility = 'hidden';
-                    } else {
-                        element.style.backfaceVisibility = 'hidden';
                         element.style.perspective = '1000px';
+                        element.style.transformStyle = 'preserve-3d';
+                    } else {
+                        element.style.perspective = '1200px';
+                        element.style.transformStyle = 'preserve-3d';
                     }
+                    
+                    // Apply smooth theme-aware transitions
+                    element.style.transition = `all ${isDarkMode ? '0.4s' : '0.3s'} cubic-bezier(0.4, 0, 0.2, 1)`;
                 });
                 
                 ticking = false;
@@ -118,88 +162,117 @@ function initializeMobileOptimizations() {
         }
     }
     
+    // Make optimizeScrollPerformance globally available
+    window.optimizeScrollPerformance = optimizeScrollPerformance;
+    
     window.addEventListener('scroll', optimizeScrollPerformance, { passive: true });
 
-    // Prevent overscroll on mobile Chrome with theme-aware handling
+    // Enhanced overscroll prevention for mobile Chrome with theme awareness
     document.body.addEventListener('touchmove', function(e) {
         if (e.target === document.body) {
             e.preventDefault();
         }
     }, { passive: false });
 
-    // Mobile Chrome navigation auto-hide on scroll with smooth theme transitions
+    // Superior mobile Chrome navigation auto-hide with enhanced theme transitions
     const mobileNav = document.querySelector('.nav-container');
     if (mobileNav) {
         let lastScrollTop = 0;
         let scrollTimeout;
+        let isNavVisible = true;
         
         window.addEventListener('scroll', function() {
             clearTimeout(scrollTimeout);
             scrollTimeout = setTimeout(() => {
                 const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
                 const isDarkMode = document.body.classList.contains('dark-mode');
+                const scrollDiff = Math.abs(scrollTop - lastScrollTop);
                 
-                // Enhanced smooth nav hiding with theme awareness
-                if (scrollTop > lastScrollTop && scrollTop > 100) {
-                    // Scrolling down - hide nav with theme-aware animation
-                    mobileNav.style.transform = 'translateY(-100%)';
-                    mobileNav.style.transition = 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
-                    
-                    if (isDarkMode) {
-                        mobileNav.style.boxShadow = '0 2px 20px rgba(0, 255, 255, 0.1)';
-                    } else {
-                        mobileNav.style.boxShadow = '0 2px 20px rgba(52, 152, 219, 0.1)';
-                    }
-                } else {
-                    // Scrolling up - show nav with smooth animation
-                    mobileNav.style.transform = 'translateY(0)';
-                    mobileNav.style.transition = 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
-                    
-                    if (isDarkMode) {
-                        mobileNav.style.boxShadow = '0 2px 20px rgba(0, 255, 255, 0.2)';
-                    } else {
-                        mobileNav.style.boxShadow = '0 2px 20px rgba(52, 152, 219, 0.2)';
+                // Only trigger animation if scroll difference is significant
+                if (scrollDiff > 5) {
+                    if (scrollTop > lastScrollTop && scrollTop > 100 && isNavVisible) {
+                        // Scrolling down - hide nav with enhanced theme-aware animation
+                        mobileNav.style.transform = 'translateY(-100%)';
+                        mobileNav.style.transition = 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+                        isNavVisible = false;
+                        
+                        if (isDarkMode) {
+                            mobileNav.style.boxShadow = '0 2px 30px rgba(0, 255, 255, 0.1)';
+                        } else {
+                            mobileNav.style.boxShadow = '0 2px 30px rgba(52, 152, 219, 0.1)';
+                        }
+                    } else if ((scrollTop < lastScrollTop || scrollTop <= 100) && !isNavVisible) {
+                        // Scrolling up - show nav with enhanced smooth animation
+                        mobileNav.style.transform = 'translateY(0)';
+                        mobileNav.style.transition = 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+                        isNavVisible = true;
+                        
+                        if (isDarkMode) {
+                            mobileNav.style.boxShadow = '0 2px 30px rgba(0, 255, 255, 0.3)';
+                        } else {
+                            mobileNav.style.boxShadow = '0 2px 30px rgba(52, 152, 219, 0.3)';
+                        }
                     }
                 }
                 lastScrollTop = scrollTop;
-            }, 10); // Small delay for smoother performance
+            }, 15); // Reduced delay for more responsive feel
         }, { passive: true });
     }
 
-    // Mobile Chrome specific smooth scroll polyfill
+    // Enhanced mobile Chrome smooth scroll polyfill with theme awareness
     if (/Android.*Chrome/i.test(navigator.userAgent) && /Mobile/i.test(navigator.userAgent)) {
-        // Override native scrollIntoView for better mobile Chrome performance
+        // Override native scrollIntoView for superior mobile Chrome performance
         Element.prototype.smoothScrollIntoView = function(options = {}) {
             const targetElement = this;
             const targetPosition = targetElement.offsetTop;
             const startPosition = window.pageYOffset;
             const distance = targetPosition - startPosition - (options.offset || 80);
-            const duration = options.duration || 800;
+            const duration = options.duration || 1000;
+            const isDarkMode = document.body.classList.contains('dark-mode');
             let start = null;
 
-            function easeInOutQuart(t) {
-                return t < 0.5 ? 8 * t * t * t * t : 1 - 8 * (--t) * t * t * t;
+            // Enhanced easing function with theme-specific behavior
+            function enhancedEasing(t) {
+                if (isDarkMode) {
+                    // Smoother easing for dark mode
+                    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+                } else {
+                    // More responsive for light mode
+                    return t < 0.5 ? 8 * t * t * t * t : 1 - 8 * (--t) * t * t * t;
+                }
             }
 
             function animation(currentTime) {
                 if (start === null) start = currentTime;
                 const timeElapsed = currentTime - start;
                 const progress = Math.min(timeElapsed / duration, 1);
-                const easedProgress = easeInOutQuart(progress);
+                const easedProgress = enhancedEasing(progress);
                 
                 const newPosition = startPosition + distance * easedProgress;
-                window.scrollTo(0, newPosition);
+                
+                // Use documentElement.scrollTop for better mobile Chrome performance
+                document.documentElement.scrollTop = newPosition;
                 
                 if (timeElapsed < duration) {
                     requestAnimationFrame(animation);
                 } else {
-                    window.scrollTo(0, targetPosition - (options.offset || 80));
+                    document.documentElement.scrollTop = targetPosition - (options.offset || 80);
+                    
+                    // Callback when animation completes
+                    if (options.onComplete) {
+                        options.onComplete();
+                    }
                 }
             }
 
             requestAnimationFrame(animation);
         };
     }
+    
+    // Initialize optimizations
+    optimizeScrollPerformance();
+    
+    console.log('📱 Enhanced mobile optimizations initialized with theme awareness');
 }
 
 // Navigation Menu with enhanced mobile Chrome optimizations
@@ -315,13 +388,13 @@ function initializeNavigation() {
     window.addEventListener('scroll', updateActiveNav, { passive: true });
 }
 
-// Dark Mode Toggle
+// Enhanced Dark Mode Toggle with PC and Mobile Optimization
 function initializeDarkMode() {
     const darkModeToggle = document.querySelector('.dark-mode-toggle');
     const body = document.body;
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
     
-    console.log('🌙 Dark mode initialization started');
+    console.log('🌙 Enhanced Dark mode initialization started');
     console.log('🔍 Dark mode toggle element found:', !!darkModeToggle);
     console.log('🎯 Toggle element:', darkModeToggle);
     
@@ -334,17 +407,34 @@ function initializeDarkMode() {
     document.body.removeChild(testElement);
     console.log('🎨 CSS Variables loaded:', cssLoaded);
     
-    // Define updateToggleIcon function first
-    function updateToggleIcon(isDark) {
+    // Enhanced toggle icon update with smooth animation
+    function updateToggleIcon(isDark, animate = true) {
         console.log('🎨 Updating toggle icon, isDark:', isDark);
         if (darkModeToggle) {
             const icon = darkModeToggle.querySelector('.theme-icon');
             console.log('🎯 Theme icon element:', icon);
             if (icon) {
-                const newIcon = isDark ? '☀️' : '🌙';
-                icon.textContent = newIcon;
-                console.log('✨ Icon updated to:', newIcon);
+                if (animate) {
+                    // Add rotation animation for smooth transition
+                    icon.style.transform = 'rotate(180deg) scale(0.8)';
+                    icon.style.transition = 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+                    
+                    setTimeout(() => {
+                        const newIcon = isDark ? '☀️' : '🌙';
+                        icon.textContent = newIcon;
+                        icon.style.transform = 'rotate(0deg) scale(1)';
+                        console.log('✨ Icon updated to:', newIcon);
+                    }, 150);
+                } else {
+                    const newIcon = isDark ? '☀️' : '🌙';
+                    icon.textContent = newIcon;
+                    console.log('✨ Icon updated to:', newIcon);
+                }
+                
                 darkModeToggle.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+                
+                // Add visual feedback for PC hover and mobile touch
+                darkModeToggle.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
             } else {
                 console.error('❌ Theme icon element not found inside toggle button');
             }
@@ -353,7 +443,7 @@ function initializeDarkMode() {
         }
     }
     
-    // Check for saved theme preference or default to system preference
+    // Enhanced theme detection with better mobile support
     const savedTheme = localStorage.getItem('theme');
     const systemTheme = prefersDark.matches ? 'dark' : 'light';
     const currentTheme = savedTheme || systemTheme;
@@ -362,73 +452,163 @@ function initializeDarkMode() {
     console.log('🖥️ System theme:', systemTheme);
     console.log('✅ Current theme:', currentTheme);
     
-    // Apply the theme
-    if (currentTheme === 'dark') {
-        body.classList.add('dark-mode');
-        updateToggleIcon(true);
-    } else {
-        // Ensure light mode is properly set
-        body.classList.remove('dark-mode');
-        updateToggleIcon(false);
+    // Apply the theme with smooth transition
+    function applyTheme(isDark, animate = false) {
+        if (animate) {
+            body.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+        }
+        
+        if (isDark) {
+            body.classList.add('dark-mode');
+        } else {
+            body.classList.remove('dark-mode');
+        }
+        
+        updateToggleIcon(isDark, animate);
+        
+        // Update CSS custom properties for enhanced theming
+        const root = document.documentElement;
+        if (isDark) {
+            root.style.setProperty('--scroll-accent', '#00ffff');
+            root.style.setProperty('--theme-transition', '0.4s cubic-bezier(0.4, 0, 0.2, 1)');
+        } else {
+            root.style.setProperty('--scroll-accent', '#3498db');
+            root.style.setProperty('--theme-transition', '0.4s cubic-bezier(0.4, 0, 0.2, 1)');
+        }
+        
+        if (animate) {
+            setTimeout(() => {
+                body.style.transition = '';
+            }, 400);
+        }
     }
     
-    // Toggle functionality
+    // Initial theme application
+    applyTheme(currentTheme === 'dark', false);
+    
+    // Enhanced toggle functionality with mobile and PC optimization
     if (darkModeToggle) {
-        console.log('🎛️ Adding click event listener to dark mode toggle');
+        console.log('🎛️ Adding enhanced click event listener to dark mode toggle');
+        
+        // PC hover effects
+        darkModeToggle.addEventListener('mouseenter', function() {
+            if (!('ontouchstart' in window)) { // Only on non-touch devices
+                this.style.transform = 'scale(1.1)';
+                this.style.boxShadow = '0 0 20px rgba(var(--accent-color-rgb), 0.3)';
+            }
+        });
+        
+        darkModeToggle.addEventListener('mouseleave', function() {
+            if (!('ontouchstart' in window)) {
+                this.style.transform = 'scale(1)';
+                this.style.boxShadow = '';
+            }
+        });
+        
+        // Enhanced mobile touch feedback
+        if ('ontouchstart' in window) {
+            darkModeToggle.addEventListener('touchstart', function(e) {
+                this.style.transform = 'scale(0.95)';
+                this.style.opacity = '0.8';
+                
+                // Add haptic feedback if available
+                if (navigator.vibrate) {
+                    navigator.vibrate(50);
+                }
+            }, { passive: true });
+            
+            darkModeToggle.addEventListener('touchend', function(e) {
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                    this.style.opacity = '1';
+                }, 100);
+            }, { passive: true });
+        }
+        
+        // Main click handler
         darkModeToggle.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
             
-            console.log('🖱️ Dark mode toggle clicked!');
-            body.classList.toggle('dark-mode');
-            const isDark = body.classList.contains('dark-mode');
+            console.log('🖱️ Enhanced dark mode toggle clicked!');
             
-            console.log('🌓 Theme switched to:', isDark ? 'dark' : 'light');
-            console.log('🎨 Body classes:', body.className);
+            // Prevent rapid clicking
+            if (this.disabled) return;
+            this.disabled = true;
             
-            // Force a style recalculation
-            body.style.transition = 'all 0.3s ease';
+            const wasDark = body.classList.contains('dark-mode');
+            const willBeDark = !wasDark;
+            
+            console.log('🌓 Theme switching from:', wasDark ? 'dark' : 'light', 'to:', willBeDark ? 'dark' : 'light');
+            
+            // Apply theme with animation
+            applyTheme(willBeDark, true);
             
             // Save preference
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            console.log('💾 Theme preference saved:', isDark ? 'dark' : 'light');
+            localStorage.setItem('theme', willBeDark ? 'dark' : 'light');
+            console.log('💾 Theme preference saved:', willBeDark ? 'dark' : 'light');
             
-            // Update toggle icon with animation
-            updateToggleIcon(isDark);
-            
-            // Show notification only if function exists
+            // Show enhanced notification
             if (typeof showNotification === 'function') {
-                showNotification(
-                    `Switched to ${isDark ? 'dark' : 'light'} mode ${isDark ? '🌙' : '☀️'}`, 
-                    'success', 
-                    2000
-                );
-            } else {
-                console.log('⚠️ showNotification function not available');
+                const message = `Switched to ${willBeDark ? 'dark' : 'light'} mode ${willBeDark ? '🌙' : '☀️'}`;
+                showNotification(message, 'success', 2500);
             }
             
-            // Reset transition after animation
+            // Update smooth scrolling performance for new theme
             setTimeout(() => {
-                body.style.transition = '';
-            }, 300);
+                updateScrollPerformanceForTheme();
+            }, 200);
+            
+            // Re-enable button
+            setTimeout(() => {
+                this.disabled = false;
+            }, 500);
         });
+        
+        // Keyboard accessibility
+        darkModeToggle.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.click();
+            }
+        });
+        
     } else {
         console.error('❌ Dark mode toggle button not found! Selector: .dark-mode-toggle');
         console.log('🔍 Available buttons:', document.querySelectorAll('button'));
     }
     
-    // Listen for system theme changes
+    // Enhanced system theme change detection
     prefersDark.addEventListener('change', (e) => {
         if (!localStorage.getItem('theme')) {
-            if (e.matches) {
-                body.classList.add('dark-mode');
-                updateToggleIcon(true);
-            } else {
-                body.classList.remove('dark-mode');
-                updateToggleIcon(false);
+            console.log('🖥️ System theme changed to:', e.matches ? 'dark' : 'light');
+            applyTheme(e.matches, true);
+            
+            if (typeof showNotification === 'function') {
+                showNotification(`Automatically switched to ${e.matches ? 'dark' : 'light'} mode`, 'info', 3000);
             }
         }
     });
+    
+    // Theme-aware performance optimization function
+    function updateScrollPerformanceForTheme() {
+        const isDarkMode = body.classList.contains('dark-mode');
+        const scrollableElements = document.querySelectorAll('section, article, nav, main');
+        
+        scrollableElements.forEach(element => {
+            element.style.willChange = 'transform';
+            element.style.backfaceVisibility = 'hidden';
+            
+            if (isDarkMode) {
+                element.style.transform = 'translateZ(0)';
+            } else {
+                element.style.transform = 'translate3d(0, 0, 0)';
+            }
+        });
+    }
+    
+    // Initial performance optimization
+    updateScrollPerformanceForTheme();
 }
 
 // Notification System for better user feedback
@@ -1085,226 +1265,308 @@ function initializeContactForm() {
     }
 }
 
-// Smooth Scrolling with enhanced mobile Chrome optimization for both themes
+// Enhanced Smooth Scrolling with Superior PC and Mobile Optimization
 function initializeSmoothScrolling() {
     const navLinks = document.querySelectorAll('.nav-link');
     
-    // Enhanced mobile Chrome smooth scrolling function
-    function mobileOptimizedScrollTo(targetElement) {
+    // Detect device type for optimal scrolling
+    function getDeviceType() {
+        const userAgent = navigator.userAgent;
+        return {
+            isMobile: /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent),
+            isMobileChrome: /Android.*Chrome/i.test(userAgent) && /Mobile/i.test(userAgent),
+            isIOS: /iPad|iPhone|iPod/.test(userAgent),
+            isDesktop: !(/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent))
+        };
+    }
+    
+    const device = getDeviceType();
+    console.log('📱 Device detection:', device);
+    
+    // Ultra-smooth scrolling function optimized for all devices
+    function ultraSmoothScrollTo(targetElement, options = {}) {
         const targetPosition = targetElement.offsetTop;
         const startPosition = window.pageYOffset;
-        const distance = targetPosition - startPosition - 80; // Account for fixed nav height
-        const duration = 800; // Optimized for mobile Chrome performance
+        const distance = targetPosition - startPosition - (options.offset || 80);
+        const duration = options.duration || (device.isMobile ? 1000 : 800);
         let start = null;
-
-        // Mobile Chrome optimized easing function
-        function easeInOutQuart(t) {
-            return t < 0.5 ? 8 * t * t * t * t : 1 - 8 * (--t) * t * t * t;
-        }
-
-        // High-performance animation for mobile Chrome
+        
+        // Enhanced easing functions for different devices
+        const easings = {
+            desktop: function(t) {
+                // Cubic bezier for desktop - smooth and professional
+                return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+            },
+            mobile: function(t) {
+                // Optimized for mobile touch - more responsive
+                return t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2;
+            },
+            ios: function(t) {
+                // iOS specific - matches native feel
+                return 1 - Math.pow(1 - t, 4);
+            }
+        };
+        
+        const easing = device.isIOS ? easings.ios : 
+                      device.isMobile ? easings.mobile : 
+                      easings.desktop;
+        
         function animation(currentTime) {
             if (start === null) start = currentTime;
             const timeElapsed = currentTime - start;
             const progress = Math.min(timeElapsed / duration, 1);
-            const easedProgress = easeInOutQuart(progress);
+            const easedProgress = easing(progress);
             
-            // Use scrollTo for consistent mobile Chrome behavior
             const newPosition = startPosition + distance * easedProgress;
-            window.scrollTo(0, newPosition);
+            
+            // Use the most appropriate scroll method for the device
+            if (device.isMobileChrome) {
+                // Force GPU acceleration on mobile Chrome
+                document.documentElement.scrollTop = newPosition;
+            } else {
+                window.scrollTo(0, newPosition);
+            }
             
             if (timeElapsed < duration) {
                 requestAnimationFrame(animation);
             } else {
-                // Ensure we end exactly at target position
-                window.scrollTo(0, targetPosition - 80);
+                // Ensure exact final position
+                const finalPosition = targetPosition - (options.offset || 80);
+                if (device.isMobileChrome) {
+                    document.documentElement.scrollTop = finalPosition;
+                } else {
+                    window.scrollTo(0, finalPosition);
+                }
+                
+                // Callback when animation completes
+                if (options.onComplete) {
+                    options.onComplete();
+                }
             }
         }
-
+        
         requestAnimationFrame(animation);
     }
-
-    // Detect mobile Chrome specifically
-    function isMobileChrome() {
-        const userAgent = navigator.userAgent;
-        return /Android.*Chrome/i.test(userAgent) && /Mobile/i.test(userAgent);
+    
+    // Enhanced scroll performance optimization
+    function optimizeScrollPerformance() {
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        const elements = document.querySelectorAll('section, article, nav, main, header');
+        
+        elements.forEach(element => {
+            // Force hardware acceleration
+            element.style.willChange = 'transform';
+            element.style.backfaceVisibility = 'hidden';
+            element.style.perspective = '1000px';
+            
+            // Theme-aware and device-specific optimizations
+            if (device.isMobile) {
+                element.style.transform = 'translateZ(0)';
+                element.style.webkitTransform = 'translateZ(0)'; // iOS Safari
+            } else {
+                element.style.transform = 'translate3d(0, 0, 0)';
+            }
+            
+            // Apply smooth transitions based on theme
+            element.style.transition = `all ${isDarkMode ? '0.4s' : '0.3s'} cubic-bezier(0.4, 0, 0.2, 1)`;
+        });
     }
-
-    // Handle scroll for both dark and light modes
+    
+    // Enhanced navigation link handling
     navLinks.forEach(link => {
+        // Visual feedback for both PC and mobile
+        function addHoverEffect() {
+            if (!device.isMobile) {
+                link.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px)';
+                    this.style.transition = 'transform 0.2s cubic-bezier(0.4, 0, 0.2, 1)';
+                });
+                
+                link.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            }
+        }
+        
+        // Enhanced touch feedback for mobile
+        function addTouchFeedback() {
+            if (device.isMobile) {
+                link.addEventListener('touchstart', function(e) {
+                    this.style.transform = 'scale(0.98)';
+                    this.style.transition = 'transform 0.1s ease';
+                    
+                    const isDarkMode = document.body.classList.contains('dark-mode');
+                    this.style.backgroundColor = isDarkMode ? 
+                        'rgba(255, 255, 255, 0.1)' : 
+                        'rgba(0, 0, 0, 0.1)';
+                        
+                    // Haptic feedback if available
+                    if (navigator.vibrate) {
+                        navigator.vibrate(30);
+                    }
+                }, { passive: true });
+                
+                link.addEventListener('touchend', function(e) {
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                        this.style.backgroundColor = '';
+                    }, 100);
+                }, { passive: true });
+            }
+        }
+        
+        addHoverEffect();
+        addTouchFeedback();
+        
+        // Main click handler with enhanced scrolling
         link.addEventListener('click', function(e) {
             e.preventDefault();
             const targetId = this.getAttribute('href').substring(1);
             const targetSection = document.getElementById(targetId);
             
             if (targetSection) {
-                // Force hardware acceleration for smooth scrolling
-                document.body.style.transform = 'translateZ(0)';
-                targetSection.style.transform = 'translateZ(0)';
+                console.log(`🎯 Scrolling to section: ${targetId}`);
                 
-                // Mobile Chrome specific handling
-                if (isMobileChrome()) {
-                    // Disable any existing CSS scroll behavior temporarily
-                    const htmlElement = document.documentElement;
-                    const originalScrollBehavior = htmlElement.style.scrollBehavior;
-                    htmlElement.style.scrollBehavior = 'auto';
-                    
-                    // Use our optimized scroll function
-                    mobileOptimizedScrollTo(targetSection);
-                    
-                    // Restore original scroll behavior after animation
-                    setTimeout(() => {
-                        htmlElement.style.scrollBehavior = originalScrollBehavior;
-                        document.body.style.transform = '';
-                        targetSection.style.transform = '';
-                    }, 850);
-                } else if ('scrollBehavior' in document.documentElement.style) {
-                    // Use native smooth scrolling for other browsers
+                // Add loading state for visual feedback
+                this.style.opacity = '0.7';
+                
+                // Optimize performance before scrolling
+                optimizeScrollPerformance();
+                
+                // Choose scroll method based on device capability
+                if (device.isDesktop && 'scrollBehavior' in document.documentElement.style) {
+                    // Use native smooth scrolling on capable desktop browsers
                     targetSection.scrollIntoView({
                         behavior: 'smooth',
                         block: 'start',
                         inline: 'nearest'
                     });
-                } else {
-                    // Fallback for older browsers
-                    mobileOptimizedScrollTo(targetSection);
-                }
-
-                // Enhanced mobile menu closing with smooth animation
-                const navLinksContainer = document.querySelector('.nav-links');
-                const mobileToggle = document.querySelector('.mobile-menu-toggle');
-                const body = document.body;
-                
-                if (navLinksContainer && navLinksContainer.classList.contains('active')) {
-                    // Add closing animation
-                    navLinksContainer.style.transition = 'transform 0.3s ease-out';
-                    navLinksContainer.classList.remove('active');
                     
-                    if (mobileToggle) {
-                        mobileToggle.classList.remove('active');
-                        mobileToggle.style.transition = 'all 0.3s ease-out';
-                    }
-                    
-                    // Restore body scroll with theme-aware handling
-                    const scrollY = body.dataset.scrollY;
+                    // Reset opacity after estimated scroll time
                     setTimeout(() => {
-                        body.style.overflow = '';
-                        body.style.position = '';
-                        body.style.top = '';
-                        body.style.width = '';
-                        body.style.transition = 'all 0.3s ease-out';
-                        
-                        if (scrollY) {
-                            // Smooth restoration of scroll position
-                            const targetScroll = parseInt(scrollY);
-                            const currentScroll = window.pageYOffset;
-                            const scrollDiff = targetScroll - currentScroll;
-                            
-                            if (Math.abs(scrollDiff) > 10) {
-                                // Animate back to original position if significant difference
-                                let animStart = null;
-                                function restoreAnimation(timestamp) {
-                                    if (!animStart) animStart = timestamp;
-                                    const progress = Math.min((timestamp - animStart) / 200, 1);
-                                    const easedProgress = easeInOutQuart(progress);
-                                    
-                                    window.scrollTo(0, currentScroll + scrollDiff * easedProgress);
-                                    
-                                    if (progress < 1) {
-                                        requestAnimationFrame(restoreAnimation);
-                                    }
-                                }
-                                requestAnimationFrame(restoreAnimation);
-                            } else {
-                                window.scrollTo(0, targetScroll);
-                            }
+                        this.style.opacity = '1';
+                    }, 800);
+                } else {
+                    // Use our enhanced custom scrolling
+                    ultraSmoothScrollTo(targetSection, {
+                        offset: 80,
+                        duration: device.isMobile ? 1200 : 900,
+                        onComplete: () => {
+                            this.style.opacity = '1';
+                            console.log(`✅ Scroll to ${targetId} completed`);
                         }
-                    }, 100);
+                    });
                 }
+                
+                // Enhanced mobile menu handling
+                handleMobileMenuClose();
             }
         });
-
-        // Enhanced touch events for mobile Chrome
-        if ('ontouchstart' in window) {
-            link.addEventListener('touchstart', function(e) {
-                // Add visual feedback for touch
-                this.style.transform = 'scale(0.98)';
-                this.style.transition = 'transform 0.1s ease';
-                
-                // Ensure smooth scrolling works in both dark and light modes
-                const isDarkMode = document.body.classList.contains('dark-mode');
-                if (isDarkMode) {
-                    this.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
-                } else {
-                    this.style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
-                }
-            }, { passive: true });
-            
-            link.addEventListener('touchend', function(e) {
-                // Reset visual feedback
-                this.style.transform = '';
-                this.style.backgroundColor = '';
-            }, { passive: true });
-        }
+        
+        // Keyboard accessibility enhancement
+        link.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                this.click();
+            }
+        });
     });
-
-    // Handle any anchor links in content with mobile Chrome optimization
-    const allAnchorLinks = document.querySelectorAll('a[href^="#"]');
-    allAnchorLinks.forEach(link => {
-        if (!link.classList.contains('nav-link')) {
-            link.addEventListener('click', function(e) {
-                const targetId = this.getAttribute('href').substring(1);
-                const targetSection = document.getElementById(targetId);
+    
+    // Enhanced mobile menu closing with smooth animation
+    function handleMobileMenuClose() {
+        const navLinksContainer = document.querySelector('.nav-links');
+        const mobileToggle = document.querySelector('.mobile-menu-toggle');
+        const body = document.body;
+        
+        if (navLinksContainer && navLinksContainer.classList.contains('active')) {
+            // Smooth closing animation
+            navLinksContainer.style.transition = 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+            navLinksContainer.classList.remove('active');
+            
+            if (mobileToggle) {
+                mobileToggle.classList.remove('active');
+                mobileToggle.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+            }
+            
+            // Restore body scroll with enhanced animation
+            const scrollY = body.dataset.scrollY;
+            setTimeout(() => {
+                body.style.overflow = '';
+                body.style.position = '';
+                body.style.top = '';
+                body.style.width = '';
                 
-                if (targetSection) {
-                    e.preventDefault();
+                if (scrollY) {
+                    // Smooth restoration of scroll position
+                    const targetScroll = parseInt(scrollY);
+                    const currentScroll = window.pageYOffset;
                     
-                    if (isMobileChrome()) {
-                        mobileOptimizedScrollTo(targetSection);
-                    } else if ('scrollBehavior' in document.documentElement.style) {
-                        targetSection.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start',
-                            inline: 'nearest'
+                    if (Math.abs(targetScroll - currentScroll) > 10) {
+                        ultraSmoothScrollTo({ offsetTop: targetScroll }, {
+                            offset: 0,
+                            duration: 300
                         });
                     } else {
-                        mobileOptimizedScrollTo(targetSection);
+                        window.scrollTo(0, targetScroll);
                     }
                 }
-            });
+            }, 100);
         }
-    });
-
-    // Theme-aware scroll performance optimization
-    function optimizeScrollPerformance() {
-        const isDarkMode = document.body.classList.contains('dark-mode');
-        const scrollableElements = document.querySelectorAll('section, article, nav');
-        
-        scrollableElements.forEach(element => {
-            // Enable hardware acceleration based on theme
-            element.style.willChange = 'transform';
-            element.style.backfaceVisibility = 'hidden';
-            element.style.perspective = '1000px';
+    }
+    
+    // Handle all anchor links in content
+    const allAnchorLinks = document.querySelectorAll('a[href^="#"]:not(.nav-link)');
+    allAnchorLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            const targetId = this.getAttribute('href').substring(1);
+            const targetSection = document.getElementById(targetId);
             
-            // Theme-specific optimizations
-            if (isDarkMode) {
-                element.style.transform = 'translateZ(0)';
-            } else {
-                element.style.transform = 'translate3d(0, 0, 0)';
+            if (targetSection) {
+                e.preventDefault();
+                ultraSmoothScrollTo(targetSection, {
+                    offset: 100,
+                    duration: device.isMobile ? 1000 : 700
+                });
             }
         });
+    });
+    
+    // Smooth scroll to top enhancement for back-to-top button
+    const backToTopBtn = document.getElementById('backToTop');
+    if (backToTopBtn) {
+        backToTopBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Enhanced smooth scroll to top
+            ultraSmoothScrollTo({ offsetTop: 0 }, {
+                offset: 0,
+                duration: device.isMobile ? 800 : 600,
+                onComplete: () => {
+                    console.log('✅ Smooth scroll to top completed');
+                }
+            });
+        });
     }
-
-    // Apply optimizations on theme change
+    
+    // Initialize performance optimizations
+    optimizeScrollPerformance();
+    
+    // Update optimizations when theme changes
     const darkModeToggle = document.querySelector('.dark-mode-toggle');
     if (darkModeToggle) {
         darkModeToggle.addEventListener('click', () => {
             setTimeout(optimizeScrollPerformance, 100);
         });
     }
-
-    // Initial optimization
-    optimizeScrollPerformance();
+    
+    // Optimize on window resize
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(optimizeScrollPerformance, 200);
+    }, { passive: true });
+    
+    console.log('✅ Enhanced smooth scrolling initialized for', device.isMobile ? 'mobile' : 'desktop');
 }
 
 // Scroll Animations
