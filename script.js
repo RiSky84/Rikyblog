@@ -5,6 +5,16 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('🔍 Available buttons:', document.querySelectorAll('button'));
     console.log('🎯 Dark mode toggle check:', document.querySelector('.dark-mode-toggle'));
     
+    // Debug: Check if dark mode toggle button exists
+    const darkModeToggle = document.querySelector('.dark-mode-toggle');
+    if (darkModeToggle) {
+        console.log('✅ Dark mode toggle found!');
+        console.log('🎨 Toggle button styles:', window.getComputedStyle(darkModeToggle));
+        console.log('📍 Toggle button position:', darkModeToggle.getBoundingClientRect());
+    } else {
+        console.error('❌ Dark mode toggle NOT found!');
+    }
+    
     // Mobile Chrome specific optimizations
     initializeMobileOptimizations();
     
@@ -398,6 +408,13 @@ function initializeDarkMode() {
     console.log('🔍 Dark mode toggle element found:', !!darkModeToggle);
     console.log('🎯 Toggle element:', darkModeToggle);
     
+    // If toggle not found, try to create it
+    if (!darkModeToggle) {
+        console.log('⚠️ Dark mode toggle not found, attempting to create it...');
+        createDarkModeToggle();
+        return;
+    }
+    
     // Check if CSS is loaded properly
     const testElement = document.createElement('div');
     testElement.style.cssText = 'background: var(--bg-color); position: absolute; visibility: hidden;';
@@ -609,6 +626,36 @@ function initializeDarkMode() {
     
     // Initial performance optimization
     updateScrollPerformanceForTheme();
+}
+
+// Function to create dark mode toggle if it doesn't exist
+function createDarkModeToggle() {
+    console.log('🔧 Creating dark mode toggle button...');
+    
+    const navControls = document.querySelector('.nav-controls');
+    if (!navControls) {
+        console.error('❌ Nav controls container not found!');
+        return;
+    }
+    
+    // Create the toggle button
+    const toggleButton = document.createElement('button');
+    toggleButton.className = 'dark-mode-toggle';
+    toggleButton.setAttribute('aria-label', 'Switch to dark mode');
+    
+    const themeIcon = document.createElement('span');
+    themeIcon.className = 'theme-icon';
+    themeIcon.textContent = '🌙';
+    
+    toggleButton.appendChild(themeIcon);
+    navControls.insertBefore(toggleButton, navControls.firstChild);
+    
+    console.log('✅ Dark mode toggle created successfully!');
+    
+    // Re-initialize dark mode with the new button
+    setTimeout(() => {
+        initializeDarkMode();
+    }, 100);
 }
 
 // Notification System for better user feedback

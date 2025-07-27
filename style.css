@@ -839,7 +839,17 @@ footer {
 .nav-controls {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
+    position: relative;
+    z-index: 100;
+}
+
+/* Debug styles to make sure the dark mode toggle is visible */
+.nav-controls .dark-mode-toggle {
+    opacity: 1 !important;
+    visibility: visible !important;
+    position: relative !important;
+    display: flex !important;
 }
 
 .logo {
