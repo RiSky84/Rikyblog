@@ -635,29 +635,37 @@ function createSimpleWorkingToggle() {
         return;
     }
     
-    // Create the switch-style toggle HTML
+    // Create the switch-style toggle HTML - HIGHLY VISIBLE VERSION
     const toggleHTML = `
         <div id="themeSwitchContainer" style="
-            position: absolute;
-            top: -10px;
-            right: 0px;
+            position: relative;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #3498db;
+            border-radius: 10px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            justify-content: center;
+            gap: 15px;
             z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
         ">
             <span id="themeLabel" style="
-                font-size: 14px;
-                font-weight: 500;
-                color: #666;
-                margin-right: 8px;
-            ">🌙 Dark</span>
+                font-size: 16px;
+                font-weight: 600;
+                color: #2c3e50;
+                margin-right: 10px;
+            ">🌙 Dark Mode</span>
             
             <label id="themeSwitch" style="
                 position: relative;
                 display: inline-block;
-                width: 60px;
-                height: 30px;
+                width: 70px;
+                height: 35px;
                 cursor: pointer;
             ">
                 <input type="checkbox" id="themeSwitchInput" style="
@@ -672,38 +680,38 @@ function createSimpleWorkingToggle() {
                     right: 0;
                     bottom: 0;
                     background-color: #34495e;
-                    transition: 0.3s;
-                    border-radius: 30px;
-                    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+                    transition: 0.4s;
+                    border-radius: 35px;
+                    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
                 ">
                     <span id="switchButton" style="
                         position: absolute;
                         content: '';
-                        height: 24px;
-                        width: 24px;
-                        left: 3px;
-                        bottom: 3px;
+                        height: 28px;
+                        width: 28px;
+                        left: 4px;
+                        bottom: 3.5px;
                         background-color: white;
-                        transition: 0.3s;
+                        transition: 0.4s;
                         border-radius: 50%;
-                        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+                        box-shadow: 0 2px 6px rgba(0,0,0,0.3);
                         display: flex;
                         align-items: center;
                         justify-content: center;
-                        font-size: 12px;
+                        font-size: 14px;
                     ">🌙</span>
                 </span>
             </label>
         </div>
     `;
     
-    // Make the header-content relative positioned to contain the absolute toggle
+    // Make the header-content relative positioned to contain the toggle
     const headerContent = welcomeElement.closest('.header-content');
     if (headerContent) {
         headerContent.style.position = 'relative';
     }
     
-    // Insert the toggle near the welcome text
+    // Insert the toggle AFTER the welcome text (more visible)
     welcomeElement.insertAdjacentHTML('afterend', toggleHTML);
     
     const toggleInput = document.getElementById('themeSwitchInput');
@@ -731,9 +739,9 @@ function createSimpleWorkingToggle() {
             body.style.background = '#ffffff';
             body.style.color = '#333333';
             switchSlider.style.backgroundColor = '#3498db';
-            switchButton.style.transform = 'translateX(30px)';
+            switchButton.style.transform = 'translateX(35px)';
             switchButton.innerHTML = '☀️';
-            themeLabel.innerHTML = '☀️ Light';
+            themeLabel.innerHTML = '☀️ Light Mode';
             themeLabel.style.color = '#3498db';
             localStorage.setItem('theme', 'light');
             console.log('☀️ Switched to LIGHT mode');
@@ -745,7 +753,7 @@ function createSimpleWorkingToggle() {
             switchSlider.style.backgroundColor = '#34495e';
             switchButton.style.transform = 'translateX(0px)';
             switchButton.innerHTML = '🌙';
-            themeLabel.innerHTML = '🌙 Dark';
+            themeLabel.innerHTML = '🌙 Dark Mode';
             themeLabel.style.color = '#ecf0f1';
             localStorage.setItem('theme', 'dark');
             console.log('🌙 Switched to DARK mode');
@@ -769,9 +777,9 @@ function createSimpleWorkingToggle() {
         document.body.style.background = '#ffffff';
         document.body.style.color = '#333333';
         switchSlider.style.backgroundColor = '#3498db';
-        switchButton.style.transform = 'translateX(30px)';
+        switchButton.style.transform = 'translateX(35px)';
         switchButton.innerHTML = '☀️';
-        themeLabel.innerHTML = '☀️ Light';
+        themeLabel.innerHTML = '☀️ Light Mode';
         themeLabel.style.color = '#3498db';
     } else {
         toggleInput.checked = false;
@@ -781,7 +789,7 @@ function createSimpleWorkingToggle() {
         switchSlider.style.backgroundColor = '#34495e';
         switchButton.style.transform = 'translateX(0px)';
         switchButton.innerHTML = '🌙';
-        themeLabel.innerHTML = '🌙 Dark';
+        themeLabel.innerHTML = '🌙 Dark Mode';
         themeLabel.style.color = '#ecf0f1';
     }
     
