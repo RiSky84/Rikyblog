@@ -2,21 +2,11 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log('📄 DOM fully loaded');
-    console.log('🔍 Available buttons:', document.querySelectorAll('button'));
     
-    // CREATE ONLY ONE CLEAN, VISIBLE DARK MODE TOGGLE
-    createCleanDarkModeToggle();
+    // CREATE A SIMPLE, GUARANTEED WORKING TOGGLE
+    createSimpleWorkingToggle();
     
-    // Debug: Check if the floating dark mode toggle exists
-    setTimeout(() => {
-        const floatingToggle = document.getElementById('frontDarkToggle');
-        if (floatingToggle) {
-            console.log('✅ Floating dark mode toggle found!');
-            console.log('📍 Toggle position:', floatingToggle.getBoundingClientRect());
-        } else {
-            console.error('❌ Floating dark mode toggle NOT found!');
-        }
-    }, 500);
+    console.log('✅ Simple working toggle initialized');
     
     // Mobile Chrome specific optimizations
     initializeMobileOptimizations();
@@ -625,238 +615,122 @@ function initializeDarkMode() {
     updateScrollPerformanceForTheme();
 }
 
-// Create a clean, guaranteed visible dark mode toggle
-function createCleanDarkModeToggle() {
-    console.log('🎨 Creating SINGLE clean dark mode toggle...');
+// Create a simple, guaranteed working toggle
+function createSimpleWorkingToggle() {
+    console.log('🎨 Creating SIMPLE working toggle...');
     
-    // Remove any existing toggles to prevent duplicates
-    const existingToggles = [
-        document.getElementById('emergency-dark-toggle'),
-        document.getElementById('frontDarkToggle'),
-        document.querySelector('.dark-mode-toggle'),
-        document.querySelector('.front-dark-toggle')
-    ];
-    
-    existingToggles.forEach((toggle, index) => {
+    // Remove ALL existing toggles
+    const allExistingToggles = document.querySelectorAll('[id*="toggle"], [class*="toggle"], [id*="Toggle"], [class*="Toggle"]');
+    allExistingToggles.forEach(toggle => {
         if (toggle) {
             toggle.remove();
-            console.log(`🗑️ Removed existing toggle ${index + 1}`);
+            console.log('🗑️ Removed existing toggle:', toggle.className || toggle.id);
         }
     });
     
-    // Create a PROMINENT, FIXED-POSITION toggle at the bottom-right
-    const toggleContainer = document.createElement('div');
-    toggleContainer.innerHTML = `
-        <button class="front-dark-toggle" id="frontDarkToggle" aria-label="Toggle dark mode">
-            <span class="toggle-icon">🌙</span>
-        </button>
+    // Create the simple toggle HTML
+    const toggleHTML = `
+        <div id="simpleToggle" style="
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: #3498db;
+            border: 3px solid white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 24px;
+            color: white;
+            z-index: 99999;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        ">🌙</div>
     `;
     
-    // Insert at the very beginning of body to ensure it's at the front
-    document.body.insertBefore(toggleContainer, document.body.firstChild);
+    // Insert into body
+    document.body.insertAdjacentHTML('beforeend', toggleHTML);
     
-    const toggle = document.getElementById('frontDarkToggle');
-    console.log('🎯 Toggle element created:', toggle);
+    const toggle = document.getElementById('simpleToggle');
+    console.log('✅ Simple toggle created:', toggle);
     
     if (!toggle) {
-        console.error('❌ Failed to create toggle element!');
+        console.error('❌ Failed to create simple toggle');
         return;
     }
     
-    // Apply PROMINENT, ALWAYS-VISIBLE styling at bottom-right
-    toggle.style.cssText = `
-        position: fixed !important;
-        bottom: 30px !important;
-        right: 30px !important;
-        background: #3498db !important;
-        border: 3px solid #ffffff !important;
-        border-radius: 50% !important;
-        width: 60px !important;
-        height: 60px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        cursor: pointer !important;
-        font-size: 24px !important;
-        color: white !important;
-        transition: all 0.3s ease !important;
-        box-shadow: 0 4px 20px rgba(52, 152, 219, 0.4), 0 0 0 0 rgba(52, 152, 219, 0.6) !important;
-        z-index: 99999 !important;
-        opacity: 1 !important;
-        visibility: visible !important;
-        backdrop-filter: blur(10px) !important;
-        -webkit-backdrop-filter: blur(10px) !important;
-        animation: pulseGlow 3s ease-in-out infinite !important;
-    `;
-    
-    // Add CSS animation for the glow effect
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes pulseGlow {
-            0%, 100% { 
-                box-shadow: 0 4px 20px rgba(52, 152, 219, 0.4), 0 0 0 0 rgba(52, 152, 219, 0.6);
-            }
-            50% { 
-                box-shadow: 0 4px 30px rgba(52, 152, 219, 0.6), 0 0 20px rgba(52, 152, 219, 0.8);
-                transform: scale(1.05);
-            }
+    // Add click functionality
+    toggle.addEventListener('click', function() {
+        console.log('🖱️ Simple toggle clicked!');
+        
+        const body = document.body;
+        const isCurrentlyDark = body.classList.contains('dark-mode');
+        
+        if (isCurrentlyDark) {
+            // Switch to LIGHT mode
+            body.classList.remove('dark-mode');
+            body.style.background = '#ffffff';
+            body.style.color = '#333333';
+            this.innerHTML = '🌙';
+            this.style.background = '#3498db';
+            this.style.borderColor = 'white';
+            localStorage.setItem('theme', 'light');
+            console.log('☀️ Switched to LIGHT mode');
+        } else {
+            // Switch to DARK mode
+            body.classList.add('dark-mode');
+            body.style.background = '#2c3e50';
+            body.style.color = '#ffffff';
+            this.innerHTML = '☀️';
+            this.style.background = '#34495e';
+            this.style.borderColor = '#ecf0f1';
+            localStorage.setItem('theme', 'dark');
+            console.log('🌙 Switched to DARK mode');
         }
-        
-        body.dark-mode @keyframes pulseGlow {
-            0%, 100% { 
-                box-shadow: 0 4px 20px rgba(52, 73, 94, 0.4), 0 0 0 0 rgba(52, 73, 94, 0.6);
-            }
-            50% { 
-                box-shadow: 0 4px 30px rgba(52, 73, 94, 0.6), 0 0 20px rgba(52, 73, 94, 0.8);
-                transform: scale(1.05);
-            }
-        }
-        
-        /* Mobile responsive styles */
-        @media (max-width: 768px) {
-            #frontDarkToggle {
-                bottom: 20px !important;
-                right: 20px !important;
-                width: 55px !important;
-                height: 55px !important;
-                font-size: 20px !important;
-            }
-        }
-    `;
-    document.head.appendChild(style);
-    
-    // Enhanced click functionality with detailed logging
-    toggle.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        
-        console.log('🖱️ Toggle clicked!');
-        
-        const currentlyDark = document.body.classList.contains('dark-mode');
-        const willBeDark = !currentlyDark;
-        
-        console.log('🌓 Current mode:', currentlyDark ? 'dark' : 'light');
-        console.log('🌓 Switching to:', willBeDark ? 'dark' : 'light');
         
         // Add click animation
         this.style.transform = 'scale(0.9)';
-        this.style.transition = 'transform 0.1s ease';
-        
         setTimeout(() => {
             this.style.transform = 'scale(1)';
-            this.style.transition = 'all 0.3s ease';
         }, 150);
-        
-        // Toggle theme classes
-        if (willBeDark) {
-            document.body.classList.add('dark-mode');
-            document.documentElement.classList.add('dark-mode'); // Also add to html element
-            this.querySelector('.toggle-icon').textContent = '☀️';
-            this.style.background = '#34495e !important';
-            this.style.borderColor = '#ecf0f1 !important';
-            console.log('🌙 Switched to DARK mode');
-        } else {
-            document.body.classList.remove('dark-mode');
-            document.documentElement.classList.remove('dark-mode'); // Also remove from html element
-            this.querySelector('.toggle-icon').textContent = '🌙';
-            this.style.background = '#3498db !important';
-            this.style.borderColor = '#ffffff !important';
-            console.log('☀️ Switched to LIGHT mode');
-        }
-        
-        // Save preference to localStorage
-        localStorage.setItem('theme', willBeDark ? 'dark' : 'light');
-        console.log('💾 Theme saved to localStorage:', willBeDark ? 'dark' : 'light');
-        
-        // Show notification
-        if (typeof showNotification === 'function') {
-            showNotification(`🎨 Switched to ${willBeDark ? 'dark' : 'light'} mode ${willBeDark ? '🌙' : '☀️'}`, 'success', 3000);
-        } else {
-            console.log('📢 Notification function not available');
-        }
-        
-        // Force update of any theme-dependent elements
-        updateThemeElements(willBeDark);
-        
-        console.log('✅ Theme switch completed successfully!');
     });
     
     // Add hover effects
     toggle.addEventListener('mouseenter', function() {
-        console.log('🖱️ Toggle hover started');
-        this.style.animationPlayState = 'paused';
-        this.style.background = '#2980b9 !important';
         this.style.transform = 'scale(1.1)';
-        this.style.boxShadow = '0 6px 25px rgba(41, 128, 185, 0.6), 0 0 30px rgba(41, 128, 185, 0.8) !important';
+        this.style.boxShadow = '0 6px 20px rgba(0,0,0,0.3)';
     });
     
     toggle.addEventListener('mouseleave', function() {
-        console.log('🖱️ Toggle hover ended');
-        const isDark = document.body.classList.contains('dark-mode');
-        this.style.animationPlayState = 'running';
-        this.style.background = (isDark ? '#34495e' : '#3498db') + ' !important';
         this.style.transform = 'scale(1)';
-        this.style.boxShadow = isDark ? 
-            '0 4px 20px rgba(52, 73, 94, 0.4), 0 0 0 0 rgba(52, 73, 94, 0.6) !important' : 
-            '0 4px 20px rgba(52, 152, 219, 0.4), 0 0 0 0 rgba(52, 152, 219, 0.6) !important';
+        this.style.boxShadow = '0 4px 15px rgba(0,0,0,0.2)';
     });
     
-    // Apply saved theme on load
+    // Apply saved theme
     const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const shouldBeDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
-    
-    console.log('💾 Saved theme:', savedTheme);
-    console.log('🖥️ System prefers dark:', prefersDark);
-    console.log('✅ Should be dark:', shouldBeDark);
-    
-    if (shouldBeDark) {
+    if (savedTheme === 'dark') {
         document.body.classList.add('dark-mode');
-        document.documentElement.classList.add('dark-mode');
-        toggle.querySelector('.toggle-icon').textContent = '☀️';
-        toggle.style.background = '#34495e !important';
-        toggle.style.borderColor = '#ecf0f1 !important';
-        updateThemeElements(true);
-        console.log('🌙 Applied dark mode on load');
+        document.body.style.background = '#2c3e50';
+        document.body.style.color = '#ffffff';
+        toggle.innerHTML = '☀️';
+        toggle.style.background = '#34495e';
+        toggle.style.borderColor = '#ecf0f1';
+        console.log('🌙 Applied saved DARK mode');
     } else {
         document.body.classList.remove('dark-mode');
-        document.documentElement.classList.remove('dark-mode');
-        toggle.querySelector('.toggle-icon').textContent = '🌙';
-        toggle.style.background = '#3498db !important';
-        toggle.style.borderColor = '#ffffff !important';
-        updateThemeElements(false);
-        console.log('☀️ Applied light mode on load');
+        document.body.style.background = '#ffffff';
+        document.body.style.color = '#333333';
+        toggle.innerHTML = '🌙';
+        toggle.style.background = '#3498db';
+        toggle.style.borderColor = 'white';
+        console.log('☀️ Applied LIGHT mode (default)');
     }
     
-    console.log('✅ BOTTOM-RIGHT dark mode toggle created and positioned prominently!');
-    console.log('📍 Toggle position:', toggle.getBoundingClientRect());
-    console.log('🎨 Toggle styles applied:', window.getComputedStyle(toggle));
-    
+    console.log('✅ Simple working toggle is ready!');
     return toggle;
-}
-
-// Helper function to update theme-dependent elements
-function updateThemeElements(isDark) {
-    console.log('🎨 Updating theme elements, isDark:', isDark);
-    
-    // Update CSS custom properties if they exist
-    const root = document.documentElement;
-    if (isDark) {
-        root.style.setProperty('--bg-color', '#2c3e50');
-        root.style.setProperty('--text-color', '#ecf0f1');
-        root.style.setProperty('--accent-color', '#00d4ff');
-    } else {
-        root.style.setProperty('--bg-color', '#ffffff');
-        root.style.setProperty('--text-color', '#2c3e50');
-        root.style.setProperty('--accent-color', '#3498db');
-    }
-    
-    // Trigger any theme-dependent animations or updates
-    if (typeof optimizeScrollPerformance === 'function') {
-        optimizeScrollPerformance();
-    }
-    
-    console.log('✅ Theme elements updated');
 }
 
 // Notification System for better user feedback
