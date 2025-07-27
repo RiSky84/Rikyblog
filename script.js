@@ -635,13 +635,13 @@ function createSimpleWorkingToggle() {
         return;
     }
     
-    // Create the switch-style toggle HTML - HIGHLY VISIBLE VERSION
+    // Create the switch-style toggle HTML - POSITIONED ABOVE WELCOME TEXT
     const toggleHTML = `
         <div id="themeSwitchContainer" style="
             position: relative;
-            margin: 20px 0;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.9);
+            margin: 10px 0 30px 0;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.95);
             border: 2px solid #3498db;
             border-radius: 10px;
             display: flex;
@@ -655,7 +655,7 @@ function createSimpleWorkingToggle() {
             margin-right: auto;
         ">
             <span id="themeLabel" style="
-                font-size: 16px;
+                font-size: 15px;
                 font-weight: 600;
                 color: #2c3e50;
                 margin-right: 10px;
@@ -711,8 +711,8 @@ function createSimpleWorkingToggle() {
         headerContent.style.position = 'relative';
     }
     
-    // Insert the toggle AFTER the welcome text (more visible)
-    welcomeElement.insertAdjacentHTML('afterend', toggleHTML);
+    // Insert the toggle BEFORE the welcome text (above it, won't block)
+    welcomeElement.insertAdjacentHTML('beforebegin', toggleHTML);
     
     const toggleInput = document.getElementById('themeSwitchInput');
     const switchSlider = document.getElementById('switchSlider');
