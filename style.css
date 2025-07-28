@@ -149,6 +149,115 @@ html, body {
     will-change: scroll-position;
 }
 
+/* Custom Mouse Cursor Styles for PC */
+* {
+    cursor: default;
+}
+
+/* Default cursor for body */
+body {
+    cursor: default;
+}
+
+/* Pointer cursor for interactive elements */
+a, button, .nav-link, .back-to-top, .youtube-button, .mobile-menu-toggle,
+.newsletter-form button, .share-button, .theme-toggle, input[type="submit"],
+input[type="button"], .btn, .developer-credit {
+    cursor: pointer;
+}
+
+/* Text cursor for text inputs and editable areas */
+input[type="text"], input[type="email"], input[type="password"], 
+textarea, [contenteditable="true"] {
+    cursor: text;
+}
+
+/* Help cursor for elements with tooltips or help information */
+.stat-item, .benefits-list li {
+    cursor: help;
+}
+
+/* Move cursor for draggable elements */
+.floating-shapes .shape {
+    cursor: move;
+}
+
+/* Not-allowed cursor for disabled elements */
+button:disabled, input:disabled, textarea:disabled {
+    cursor: not-allowed;
+}
+
+/* Zoom-in cursor for images */
+img, .dev-bg img {
+    cursor: zoom-in;
+}
+
+/* Crosshair cursor for precise selection areas */
+.nav-controls {
+    cursor: crosshair;
+}
+
+/* Enhanced hover effects with custom cursors */
+section:hover {
+    cursor: pointer;
+}
+
+/* Text selection cursor for paragraphs and readable content */
+p, article, blockquote, li {
+    cursor: text;
+}
+
+/* Custom cursor for special elements */
+.typewriter {
+    cursor: text;
+}
+
+.header-stats .stat-number {
+    cursor: help;
+}
+
+/* Advanced Custom Cursor Effects */
+/* Golden glow cursor effect for special elements */
+.nav-link:hover, .youtube-button:hover, .newsletter-form button:hover {
+    cursor: pointer;
+    position: relative;
+}
+
+/* Custom cursor for theme-specific elements */
+body:not(.dark-mode) .nav-link:hover {
+    cursor: pointer;
+}
+
+body.dark-mode .nav-link:hover {
+    cursor: pointer;
+}
+
+/* Responsive cursor - hide custom cursors on touch devices */
+@media (hover: none) and (pointer: coarse) {
+    * {
+        cursor: auto !important;
+    }
+}
+
+/* Custom cursor for code blocks */
+code, pre {
+    cursor: text;
+}
+
+/* Progress cursor for loading or processing elements */
+.back-to-top[aria-label*="loading"] {
+    cursor: progress;
+}
+
+/* Grab cursor for scrollable areas */
+.nav-links {
+    cursor: grab;
+}
+
+.nav-links:active {
+    cursor: grabbing;
+}
+
 /* Mobile Chrome theme-aware scroll optimizations */
 body:not(.dark-mode) {
     /* Light mode optimizations */
@@ -3088,6 +3197,18 @@ body.dark-mode section#my-hobbies {
     color: #ffffff !important;
     box-shadow: 0 12px 40px rgba(255, 140, 0, 0.6), 
                 inset 0 1px 0 rgba(218, 165, 32, 0.3) !important;
+    cursor: default;
+}
+
+/* Custom cursors for hobbies list items */
+body.dark-mode section#my-hobbies ul li,
+body:not(.dark-mode) section#my-hobbies ul li {
+    cursor: pointer;
+}
+
+body.dark-mode section#my-hobbies ul li:hover,
+body:not(.dark-mode) section#my-hobbies ul li:hover {
+    cursor: pointer;
 }
 
 body.dark-mode section#my-hobbies::before {
