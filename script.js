@@ -1337,7 +1337,7 @@ function initializeContactForm() {
             
             if (!hasValidFormspree) {
                 console.warn('⚠️ Email system not configured properly!');
-                showNotification('📧 Email system needs setup - check EMAIL_FIX_GUIDE.md', 'warning', 8000);
+                // Notification removed - no longer showing setup guide info
             } else {
                 console.log('✅ Email system configured correctly with Formspree ID: meozgndw');
             }
@@ -1419,11 +1419,11 @@ function initializeContactForm() {
                 });
                 
             } else {
-                // Form needs setup - prevent submission and show instructions
+                // Form needs setup - prevent submission but don't show notification
                 submitBtn.innerHTML = '<span>Setup Required</span>';
                 submitBtn.disabled = true;
                 
-                showNotification('⚙️ Contact form needs setup! Check EMAIL_SETUP_GUIDE.md', 'info', 6000);
+                // Email setup notification removed
                 
                 setTimeout(() => {
                     submitBtn.innerHTML = originalText;
@@ -1455,7 +1455,7 @@ function initializeContactForm() {
                     console.log('✅ Formspree endpoint exists (405 expected for HEAD)');
                 } else {
                     console.warn(`⚠️ Formspree endpoint issue: ${response.status}`);
-                    showNotification(`⚠️ Form endpoint returned status ${response.status}. Check EMAIL_SETUP_GUIDE.md`, 'warning', 8000);
+                    // Email setup guide notification removed
                 }
             })
             .catch(error => {
