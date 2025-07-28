@@ -51,9 +51,9 @@
     --nav-bg: rgba(255, 255, 255, 0.98);
     --nav-shadow: rgba(15, 23, 42, 0.1);
     --post-bg: rgba(255, 255, 255, 0.98);
-    --input-bg: #ffffff;
-    --input-border: #d1d5db;
-    --input-focus: var(--neon-blue);
+    --input-bg: #fffef9;
+    --input-border: #daa520;
+    --input-focus: var(--orange-primary);
     --button-bg: var(--neon-blue);
     --button-hover: var(--neon-cyan);
     --button-text: #ffffff;
@@ -400,14 +400,26 @@ h2 {
     color: var(--accent-color);
 }
 
-/* Light mode neon glow for section headings */
+/* Golden theme section headings */
 body:not(.dark-mode) section h2 {
-    text-shadow: 0 0 15px var(--neon-glow);
+    color: var(--orange-primary);
+    text-shadow: 0 0 20px var(--golden-glow), 0 2px 8px rgba(218, 165, 32, 0.3);
 }
 
 body:not(.dark-mode) section h2:hover {
-    text-shadow: 0 0 25px var(--neon-glow-strong);
-    color: var(--neon-blue);
+    text-shadow: 0 0 30px var(--golden-glow-strong), 0 2px 12px rgba(255, 140, 0, 0.4);
+    color: var(--golden-primary);
+}
+
+/* Dark mode section headings */
+body.dark-mode section h2 {
+    color: var(--golden-primary);
+    text-shadow: 0 0 25px var(--golden-glow-strong), 0 2px 10px rgba(255, 215, 0, 0.4);
+}
+
+body.dark-mode section h2:hover {
+    text-shadow: 0 0 35px var(--orange-glow), 0 2px 15px rgba(255, 140, 0, 0.5);
+    color: var(--orange-primary);
 }
 
 /* Legacy header styles (kept for specificity) */
@@ -421,13 +433,25 @@ header h1 {
 }
 
 section h2 { 
-    border-bottom: 2px solid var(--accent-color); 
-    padding-bottom: 0.5em;
-    color: #34495e;
-    font-size: 1.8em;
-    font-family: 'Crimson Text', 'Times New Roman', Times, serif;
-    font-weight: 600;
+    border-bottom: 3px solid var(--accent-color); 
+    padding-bottom: 0.8em;
+    color: var(--accent-color);
+    font-size: 2em;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
     margin-top: 1.5em;
+    margin-bottom: 1em;
+    position: relative;
+}
+
+/* Light mode section h2 styling */
+body:not(.dark-mode) section h2 {
+    border-bottom-color: var(--orange-primary);
+}
+
+/* Dark mode section h2 styling */
+body.dark-mode section h2 {
+    border-bottom-color: var(--golden-primary);
 }
 .date { 
     color: #5d4e75; 
@@ -451,36 +475,57 @@ section h2 {
 }
 
 /* Advanced Section Enhancement with Sci-Fi Elements */
-/* Enhanced Section Styling - Crystal Clear */
+/* Enhanced Section Styling - Black, Orange, Golden, White Theme */
 section {
     background: var(--card-bg);
     margin: 2em 0;
     padding: 3em;
     border-radius: 20px;
-    box-shadow: 0 8px 32px var(--shadow-color);
-    border: 1px solid var(--card-border);
-    border-left: 4px solid var(--accent-color);
+    box-shadow: 0 10px 40px var(--shadow-color);
+    border: 2px solid var(--card-border);
+    border-left: 6px solid var(--accent-color);
     color: var(--text-color);
     font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
     font-size: 1.1em;
     line-height: 1.8;
-    transition: all 0.4s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
+    backdrop-filter: blur(10px);
 }
 
-/* Light mode neon section hover effect */
+/* Light mode section styling */
+body:not(.dark-mode) section {
+    background: linear-gradient(135deg, #ffffff 0%, #fffef9 50%, #fefcf3 100%);
+    border-color: var(--golden-secondary);
+    border-left-color: var(--orange-primary);
+    box-shadow: 0 10px 40px rgba(218, 165, 32, 0.15), 0 0 20px rgba(255, 140, 0, 0.1);
+}
+
+/* Dark mode section styling */
+body.dark-mode section {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1f1f1f 100%);
+    border-color: var(--orange-primary);
+    border-left-color: var(--golden-primary);
+    box-shadow: 0 10px 40px rgba(255, 140, 0, 0.3), 0 0 30px rgba(255, 215, 0, 0.2);
+}
+
+/* Section hover effects */
 body:not(.dark-mode) section:hover {
     box-shadow: 
-        0 12px 40px var(--shadow-hover),
-        0 0 30px var(--neon-glow),
-        inset 0 0 1px var(--neon-blue);
-    border-left-color: var(--neon-cyan);
-    transform: translateY(-4px);
+        0 15px 50px rgba(218, 165, 32, 0.25),
+        0 0 40px var(--golden-glow),
+        inset 0 0 2px var(--orange-primary);
+    border-left-color: var(--golden-primary);
+    transform: translateY(-5px);
 }
 
-section:hover {
-    box-shadow: 0 12px 40px var(--shadow-hover);
-    transform: translateY(-4px);
+body.dark-mode section:hover {
+    box-shadow: 
+        0 15px 50px rgba(255, 140, 0, 0.4),
+        0 0 50px var(--golden-glow-strong),
+        inset 0 0 2px var(--golden-primary);
+    border-left-color: var(--orange-secondary);
+    transform: translateY(-5px);
 }
 
 /* Clean paragraph styling */
@@ -616,16 +661,38 @@ article p:first-of-type::first-letter {
     font-weight: 700;
 }
 
-/* Accent colors for interactive elements */
+/* Golden theme links */
 a {
-    color: #3498db;
+    color: var(--accent-color);
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
+    position: relative;
 }
 
 a:hover {
-    color: #2980b9;
+    color: var(--golden-primary);
     text-decoration: underline;
+    text-shadow: 0 0 10px var(--golden-glow);
+}
+
+/* Light mode links */
+body:not(.dark-mode) a {
+    color: var(--orange-primary);
+}
+
+body:not(.dark-mode) a:hover {
+    color: var(--golden-secondary);
+    text-shadow: 0 0 8px var(--orange-glow);
+}
+
+/* Dark mode links */
+body.dark-mode a {
+    color: var(--golden-primary);
+}
+
+body.dark-mode a:hover {
+    color: var(--orange-primary);
+    text-shadow: 0 0 12px var(--golden-glow-strong);
 }
 
 /* Custom scrollbar for webkit browsers */
@@ -1517,22 +1584,52 @@ body.dark-mode .dark-mode-toggle:focus {
     border-color: #3498db;
 }
 
-/* Enhanced Blog Post Styles */
+/* Enhanced Blog Post Styles - Golden Theme */
 .blog-post {
-    background: var(--post-bg);
+    background: var(--card-bg);
     color: var(--text-color);
     padding: 40px;
     margin: 30px 0;
-    border-radius: 15px;
-    box-shadow: 0 5px 20px var(--shadow-color);
-    transition: all 0.3s ease;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px var(--shadow-color);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
-    border: 1px solid var(--border-color);
+    border: 2px solid var(--card-border);
+    border-left: 6px solid var(--accent-color);
+    backdrop-filter: blur(10px);
+}
+
+/* Light mode blog posts */
+body:not(.dark-mode) .blog-post {
+    background: linear-gradient(135deg, #ffffff 0%, #fffef9 100%);
+    border-color: var(--golden-secondary);
+    border-left-color: var(--orange-primary);
+    box-shadow: 0 8px 30px rgba(218, 165, 32, 0.15), 0 0 20px rgba(255, 140, 0, 0.05);
+}
+
+/* Dark mode blog posts */
+body.dark-mode .blog-post {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    border-color: var(--orange-primary);
+    border-left-color: var(--golden-primary);
+    box-shadow: 0 8px 30px rgba(255, 140, 0, 0.25), 0 0 25px rgba(255, 215, 0, 0.1);
 }
 
 .blog-post:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 40px var(--shadow-hover);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 50px var(--shadow-hover);
+}
+
+/* Light mode blog post hover */
+body:not(.dark-mode) .blog-post:hover {
+    box-shadow: 0 20px 50px rgba(218, 165, 32, 0.25), 0 0 40px var(--golden-glow);
+    border-left-color: var(--golden-primary);
+}
+
+/* Dark mode blog post hover */
+body.dark-mode .blog-post:hover {
+    box-shadow: 0 20px 50px rgba(255, 140, 0, 0.35), 0 0 50px var(--golden-glow-strong);
+    border-left-color: var(--orange-secondary);
 }
 
 .post-meta {
