@@ -304,14 +304,14 @@ body {
 /* Golden Header Design */
 header { 
     text-align: center; 
-    margin-bottom: 2em; 
+    margin-bottom: 1.5em; 
     background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #404040 100%);
     color: var(--golden-primary);
     border: 2px solid var(--orange-primary);
-    border-bottom: 4px solid var(--golden-primary);
-    padding: 3em 2em;
-    border-radius: 20px;
-    box-shadow: 0 8px 30px rgba(255, 140, 0, 0.3), 0 0 50px rgba(255, 215, 0, 0.2);
+    border-bottom: 3px solid var(--golden-primary);
+    padding: 2em 1.5em;
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(255, 140, 0, 0.25), 0 0 30px rgba(255, 215, 0, 0.15);
     font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
     position: relative;
     overflow: hidden;
@@ -321,9 +321,9 @@ header {
 body:not(.dark-mode) header {
     background: linear-gradient(135deg, #ffffff 0%, #fefefe 50%, #fdfdfd 100%);
     color: #2c3e50;
-    border: 3px solid var(--orange-primary);
-    border-bottom: 5px solid var(--golden-secondary);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1), 0 0 50px rgba(230, 126, 34, 0.15);
+    border: 2px solid var(--orange-primary);
+    border-bottom: 3px solid var(--golden-secondary);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08), 0 0 30px rgba(230, 126, 34, 0.12);
 }
 
 header h1 {
@@ -370,32 +370,32 @@ body:not(.dark-mode) header p {
 /* Enhanced Article Styling - Crystal Clear with Neon Accents */
 article { 
     background: var(--card-bg);
-    padding: 2em; 
-    margin-bottom: 1.5em; 
-    border-radius: 16px; 
-    box-shadow: 0 4px 20px var(--shadow-color); 
+    padding: 1.5em; 
+    margin-bottom: 1.2em; 
+    border-radius: 12px; 
+    box-shadow: 0 3px 15px var(--shadow-color); 
     border: 1px solid var(--card-border);
-    border-left: 4px solid var(--accent-color);
+    border-left: 3px solid var(--accent-color);
     color: var(--text-color);
     font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 1.1em;
-    line-height: 1.8;
+    font-size: 1em;
+    line-height: 1.6;
     transition: all 0.3s ease;
 }
 
 /* Light mode neon hover effect */
 body:not(.dark-mode) article:hover {
     box-shadow: 
-        0 8px 30px var(--shadow-hover),
-        0 0 20px var(--neon-glow),
+        0 6px 20px var(--shadow-hover),
+        0 0 15px var(--neon-glow),
         inset 0 0 1px var(--neon-blue);
     border-left-color: var(--neon-blue);
-    transform: translateY(-2px);
+    transform: translateY(-1px);
 }
 
 article:hover {
-    box-shadow: 0 8px 30px var(--shadow-hover);
-    transform: translateY(-2px);
+    box-shadow: 0 6px 20px var(--shadow-hover);
+    transform: translateY(-1px);
 }
 
 /* Enhanced Text Styling - More Colors and Better Visibility */
@@ -520,22 +520,22 @@ body.dark-mode section h2:hover {
 /* Legacy header styles (kept for specificity) */
 header h1 {
     color: var(--accent-color);
-    font-size: 2.8em;
+    font-size: 2.2em;
     font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-    font-weight: 800;
-    letter-spacing: -1px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
     text-transform: none;
 }
 
 section h2 { 
-    border-bottom: 3px solid var(--accent-color); 
-    padding-bottom: 0.8em;
+    border-bottom: 2px solid var(--accent-color); 
+    padding-bottom: 0.6em;
     color: var(--accent-color);
-    font-size: 2em;
+    font-size: 1.6em;
     font-family: 'Playfair Display', serif;
-    font-weight: 700;
-    margin-top: 1.5em;
-    margin-bottom: 1em;
+    font-weight: 600;
+    margin-top: 1.2em;
+    margin-bottom: 0.8em;
     position: relative;
 }
 
@@ -573,27 +573,27 @@ body.dark-mode section h2 {
 /* Enhanced Section Styling - Black, Orange, Golden, White Theme */
 section {
     background: var(--card-bg);
-    margin: 2em 0;
-    padding: 3em;
-    border-radius: 20px;
-    box-shadow: 0 10px 40px var(--shadow-color);
+    margin: 1.5em 0;
+    padding: 2em;
+    border-radius: 15px;
+    box-shadow: 0 6px 25px var(--shadow-color);
     border: 2px solid var(--card-border);
-    border-left: 6px solid var(--accent-color);
+    border-left: 4px solid var(--accent-color);
     color: var(--text-color);
     font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 1.1em;
-    line-height: 1.8;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 1em;
+    line-height: 1.6;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(8px);
 }
 
 /* Light mode section styling - Colorful & High Contrast */
 body:not(.dark-mode) section {
     background: linear-gradient(135deg, #ffffff 0%, #fdfbf7 50%, #faf6f0 100%);
     border: 2px solid #e67e22;
-    border-left: 6px solid #d35400;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), 0 4px 16px rgba(230, 126, 34, 0.15);
+    border-left: 4px solid #d35400;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08), 0 3px 12px rgba(230, 126, 34, 0.12);
     color: var(--text-color);
 }
 
@@ -602,33 +602,33 @@ body.dark-mode section {
     background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1f1f1f 100%);
     border-color: var(--orange-primary);
     border-left-color: var(--golden-primary);
-    box-shadow: 0 10px 40px rgba(255, 140, 0, 0.3), 0 0 30px rgba(255, 215, 0, 0.2);
+    box-shadow: 0 6px 25px rgba(255, 140, 0, 0.25), 0 0 20px rgba(255, 215, 0, 0.15);
 }
 
 /* Section hover effects */
 body:not(.dark-mode) section:hover {
     box-shadow: 
-        0 15px 50px rgba(218, 165, 32, 0.25),
-        0 0 40px var(--golden-glow),
-        inset 0 0 2px var(--orange-primary);
+        0 10px 30px rgba(218, 165, 32, 0.2),
+        0 0 25px var(--golden-glow),
+        inset 0 0 1px var(--orange-primary);
     border-left-color: var(--golden-primary);
-    transform: translateY(-5px);
+    transform: translateY(-3px);
 }
 
 body.dark-mode section:hover {
     box-shadow: 
-        0 15px 50px rgba(255, 140, 0, 0.4),
-        0 0 50px var(--golden-glow-strong),
-        inset 0 0 2px var(--golden-primary);
+        0 10px 30px rgba(255, 140, 0, 0.3),
+        0 0 35px var(--golden-glow-strong),
+        inset 0 0 1px var(--golden-primary);
     border-left-color: var(--orange-secondary);
-    transform: translateY(-5px);
+    transform: translateY(-3px);
 }
 
 /* Enhanced paragraph styling with color variety */
 section p {
     color: var(--text-color);
-    margin-bottom: 1.2em;
-    line-height: 1.7;
+    margin-bottom: 1em;
+    line-height: 1.6;
     font-weight: 400;
 }
 
@@ -652,13 +652,13 @@ body:not(.dark-mode) section strong {
 /* Enhanced blockquote styling */
 body:not(.dark-mode) blockquote {
     background: linear-gradient(135deg, rgba(255, 140, 0, 0.05) 0%, rgba(218, 165, 32, 0.08) 100%);
-    border-left: 4px solid var(--orange-primary);
+    border-left: 3px solid var(--orange-primary);
     color: var(--text-heading);
     font-style: italic;
-    padding: 1.5em 2em;
-    margin: 1.5em 0;
-    border-radius: 0 8px 8px 0;
-    box-shadow: 0 2px 10px rgba(255, 140, 0, 0.1);
+    padding: 1.2em 1.5em;
+    margin: 1.2em 0;
+    border-radius: 0 6px 6px 0;
+    box-shadow: 0 2px 8px rgba(255, 140, 0, 0.08);
 }
 
 body:not(.dark-mode) blockquote p {
@@ -680,12 +680,12 @@ body:not(.dark-mode) code {
 body:not(.dark-mode) pre {
     background: linear-gradient(135deg, rgba(44, 62, 80, 0.05) 0%, rgba(52, 73, 94, 0.08) 100%);
     border: 1px solid rgba(255, 140, 0, 0.2);
-    border-left: 4px solid var(--golden-primary);
-    border-radius: 8px;
-    padding: 1.5em;
+    border-left: 3px solid var(--golden-primary);
+    border-radius: 6px;
+    padding: 1.2em;
     overflow-x: auto;
-    margin: 1.5em 0;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    margin: 1.2em 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 body:not(.dark-mode) pre code {
@@ -733,8 +733,8 @@ body:not(.dark-mode) select {
     background: rgba(255, 255, 255, 0.9);
     border: 2px solid var(--golden-primary);
     color: var(--text-color);
-    padding: 10px 15px;
-    border-radius: 6px;
+    padding: 8px 12px;
+    border-radius: 5px;
     transition: all 0.3s ease;
 }
 
@@ -742,7 +742,7 @@ body:not(.dark-mode) input:focus,
 body:not(.dark-mode) textarea:focus,
 body:not(.dark-mode) select:focus {
     border-color: var(--orange-primary);
-    box-shadow: 0 0 15px rgba(255, 140, 0, 0.3);
+    box-shadow: 0 0 12px rgba(255, 140, 0, 0.25);
     outline: none;
 }
 
@@ -752,18 +752,18 @@ body:not(.dark-mode) .btn {
     background: linear-gradient(135deg, var(--orange-primary) 0%, var(--golden-primary) 100%);
     color: white;
     border: none;
-    padding: 12px 24px;
-    border-radius: 6px;
+    padding: 10px 20px;
+    border-radius: 5px;
     font-weight: 600;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3);
+    box-shadow: 0 3px 12px rgba(255, 140, 0, 0.25);
 }
 
 body:not(.dark-mode) button:hover,
 body:not(.dark-mode) .btn:hover {
     background: linear-gradient(135deg, var(--golden-primary) 0%, var(--orange-primary) 100%);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 140, 0, 0.4);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(255, 140, 0, 0.35);
 }
 
 body:not(.dark-mode) section em {
