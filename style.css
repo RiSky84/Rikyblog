@@ -1024,25 +1024,34 @@ strong {
     color: #2c3e50;
 }
 
-/* Developer Credit Styling */
+/* Developer Credit Styling - Enhanced Visibility */
 .developer-credit {
     font-family: 'Crimson Text', 'Times New Roman', Times, serif;
-    font-size: 0.9em;
+    font-size: 1em;
     font-style: italic;
-    color: #3498db !important;
+    color: var(--text-heading) !important;
     margin-top: 1em;
     text-align: center;
     letter-spacing: 0.5px;
+    padding: 0.8em 1.5em;
+    background: linear-gradient(135deg, rgba(255, 140, 0, 0.1) 0%, rgba(218, 165, 32, 0.05) 100%);
+    border-radius: 25px;
+    border: 2px solid rgba(255, 140, 0, 0.2);
+    box-shadow: 0 4px 15px rgba(255, 140, 0, 0.1);
+    font-weight: 500;
 }
 
 .developer-credit strong {
-    color: #f8f9fa;
-    font-weight: 600;
+    color: var(--orange-primary) !important;
+    font-weight: 700;
+    text-shadow: 0 1px 3px rgba(255, 140, 0, 0.3);
 }
 
 .developer-credit em {
-    color: #d4c5b9;
+    color: var(--golden-primary) !important;
     font-style: italic;
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(218, 165, 32, 0.4);
 }
 
 /* Footer Styling */
@@ -2805,7 +2814,39 @@ body.dark-mode .stat-number {
 
 body.dark-mode .developer-credit,
 body.dark-mode .header-subtitle {
-    color: #c7ccd1 !important;
+    color: #ffffff !important;
+}
+
+/* Dark mode developer credit enhancement */
+body.dark-mode .developer-credit {
+    background: linear-gradient(135deg, rgba(255, 140, 0, 0.2) 0%, rgba(218, 165, 32, 0.15) 100%) !important;
+    border: 2px solid rgba(255, 140, 0, 0.4) !important;
+    box-shadow: 0 6px 20px rgba(255, 140, 0, 0.3), 0 0 15px rgba(218, 165, 32, 0.2) !important;
+    color: #ffffff !important;
+}
+
+body.dark-mode .developer-credit strong {
+    color: var(--orange-primary) !important;
+    text-shadow: 0 2px 8px rgba(255, 140, 0, 0.6) !important;
+}
+
+body.dark-mode .developer-credit em {
+    color: var(--golden-primary) !important;
+    text-shadow: 0 2px 6px rgba(218, 165, 32, 0.7) !important;
+}
+
+/* Developer credit hover effects */
+.developer-credit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 140, 0, 0.2);
+    border-color: rgba(255, 140, 0, 0.4);
+    background: linear-gradient(135deg, rgba(255, 140, 0, 0.15) 0%, rgba(218, 165, 32, 0.1) 100%);
+}
+
+body.dark-mode .developer-credit:hover {
+    box-shadow: 0 8px 25px rgba(255, 140, 0, 0.4), 0 0 20px rgba(218, 165, 32, 0.3) !important;
+    border-color: rgba(255, 140, 0, 0.6) !important;
+    background: linear-gradient(135deg, rgba(255, 140, 0, 0.25) 0%, rgba(218, 165, 32, 0.2) 100%) !important;
 }
 
 body.dark-mode .contact-details h3 {
