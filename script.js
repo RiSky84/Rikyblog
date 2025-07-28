@@ -635,37 +635,38 @@ function createSimpleWorkingToggle() {
         return;
     }
     
-    // Create the switch-style toggle HTML - POSITIONED ABOVE WELCOME TEXT
+    // Create the switch-style toggle HTML - GOLDEN/BLACK/ORANGE THEME
     const toggleHTML = `
         <div id="themeSwitchContainer" style="
             position: relative;
             margin: 10px 0 30px 0;
-            padding: 12px;
-            background: rgba(255, 255, 255, 0.95);
-            border: 2px solid #3498db;
-            border-radius: 10px;
+            padding: 15px;
+            background: linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(51,51,51,0.95) 100%);
+            border: 2px solid #FF8C00;
+            border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 15px;
             z-index: 1000;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 25px rgba(255,140,0,0.3), 0 4px 15px rgba(0,0,0,0.4);
             width: fit-content;
             margin-left: auto;
             margin-right: auto;
         ">
             <span id="themeLabel" style="
-                font-size: 15px;
-                font-weight: 600;
-                color: #2c3e50;
-                margin-right: 10px;
+                font-size: 16px;
+                font-weight: 700;
+                color: #FFD700;
+                margin-right: 12px;
+                text-shadow: 0 2px 4px rgba(0,0,0,0.5);
             ">🌙 Dark Mode</span>
             
             <label id="themeSwitch" style="
                 position: relative;
                 display: inline-block;
-                width: 70px;
-                height: 35px;
+                width: 75px;
+                height: 38px;
                 cursor: pointer;
             ">
                 <input type="checkbox" id="themeSwitchInput" style="
@@ -679,26 +680,28 @@ function createSimpleWorkingToggle() {
                     left: 0;
                     right: 0;
                     bottom: 0;
-                    background-color: #34495e;
-                    transition: 0.4s;
-                    border-radius: 35px;
-                    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+                    background: linear-gradient(135deg, #1a1a1a 0%, #333333 100%);
+                    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                    border-radius: 38px;
+                    box-shadow: inset 0 2px 8px rgba(0,0,0,0.5), 0 4px 15px rgba(255,140,0,0.2);
+                    border: 1px solid #444;
                 ">
                     <span id="switchButton" style="
                         position: absolute;
                         content: '';
-                        height: 28px;
-                        width: 28px;
-                        left: 4px;
-                        bottom: 3.5px;
-                        background-color: white;
-                        transition: 0.4s;
+                        height: 32px;
+                        width: 32px;
+                        left: 3px;
+                        bottom: 2.5px;
+                        background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+                        transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
                         border-radius: 50%;
-                        box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+                        box-shadow: 0 4px 12px rgba(255,140,0,0.4), 0 2px 6px rgba(0,0,0,0.3);
                         display: flex;
                         align-items: center;
                         justify-content: center;
-                        font-size: 14px;
+                        font-size: 16px;
+                        border: 2px solid #FF8C00;
                     ">🌙</span>
                 </span>
             </label>
@@ -738,11 +741,14 @@ function createSimpleWorkingToggle() {
             body.classList.remove('dark-mode');
             body.style.background = '#ffffff';
             body.style.color = '#333333';
-            switchSlider.style.backgroundColor = '#3498db';
-            switchButton.style.transform = 'translateX(35px)';
+            switchSlider.style.background = 'linear-gradient(135deg, #FFD700 0%, #FFA500 100%)';
+            switchSlider.style.border = '1px solid #FF8C00';
+            switchButton.style.transform = 'translateX(37px)';
+            switchButton.style.background = 'linear-gradient(135deg, #FFF8DC 0%, #FFFACD 100%)';
+            switchButton.style.border = '2px solid #DAA520';
             switchButton.innerHTML = '☀️';
             themeLabel.innerHTML = '☀️ Light Mode';
-            themeLabel.style.color = '#3498db';
+            themeLabel.style.color = '#FF8C00';
             localStorage.setItem('theme', 'light');
             console.log('☀️ Switched to LIGHT mode');
         } else {
@@ -750,47 +756,56 @@ function createSimpleWorkingToggle() {
             body.classList.add('dark-mode');
             body.style.background = '#2c3e50';
             body.style.color = '#ffffff';
-            switchSlider.style.backgroundColor = '#34495e';
+            switchSlider.style.background = 'linear-gradient(135deg, #1a1a1a 0%, #333333 100%)';
+            switchSlider.style.border = '1px solid #444';
             switchButton.style.transform = 'translateX(0px)';
+            switchButton.style.background = 'linear-gradient(135deg, #FFD700 0%, #FFA500 100%)';
+            switchButton.style.border = '2px solid #FF8C00';
             switchButton.innerHTML = '🌙';
             themeLabel.innerHTML = '🌙 Dark Mode';
-            themeLabel.style.color = '#ecf0f1';
+            themeLabel.style.color = '#FFD700';
             localStorage.setItem('theme', 'dark');
             console.log('🌙 Switched to DARK mode');
         }
     });
     
-    // Add hover effects
+    // Add hover effects with golden glow
     switchSlider.addEventListener('mouseenter', function() {
-        this.style.boxShadow = '0 4px 12px rgba(0,0,0,0.3)';
+        this.style.boxShadow = 'inset 0 2px 8px rgba(0,0,0,0.5), 0 6px 20px rgba(255,140,0,0.5), 0 0 15px rgba(255,215,0,0.3)';
     });
     
     switchSlider.addEventListener('mouseleave', function() {
-        this.style.boxShadow = '0 2px 8px rgba(0,0,0,0.2)';
+        this.style.boxShadow = 'inset 0 2px 8px rgba(0,0,0,0.5), 0 4px 15px rgba(255,140,0,0.2)';
     });
     
-    // Apply saved theme
+    // Apply saved theme with golden/black/orange styling
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'light') {
         toggleInput.checked = true;
         document.body.classList.remove('dark-mode');
         document.body.style.background = '#ffffff';
         document.body.style.color = '#333333';
-        switchSlider.style.backgroundColor = '#3498db';
-        switchButton.style.transform = 'translateX(35px)';
+        switchSlider.style.background = 'linear-gradient(135deg, #FFD700 0%, #FFA500 100%)';
+        switchSlider.style.border = '1px solid #FF8C00';
+        switchButton.style.transform = 'translateX(37px)';
+        switchButton.style.background = 'linear-gradient(135deg, #FFF8DC 0%, #FFFACD 100%)';
+        switchButton.style.border = '2px solid #DAA520';
         switchButton.innerHTML = '☀️';
         themeLabel.innerHTML = '☀️ Light Mode';
-        themeLabel.style.color = '#3498db';
+        themeLabel.style.color = '#FF8C00';
     } else {
         toggleInput.checked = false;
         document.body.classList.add('dark-mode');
         document.body.style.background = '#2c3e50';
         document.body.style.color = '#ffffff';
-        switchSlider.style.backgroundColor = '#34495e';
+        switchSlider.style.background = 'linear-gradient(135deg, #1a1a1a 0%, #333333 100%)';
+        switchSlider.style.border = '1px solid #444';
         switchButton.style.transform = 'translateX(0px)';
+        switchButton.style.background = 'linear-gradient(135deg, #FFD700 0%, #FFA500 100%)';
+        switchButton.style.border = '2px solid #FF8C00';
         switchButton.innerHTML = '🌙';
         themeLabel.innerHTML = '🌙 Dark Mode';
-        themeLabel.style.color = '#ecf0f1';
+        themeLabel.style.color = '#FFD700';
     }
     
     console.log('✅ Switch-style toggle setup complete!');
