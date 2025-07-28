@@ -17,26 +17,28 @@
     --gradient-matrix: linear-gradient(45deg, #000000, #1a1a2e, #16213e, #0f3460);
 }
 
-/* CSS Variables for Light/Dark Mode - Enhanced Visibility */
+/* CSS Variables for Light/Dark Mode - Enhanced Visibility with Colors */
 :root {
-    /* Light mode colors - Enhanced Contrast for Better Readability */
-    --bg-color: linear-gradient(135deg, #ffffff 0%, #fefcf3 50%, #fdf6e3 100%);
-    --text-color: #1a1a1a;
-    --text-light: #4a4a4a;
-    --text-muted: #666666;
+    /* Light mode colors - Enhanced Contrast with Color Variety */
+    --bg-color: linear-gradient(135deg, #ffffff 0%, #f8f9fa 50%, #f1f3f4 100%);
+    --text-color: #212529;
+    --text-light: #495057;
+    --text-muted: #6c757d;
+    --text-heading: #2c3e50;
+    --text-accent: #e67e22;
     --bg-primary: #ffffff;
-    --bg-secondary: #fefcf3;
-    --bg-tertiary: #fdf6e3;
-    --border-color: #daa520;
-    --border-light: #f4e4bc;
-    --shadow-color: rgba(0, 0, 0, 0.15);
-    --shadow-hover: rgba(255, 140, 0, 0.25);
-    --shadow-strong: rgba(255, 140, 0, 0.35);
+    --bg-secondary: #f8f9fa;
+    --bg-tertiary: #e9ecef;
+    --border-color: #e67e22;
+    --border-light: #fdecda;
+    --shadow-color: rgba(0, 0, 0, 0.12);
+    --shadow-hover: rgba(230, 126, 34, 0.25);
+    --shadow-strong: rgba(230, 126, 34, 0.35);
     
-    /* Enhanced Golden/Orange accent colors for light mode */
+    /* Enhanced colorful accent system for light mode */
     --accent-color: #e67e22;
     --accent-secondary: #d35400;
-    --accent-light: #fff8dc;
+    --accent-light: #fdf2e9;
     --golden-primary: #f39c12;
     --golden-secondary: #e67e22;
     --orange-primary: #d35400;
@@ -395,6 +397,83 @@ article:hover {
     box-shadow: 0 8px 30px var(--shadow-hover);
     transform: translateY(-2px);
 }
+
+/* Enhanced Text Styling - More Colors and Better Visibility */
+/* Main titles and subtitles */
+body:not(.dark-mode) .welcome-section h1 {
+    color: var(--orange-primary);
+    text-shadow: 0 2px 10px rgba(255, 140, 0, 0.3);
+}
+
+body:not(.dark-mode) .welcome-section .subtitle,
+body:not(.dark-mode) .welcome-section p {
+    color: var(--golden-secondary);
+    font-weight: 500;
+}
+
+/* Blog post titles */
+body:not(.dark-mode) .blog-post h3,
+body:not(.dark-mode) article h3 {
+    color: var(--orange-secondary);
+    border-bottom: 2px solid var(--golden-primary);
+    padding-bottom: 5px;
+}
+
+/* Section headings */
+body:not(.dark-mode) section h3,
+body:not(.dark-mode) section h4 {
+    color: var(--text-heading);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Text emphasis */
+body:not(.dark-mode) section strong,
+body:not(.dark-mode) article strong {
+    color: var(--orange-primary);
+    font-weight: 700;
+}
+
+body:not(.dark-mode) section em,
+body:not(.dark-mode) article em {
+    color: var(--golden-secondary);
+    font-style: italic;
+}
+
+/* Links in light mode */
+body:not(.dark-mode) section a,
+body:not(.dark-mode) article a {
+    color: var(--orange-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: all 0.3s ease;
+}
+
+body:not(.dark-mode) section a:hover,
+body:not(.dark-mode) article a:hover {
+    color: var(--text-heading);
+    border-bottom-color: var(--golden-primary);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Paragraph text improvements */
+body:not(.dark-mode) section p,
+body:not(.dark-mode) article p {
+    color: var(--text-color);
+    line-height: 1.7;
+}
+
+/* List styling */
+body:not(.dark-mode) section li,
+body:not(.dark-mode) article li {
+    color: var(--text-color);
+    margin-bottom: 0.5em;
+}
+
+body:not(.dark-mode) section li strong,
+body:not(.dark-mode) article li strong {
+    color: var(--orange-secondary);
+}
+
 /* Enhanced Heading Styles - Crystal Clear with Neon Accents */
 h1, h2 { 
     color: var(--text-color); 
@@ -509,13 +588,13 @@ section {
     backdrop-filter: blur(10px);
 }
 
-/* Light mode section styling - Enhanced Contrast */
+/* Light mode section styling - Colorful & High Contrast */
 body:not(.dark-mode) section {
-    background: linear-gradient(135deg, #ffffff 0%, #fefefe 50%, #fdfdfd 100%);
-    border-color: var(--golden-secondary);
-    border-left-color: var(--orange-primary);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08), 0 0 20px rgba(230, 126, 34, 0.1);
-    color: #2c3e50;
+    background: linear-gradient(135deg, #ffffff 0%, #fdfbf7 50%, #faf6f0 100%);
+    border: 2px solid #e67e22;
+    border-left: 6px solid #d35400;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), 0 4px 16px rgba(230, 126, 34, 0.15);
+    color: var(--text-color);
 }
 
 /* Dark mode section styling */
@@ -545,7 +624,7 @@ body.dark-mode section:hover {
     transform: translateY(-5px);
 }
 
-/* Enhanced paragraph styling for better readability */
+/* Enhanced paragraph styling with color variety */
 section p {
     color: var(--text-color);
     margin-bottom: 1.2em;
@@ -553,15 +632,150 @@ section p {
     font-weight: 400;
 }
 
-/* Light mode text enhancement */
+/* Light mode text enhancement with colors */
 body:not(.dark-mode) section p {
     color: #2c3e50;
     font-weight: 500;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
 }
 
 body:not(.dark-mode) section li {
     color: #34495e;
-    font-weight: 400;
+    font-weight: 450;
+}
+
+body:not(.dark-mode) section strong {
+    color: #e67e22;
+    font-weight: 700;
+}
+
+/* Enhanced blockquote styling */
+body:not(.dark-mode) blockquote {
+    background: linear-gradient(135deg, rgba(255, 140, 0, 0.05) 0%, rgba(218, 165, 32, 0.08) 100%);
+    border-left: 4px solid var(--orange-primary);
+    color: var(--text-heading);
+    font-style: italic;
+    padding: 1.5em 2em;
+    margin: 1.5em 0;
+    border-radius: 0 8px 8px 0;
+    box-shadow: 0 2px 10px rgba(255, 140, 0, 0.1);
+}
+
+body:not(.dark-mode) blockquote p {
+    color: inherit;
+    margin-bottom: 0.5em;
+}
+
+/* Enhanced code styling */
+body:not(.dark-mode) code {
+    background: linear-gradient(135deg, rgba(218, 165, 32, 0.1) 0%, rgba(255, 140, 0, 0.05) 100%);
+    color: var(--orange-secondary);
+    padding: 0.2em 0.5em;
+    border-radius: 4px;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 0.9em;
+    border: 1px solid rgba(255, 140, 0, 0.2);
+}
+
+body:not(.dark-mode) pre {
+    background: linear-gradient(135deg, rgba(44, 62, 80, 0.05) 0%, rgba(52, 73, 94, 0.08) 100%);
+    border: 1px solid rgba(255, 140, 0, 0.2);
+    border-left: 4px solid var(--golden-primary);
+    border-radius: 8px;
+    padding: 1.5em;
+    overflow-x: auto;
+    margin: 1.5em 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+body:not(.dark-mode) pre code {
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--text-heading);
+}
+
+/* Enhanced table styling */
+body:not(.dark-mode) table {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid var(--golden-primary);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(255, 140, 0, 0.1);
+}
+
+body:not(.dark-mode) th {
+    background: linear-gradient(135deg, var(--orange-primary) 0%, var(--golden-primary) 100%);
+    color: white;
+    font-weight: 600;
+    padding: 12px 15px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+body:not(.dark-mode) td {
+    color: var(--text-color);
+    padding: 10px 15px;
+    border-bottom: 1px solid rgba(255, 140, 0, 0.1);
+}
+
+body:not(.dark-mode) tr:nth-child(even) {
+    background: rgba(218, 165, 32, 0.03);
+}
+
+body:not(.dark-mode) tr:hover {
+    background: rgba(255, 140, 0, 0.08);
+}
+
+/* Enhanced form styling */
+body:not(.dark-mode) input,
+body:not(.dark-mode) textarea,
+body:not(.dark-mode) select {
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid var(--golden-primary);
+    color: var(--text-color);
+    padding: 10px 15px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+body:not(.dark-mode) input:focus,
+body:not(.dark-mode) textarea:focus,
+body:not(.dark-mode) select:focus {
+    border-color: var(--orange-primary);
+    box-shadow: 0 0 15px rgba(255, 140, 0, 0.3);
+    outline: none;
+}
+
+/* Button styling enhancements */
+body:not(.dark-mode) button,
+body:not(.dark-mode) .btn {
+    background: linear-gradient(135deg, var(--orange-primary) 0%, var(--golden-primary) 100%);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3);
+}
+
+body:not(.dark-mode) button:hover,
+body:not(.dark-mode) .btn:hover {
+    background: linear-gradient(135deg, var(--golden-primary) 0%, var(--orange-primary) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 140, 0, 0.4);
+}
+
+body:not(.dark-mode) section em {
+    color: #d35400;
+    font-style: italic;
+}
+
+/* Light mode headings with color */
+body:not(.dark-mode) section h3,
+body:not(.dark-mode) section h4 {
+    color: #d35400;
+    font-weight: 600;
 }
 
 /* Dark mode text styling */
