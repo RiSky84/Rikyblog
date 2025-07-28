@@ -17,47 +17,47 @@
     --gradient-matrix: linear-gradient(45deg, #000000, #1a1a2e, #16213e, #0f3460);
 }
 
-/* CSS Variables for Light/Dark Mode - Black, Orange, Golden Theme */
+/* CSS Variables for Light/Dark Mode - Enhanced Visibility */
 :root {
-    /* Light mode colors - Golden Elegance */
-    --bg-color: linear-gradient(135deg, #fefcf3 0%, #fdf6e3 50%, #faf0e6 100%);
-    --text-color: #2d1810;
-    --text-light: #8b4513;
-    --text-muted: #a0522d;
-    --bg-primary: #fffef9;
+    /* Light mode colors - Enhanced Contrast for Better Readability */
+    --bg-color: linear-gradient(135deg, #ffffff 0%, #fefcf3 50%, #fdf6e3 100%);
+    --text-color: #1a1a1a;
+    --text-light: #4a4a4a;
+    --text-muted: #666666;
+    --bg-primary: #ffffff;
     --bg-secondary: #fefcf3;
     --bg-tertiary: #fdf6e3;
     --border-color: #daa520;
     --border-light: #f4e4bc;
-    --shadow-color: rgba(218, 165, 32, 0.15);
-    --shadow-hover: rgba(255, 140, 0, 0.2);
-    --shadow-strong: rgba(255, 140, 0, 0.3);
+    --shadow-color: rgba(0, 0, 0, 0.15);
+    --shadow-hover: rgba(255, 140, 0, 0.25);
+    --shadow-strong: rgba(255, 140, 0, 0.35);
     
-    /* Golden/Orange accent colors for light mode */
-    --accent-color: #ff8c00;
-    --accent-secondary: #ffa500;
+    /* Enhanced Golden/Orange accent colors for light mode */
+    --accent-color: #e67e22;
+    --accent-secondary: #d35400;
     --accent-light: #fff8dc;
-    --golden-primary: #ffd700;
-    --golden-secondary: #daa520;
-    --orange-primary: #ff8c00;
-    --orange-secondary: #ff7f50;
-    --golden-glow: rgba(255, 215, 0, 0.3);
-    --orange-glow: rgba(255, 140, 0, 0.3);
-    --golden-glow-strong: rgba(255, 215, 0, 0.5);
+    --golden-primary: #f39c12;
+    --golden-secondary: #e67e22;
+    --orange-primary: #d35400;
+    --orange-secondary: #e67e22;
+    --golden-glow: rgba(243, 156, 18, 0.3);
+    --orange-glow: rgba(211, 84, 0, 0.3);
+    --golden-glow-strong: rgba(243, 156, 18, 0.5);
     
-    --success-color: #228b22;
-    --warning-color: #ff8c00;
-    --error-color: #dc143c;
+    --success-color: #27ae60;
+    --warning-color: #f39c12;
+    --error-color: #e74c3c;
     --nav-bg: rgba(255, 255, 255, 0.98);
-    --nav-shadow: rgba(15, 23, 42, 0.1);
+    --nav-shadow: rgba(0, 0, 0, 0.1);
     --post-bg: rgba(255, 255, 255, 0.98);
-    --input-bg: #fffef9;
-    --input-border: #daa520;
+    --input-bg: #ffffff;
+    --input-border: #e67e22;
     --input-focus: var(--orange-primary);
-    --button-bg: var(--neon-blue);
-    --button-hover: var(--neon-cyan);
+    --button-bg: var(--orange-primary);
+    --button-hover: var(--golden-primary);
     --button-text: #ffffff;
-    --card-bg: #fffef9;
+    --card-bg: #ffffff;
     --card-border: #daa520;
 }
 
@@ -246,7 +246,7 @@ body {
     overflow-x: hidden;
 }
 
-/* Subtle Background Particles (Reduced intensity) */
+/* Enhanced Background Particles - Golden Theme */
 body::before {
     content: '';
     position: fixed;
@@ -255,12 +255,20 @@ body::before {
     width: 100%;
     height: 100%;
     background-image: 
-        radial-gradient(1px 1px at 20% 30%, rgba(100, 181, 246, 0.3), transparent),
-        radial-gradient(1px 1px at 80% 70%, rgba(100, 181, 246, 0.2), transparent);
+        radial-gradient(1px 1px at 20% 30%, rgba(243, 156, 18, 0.15), transparent),
+        radial-gradient(1px 1px at 80% 70%, rgba(230, 126, 34, 0.1), transparent);
     background-size: 400px 400px, 300px 300px;
     animation: subtle-float 30s ease-in-out infinite;
-    opacity: 0.1;
+    opacity: 0.3;
     z-index: -1;
+}
+
+/* Dark mode particles */
+body.dark-mode::before {
+    background-image: 
+        radial-gradient(1px 1px at 20% 30%, rgba(255, 215, 0, 0.2), transparent),
+        radial-gradient(1px 1px at 80% 70%, rgba(255, 140, 0, 0.15), transparent);
+    opacity: 0.2;
 }
 
 @keyframes subtle-float {
@@ -307,13 +315,13 @@ header {
     overflow: hidden;
 }
 
-/* Light mode header */
+/* Light mode header - Enhanced Contrast */
 body:not(.dark-mode) header {
-    background: linear-gradient(135deg, #fefcf3 0%, #fdf6e3 50%, #faf0e6 100%);
-    color: #2d1810;
-    border: 2px solid var(--orange-primary);
-    border-bottom: 4px solid var(--golden-secondary);
-    box-shadow: 0 8px 30px rgba(218, 165, 32, 0.3), 0 0 50px rgba(255, 140, 0, 0.1);
+    background: linear-gradient(135deg, #ffffff 0%, #fefefe 50%, #fdfdfd 100%);
+    color: #2c3e50;
+    border: 3px solid var(--orange-primary);
+    border-bottom: 5px solid var(--golden-secondary);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1), 0 0 50px rgba(230, 126, 34, 0.15);
 }
 
 header h1 {
@@ -330,13 +338,14 @@ header h1 {
     transition: all 0.3s ease;
 }
 
-/* Light mode header text */
+/* Light mode header text - Better Contrast */
 body:not(.dark-mode) header h1 {
-    color: var(--orange-primary);
+    color: #e67e22;
     text-shadow: 
-        0 2px 8px rgba(218, 165, 32, 0.3),
-        0 0 15px var(--golden-glow),
-        0 0 30px var(--orange-glow);
+        0 3px 10px rgba(0, 0, 0, 0.2),
+        0 0 20px rgba(230, 126, 34, 0.3),
+        0 0 40px rgba(243, 156, 18, 0.2);
+    font-weight: 800;
 }
 
 header p {
@@ -344,10 +353,17 @@ header p {
     font-style: normal;
     font-size: 1.2em;
     margin-top: 0.5em;
-    color: #f0f0f0;
+    color: #ecf0f1;
     text-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
     position: relative;
     z-index: 2;
+}
+
+/* Light mode header paragraphs */
+body:not(.dark-mode) header p {
+    color: #34495e;
+    font-weight: 600;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 /* Enhanced Article Styling - Crystal Clear with Neon Accents */
 article { 
@@ -493,12 +509,13 @@ section {
     backdrop-filter: blur(10px);
 }
 
-/* Light mode section styling */
+/* Light mode section styling - Enhanced Contrast */
 body:not(.dark-mode) section {
-    background: linear-gradient(135deg, #ffffff 0%, #fffef9 50%, #fefcf3 100%);
+    background: linear-gradient(135deg, #ffffff 0%, #fefefe 50%, #fdfdfd 100%);
     border-color: var(--golden-secondary);
     border-left-color: var(--orange-primary);
-    box-shadow: 0 10px 40px rgba(218, 165, 32, 0.15), 0 0 20px rgba(255, 140, 0, 0.1);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08), 0 0 20px rgba(230, 126, 34, 0.1);
+    color: #2c3e50;
 }
 
 /* Dark mode section styling */
@@ -528,10 +545,32 @@ body.dark-mode section:hover {
     transform: translateY(-5px);
 }
 
-/* Clean paragraph styling */
+/* Enhanced paragraph styling for better readability */
 section p {
     color: var(--text-color);
     margin-bottom: 1.2em;
+    line-height: 1.7;
+    font-weight: 400;
+}
+
+/* Light mode text enhancement */
+body:not(.dark-mode) section p {
+    color: #2c3e50;
+    font-weight: 500;
+}
+
+body:not(.dark-mode) section li {
+    color: #34495e;
+    font-weight: 400;
+}
+
+/* Dark mode text styling */
+body.dark-mode section p {
+    color: #ecf0f1;
+}
+
+body.dark-mode section li {
+    color: #bdc3c7;
 }
 
 section ul {
@@ -540,6 +579,7 @@ section ul {
 
 section li {
     margin-bottom: 0.5em;
+    line-height: 1.6;
 }
 
 /* Data Stream Effect */
