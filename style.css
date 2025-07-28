@@ -1,9 +1,6 @@
-/* Google Fonts Import for Advanced Typography */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400;1,600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Merriweather:wght@300;400;700&display=swap');
 
-/* FUTURISTIC ADVANCED STYLING - Next-Gen Design System */
-
-/* Advanced CSS Variables for Futuristic Theme */
+/* Futuristic theme variables */
 :root {
     --neon-blue: #00ffff;
     --neon-purple: #8a2be2;
@@ -17,9 +14,8 @@
     --gradient-matrix: linear-gradient(45deg, #000000, #1a1a2e, #16213e, #0f3460);
 }
 
-/* CSS Variables for Light/Dark Mode - Enhanced Visibility with Colors */
+/* Main theme colors */
 :root {
-    /* Light mode colors - Enhanced Contrast with Color Variety */
     --bg-color: linear-gradient(135deg, #ffffff 0%, #f8f9fa 50%, #f1f3f4 100%);
     --text-color: #212529;
     --text-light: #495057;
@@ -35,7 +31,7 @@
     --shadow-hover: rgba(230, 126, 34, 0.25);
     --shadow-strong: rgba(230, 126, 34, 0.35);
     
-    /* Enhanced colorful accent system for light mode */
+    /* Light mode colors */
     --accent-color: #e67e22;
     --accent-secondary: #d35400;
     --accent-light: #fdf2e9;
@@ -63,7 +59,7 @@
     --card-border: #daa520;
 }
 
-/* Dark mode colors - Black & Golden Elegance */
+/* Dark mode */
 body.dark-mode {
     --bg-color: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #2d2d2d 100%);
     --text-color: #ffd700;
@@ -123,16 +119,14 @@ p, h1, h2, h3, h4, h5, h6, span, div.post-content, textarea, input[type="text"],
     user-select: text;
 }
 
-/* Mobile Chrome smooth scrolling optimization for both themes */
 html {
-    scroll-behavior: auto; /* Let JavaScript handle smooth scrolling for better control */
+    scroll-behavior: auto;
     -webkit-overflow-scrolling: touch;
     overflow-x: hidden;
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
-    scroll-padding-top: 70px; /* Account for fixed navigation */
+    scroll-padding-top: 70px;
     height: 100%;
-    /* Mobile Chrome specific optimizations */
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
     -webkit-backface-visibility: hidden;
@@ -141,15 +135,13 @@ html {
     perspective: 1000px;
 }
 
-/* Enhanced smooth scrolling for mobile Chrome */
 html, body {
-    scroll-behavior: auto; /* JavaScript will handle smooth scrolling */
-    /* Hardware acceleration for mobile Chrome */
+    scroll-behavior: auto;
     transform: translateZ(0);
     will-change: scroll-position;
 }
 
-/* Custom Mouse Cursor Styles for PC */
+/* Cursor styles */
 * {
     cursor: default;
 }
@@ -166,43 +158,35 @@ input[type="button"], .btn, .developer-credit {
     cursor: pointer;
 }
 
-/* Text cursor for text inputs and editable areas */
 input[type="text"], input[type="email"], input[type="password"], 
 textarea, [contenteditable="true"] {
     cursor: text;
 }
 
-/* Help cursor for elements with tooltips or help information */
 .stat-item, .benefits-list li {
     cursor: help;
 }
 
-/* Move cursor for draggable elements */
 .floating-shapes .shape {
     cursor: move;
 }
 
-/* Not-allowed cursor for disabled elements */
 button:disabled, input:disabled, textarea:disabled {
     cursor: not-allowed;
 }
 
-/* Zoom-in cursor for images */
 img, .dev-bg img {
     cursor: zoom-in;
 }
 
-/* Crosshair cursor for precise selection areas */
 .nav-controls {
     cursor: crosshair;
 }
 
-/* Enhanced hover effects with custom cursors */
 section:hover {
     cursor: pointer;
 }
 
-/* Text selection cursor for paragraphs and readable content */
 p, article, blockquote, li {
     cursor: text;
 }
@@ -216,14 +200,14 @@ p, article, blockquote, li {
     cursor: help;
 }
 
-/* Advanced Custom Cursor Effects */
-/* Golden glow cursor effect for special elements */
+/* Custom Cursor Effects */
+/* Cursor glow effect */
 .nav-link:hover, .youtube-button:hover, .newsletter-form button:hover {
     cursor: pointer;
     position: relative;
 }
 
-/* Custom cursor for theme-specific elements */
+/* Custom cursor */
 body:not(.dark-mode) .nav-link:hover {
     cursor: pointer;
 }
@@ -232,7 +216,7 @@ body.dark-mode .nav-link:hover {
     cursor: pointer;
 }
 
-/* Responsive cursor - hide custom cursors on touch devices */
+/* Responsive cursor */
 @media (hover: none) and (pointer: coarse) {
     * {
         cursor: auto !important;
@@ -258,7 +242,7 @@ code, pre {
     cursor: grabbing;
 }
 
-/* Mobile Chrome theme-aware scroll optimizations */
+/* Mobile scroll optimizations */
 body:not(.dark-mode) {
     /* Light mode optimizations */
     -webkit-overflow-scrolling: touch;
@@ -271,7 +255,7 @@ body.dark-mode {
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
     scroll-snap-type: y proximity;
-    /* Enhanced dark mode scroll performance */
+    /* Dark mode scrolling */
     -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
 }
@@ -323,7 +307,7 @@ body.dark-mode {
         transform: translateZ(0);
     }
     
-    /* Theme-aware mobile scroll enhancements */
+    /* Mobile scroll */
     body:not(.dark-mode) section {
         scroll-margin-top: 80px;
         -webkit-scroll-snap-coordinate: 0 0;
@@ -357,7 +341,7 @@ body {
     overflow-x: hidden;
 }
 
-/* Enhanced Background Particles - Golden Theme */
+/* Background particles */
 body::before {
     content: '';
     position: fixed;
@@ -391,7 +375,7 @@ body.dark-mode::before {
 body {
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-    /* Enhanced scrolling performance for mobile */
+    /* Mobile scrolling */
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
     /* Mobile touch optimizations */
@@ -401,7 +385,7 @@ body {
     touch-action: pan-y;
 }
 
-/* Mobile-specific body adjustments */
+/* Mobile body adjustments */
 @media (max-width: 768px) {
     body {
         margin: 0;
@@ -410,7 +394,7 @@ body {
         line-height: 1.6;
     }
 }
-/* Golden Header Design */
+/* Header design */
 header { 
     text-align: center; 
     margin-bottom: 1.5em; 
@@ -426,7 +410,7 @@ header {
     overflow: hidden;
 }
 
-/* Light mode header - Enhanced Contrast */
+/* Light mode header */
 body:not(.dark-mode) header {
     background: linear-gradient(135deg, #ffffff 0%, #fefefe 50%, #fdfdfd 100%);
     color: #2c3e50;
@@ -449,7 +433,7 @@ header h1 {
     transition: all 0.3s ease;
 }
 
-/* Light mode header text - Better Contrast */
+/* Light mode header */
 body:not(.dark-mode) header h1 {
     color: #e67e22;
     text-shadow: 
@@ -476,7 +460,7 @@ body:not(.dark-mode) header p {
     font-weight: 600;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
-/* Enhanced Article Styling - Crystal Clear with Neon Accents */
+/* Article Styling */
 article { 
     background: var(--card-bg);
     padding: 1.5em; 
@@ -492,7 +476,7 @@ article {
     transition: all 0.3s ease;
 }
 
-/* Light mode neon hover effect */
+/* Light mode hover effect */
 body:not(.dark-mode) article:hover {
     box-shadow: 
         0 6px 20px var(--shadow-hover),
@@ -507,7 +491,7 @@ article:hover {
     transform: translateY(-1px);
 }
 
-/* Enhanced Text Styling - More Colors and Better Visibility */
+/* Text Styling */
 /* Main titles and subtitles */
 body:not(.dark-mode) .welcome-section h1 {
     color: var(--orange-primary);
@@ -583,7 +567,7 @@ body:not(.dark-mode) article li strong {
     color: var(--orange-secondary);
 }
 
-/* Enhanced Heading Styles - Crystal Clear with Neon Accents */
+/* Heading Styles */
 h1, h2 { 
     color: var(--text-color); 
     text-shadow: none;
@@ -678,8 +662,8 @@ body.dark-mode section h2 {
     border: 2px solid #d4c5b9;
 }
 
-/* Advanced Section Enhancement with Sci-Fi Elements */
-/* Enhanced Section Styling - Black, Orange, Golden, White Theme */
+/* Section Enhancement */
+/* Section Styling */
 section {
     background: var(--card-bg);
     margin: 1.2em 0;
@@ -697,7 +681,7 @@ section {
     backdrop-filter: blur(8px);
 }
 
-/* Light mode section styling - Colorful & High Contrast */
+/* Light mode sections */
 body:not(.dark-mode) section {
     background: linear-gradient(135deg, #ffffff 0%, #fdfbf7 50%, #faf6f0 100%);
     border: 2px solid #e67e22;
@@ -733,7 +717,7 @@ body.dark-mode section:hover {
     transform: translateY(-3px);
 }
 
-/* Enhanced paragraph styling with color variety */
+/* Paragraph styling */
 section p {
     color: var(--text-color);
     margin-bottom: 1em;
@@ -758,7 +742,7 @@ body:not(.dark-mode) section strong {
     font-weight: 700;
 }
 
-/* Enhanced blockquote styling */
+/* Blockquote styling */
 body:not(.dark-mode) blockquote {
     background: linear-gradient(135deg, rgba(255, 140, 0, 0.05) 0%, rgba(218, 165, 32, 0.08) 100%);
     border-left: 3px solid var(--orange-primary);
@@ -775,7 +759,7 @@ body:not(.dark-mode) blockquote p {
     margin-bottom: 0.5em;
 }
 
-/* Enhanced code styling */
+/* Code styling */
 body:not(.dark-mode) code {
     background: linear-gradient(135deg, rgba(218, 165, 32, 0.1) 0%, rgba(255, 140, 0, 0.05) 100%);
     color: var(--orange-secondary);
@@ -804,7 +788,7 @@ body:not(.dark-mode) pre code {
     color: var(--text-heading);
 }
 
-/* Enhanced table styling */
+/* Table styling */
 body:not(.dark-mode) table {
     background: rgba(255, 255, 255, 0.9);
     border: 1px solid var(--golden-primary);
@@ -835,7 +819,7 @@ body:not(.dark-mode) tr:hover {
     background: rgba(255, 140, 0, 0.08);
 }
 
-/* Enhanced form styling */
+/* Form styling */
 body:not(.dark-mode) input,
 body:not(.dark-mode) textarea,
 body:not(.dark-mode) select {
@@ -1120,7 +1104,7 @@ blockquote {
     border-radius: 0 8px 8px 0;
 }
 
-/* Enhanced typography for emphasis */
+/* Typography emphasis */
 em {
     font-family: 'Crimson Text', 'Times New Roman', Times, serif;
     font-style: italic;
@@ -1133,7 +1117,7 @@ strong {
     color: #2c3e50;
 }
 
-/* Developer Credit Styling - Enhanced Visibility */
+/* Developer Credit */
 .developer-credit {
     font-family: 'Crimson Text', 'Times New Roman', Times, serif;
     font-size: 1em;
@@ -1262,7 +1246,7 @@ footer {
     text-align: center !important;
 }
 
-/* GUARANTEED VISIBLE NAVIGATION - Golden Theme */
+/* Navigation */
 .nav-menu, .nav-container {
     position: fixed !important;
     top: 0 !important;
@@ -1279,7 +1263,7 @@ footer {
     opacity: 1 !important;
 }
 
-/* Dark mode navigation - Black & Golden */
+/* Dark mode navigation */
 body.dark-mode .nav-menu,
 body.dark-mode .nav-container {
     background: linear-gradient(135deg, rgba(10, 10, 10, 0.95) 0%, rgba(26, 26, 26, 0.98) 100%) !important;
@@ -1362,7 +1346,7 @@ body.dark-mode .logo-subtitle {
     box-shadow: 0 4px 15px var(--orange-glow) !important;
 }
 
-/* Dark mode navigation links - Golden Theme */
+/* Dark mode nav links */
 body.dark-mode .nav-link {
     color: var(--golden-primary) !important;
 }
@@ -1598,7 +1582,7 @@ header {
     border-radius: 2px;
 }
 
-/* Enhanced Dark Mode Toggle - Superior PC and Mobile Design */
+/* Dark Mode Toggle */
 .dark-mode-toggle {
     background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
     border: 2px solid transparent;
@@ -1667,7 +1651,7 @@ header {
     filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.8));
 }
 
-/* Enhanced dark mode button styles */
+/* Dark mode button styles */
 body.dark-mode .dark-mode-toggle {
     background: linear-gradient(135deg, var(--neon-cyan), var(--neon-blue));
     box-shadow: 0 4px 15px rgba(0, 255, 255, 0.4), 
@@ -1956,7 +1940,7 @@ body.dark-mode .dark-mode-toggle:focus {
     border-color: #3498db;
 }
 
-/* Enhanced Blog Post Styles - Golden Theme */
+/* Blog Post Styles */
 .blog-post {
     background: var(--card-bg);
     color: var(--text-color);
@@ -2170,7 +2154,7 @@ body.dark-mode .blog-post:hover {
     color: #3498db;
 }
 
-/* Enhanced Contact Form - Crystal Clear */
+/* Contact Form */
 .contact-form {
     background: var(--card-bg);
     padding: 40px;
@@ -2423,7 +2407,7 @@ body.dark-mode .notification {
 
 /* Mobile Chrome Optimizations and Responsiveness */
 @media (max-width: 768px) {
-    /* Enhanced body styles for mobile Chrome */
+    /* Mobile body styles */
     body {
         padding-top: 70px;
         margin: 1em;
@@ -2434,13 +2418,13 @@ body.dark-mode .notification {
         -webkit-touch-callout: default;
         -webkit-user-select: text;
         user-select: text;
-        /* Enhanced mobile scrolling */
+        /* Mobile scrolling */
         -webkit-overflow-scrolling: touch;
         overscroll-behavior: contain;
         scroll-behavior: smooth;
     }
 
-    /* Enhanced HTML for mobile smooth scrolling */
+    /* HTML smooth scrolling */
     html {
         scroll-behavior: smooth;
         scroll-padding-top: 80px; /* More padding for mobile navigation */
@@ -2515,7 +2499,7 @@ body.dark-mode .notification {
         will-change: background-color, transform;
         transform: translateZ(0);
         -webkit-transform: translateZ(0);
-        /* Enhanced touch feedback */
+        /* Touch feedback */
         -webkit-user-select: none;
         user-select: none;
         cursor: pointer;
@@ -2597,7 +2581,7 @@ body.dark-mode .notification {
         justify-content: center;
     }
 
-    /* Enhanced mobile sections with proper spacing */
+    /* Mobile sections */
     section {
         padding: 30px 20px;
         margin: 0;
@@ -3579,7 +3563,7 @@ body.dark-mode #my-hobbies img:hover {
     100% { transform: rotate(360deg); }
 }
 
-/* ===== ADVANCED FUTURISTIC ENHANCEMENTS - Next-Gen UI System ===== */
+/* FUTURISTIC ENHANCEMENTS */
 
 /* Quantum Particle System */
 /* DISABLED: Quantum particles (too overwhelming)
@@ -3691,7 +3675,7 @@ body.dark-mode #my-hobbies img:hover {
 }
 */
 
-/* DISABLED: Advanced Typography with Neon Effects (too flashy)
+/* DISABLED: Typography with Neon Effects (too flashy)
 section h2, header h1 {
     position: relative;
     overflow: visible;
@@ -3748,7 +3732,7 @@ section ul li::before {
     }
 }
 
-/* Advanced Scrollbar Styling */
+/* Scrollbar Styling */
 ::-webkit-scrollbar {
     width: 14px;
 }
@@ -3803,7 +3787,7 @@ textarea:focus,
     background: rgba(0, 255, 255, 0.05) !important;
 }
 
-/* Advanced Button Styling */
+/* Button Styling */
 button, 
 .btn, 
 input[type="submit"],
@@ -3915,7 +3899,7 @@ header h1:hover {
     animation: glitch 0.3s ease-in-out;
 }
 
-/* Advanced Media Queries for Futuristic Mobile */
+/* Mobile Media Queries */
 @media (max-width: 768px) {
     section {
         margin: 1.5em 0.5em;
@@ -3986,7 +3970,7 @@ html::before {
     50% { opacity: 1; height: 5px; }
 }
 
-/* Advanced Typography with Cyber Effect */
+/* Typography */
 h1, h2, h3 {
     position: relative;
     font-weight: 800;
@@ -4775,7 +4759,7 @@ body.dark-mode .stat-card {
     text-shadow: 0 0 10px var(--neon-blue);
 }
 
-/* Advanced Loading State */
+/* Loading State */
 @keyframes quantum-load {
     0% { 
         box-shadow: 0 0 0 0 rgba(0, 255, 255, 0.7);

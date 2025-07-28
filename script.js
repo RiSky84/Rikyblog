@@ -1,19 +1,19 @@
-// Advanced Blog Features JavaScript with Mobile Chrome Optimizations
+// Blog Features JavaScript
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log('📄 DOM fully loaded');
     
-    // CREATE A SIMPLE, GUARANTEED WORKING TOGGLE
+    // CREATE WORKING TOGGLE
     createSimpleWorkingToggle();
     
-    console.log('✅ Simple working toggle initialized');
+    console.log('✅ Toggle initialized');
     
-    // Mobile Chrome specific optimizations
+    // Mobile optimizations
     initializeMobileOptimizations();
     
-    // Initialize all features
+    // Initialize navigation
     initializeNavigation();
-    // Skip the complex dark mode initialization, clean toggle handles everything
+    // Skip complex dark mode, toggle handles it
     initializeNotificationSystem();
     
     // Test notification to ensure system is working
@@ -38,22 +38,22 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeNewsletterForm();
 });
 
-// Enhanced Mobile Chrome optimizations with superior theme-aware smooth scrolling
+// Mobile optimizations
 function initializeMobileOptimizations() {
-    // Prevent zoom on input focus (mobile Chrome)
+    // Prevent zoom on input focus (mobile)
     const inputs = document.querySelectorAll('input, textarea, select');
     inputs.forEach(input => {
         if (input.type !== 'file') {
             input.style.fontSize = '16px';
         }
         
-        // Enhanced touch optimizations with theme awareness and haptic feedback
+        // Touch optimizations
         input.addEventListener('touchstart', function() {
             const isDarkMode = document.body.classList.contains('dark-mode');
             this.style.transform = 'scale(1.02)';
             this.style.transition = 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)';
             
-            // Enhanced theme-aware touch feedback with better colors
+            // Theme-aware touch feedback
             if (isDarkMode) {
                 this.style.boxShadow = '0 0 15px rgba(0, 255, 255, 0.4), 0 0 30px rgba(0, 255, 255, 0.2)';
                 this.style.borderColor = '#00ffff';
@@ -62,7 +62,7 @@ function initializeMobileOptimizations() {
                 this.style.borderColor = '#3498db';
             }
             
-            // Add subtle haptic feedback if available
+            // Haptic feedback if available
             if (navigator.vibrate) {
                 navigator.vibrate(25);
             }
@@ -76,12 +76,12 @@ function initializeMobileOptimizations() {
         }, { passive: true });
     });
 
-    // Enhanced viewport height management with theme awareness
+    // Viewport height management
     function setViewportHeight() {
         const vh = window.innerHeight * 0.01;
         document.documentElement.style.setProperty('--vh', `${vh}px`);
         
-        // Enhanced theme-aware viewport optimizations
+        // Theme-aware viewport optimizations
         const isDarkMode = document.body.classList.contains('dark-mode');
         const root = document.documentElement;
         
@@ -95,7 +95,7 @@ function initializeMobileOptimizations() {
             root.style.setProperty('--theme-transition', '0.3s cubic-bezier(0.4, 0, 0.2, 1)');
         }
         
-        // Update mobile-specific CSS custom properties
+        // Update mobile CSS properties
         root.style.setProperty('--mobile-nav-height', '60px');
         root.style.setProperty('--mobile-safe-area', 'env(safe-area-inset-bottom, 0px)');
     }
@@ -103,7 +103,7 @@ function initializeMobileOptimizations() {
     // Set initial viewport height
     setViewportHeight();
     
-    // Enhanced viewport change handling with better debouncing
+    // Viewport change handling
     let resizeTimeout;
     let orientationTimeout;
     
@@ -111,7 +111,7 @@ function initializeMobileOptimizations() {
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(() => {
             setViewportHeight();
-            // Trigger scroll performance update after viewport change
+            // Trigger scroll performance update
             if (typeof optimizeScrollPerformance === 'function') {
                 optimizeScrollPerformance();
             }
@@ -122,7 +122,7 @@ function initializeMobileOptimizations() {
         clearTimeout(orientationTimeout);
         orientationTimeout = setTimeout(() => {
             setViewportHeight();
-            // Force layout recalculation after orientation change
+            // Force layout recalculation
             document.body.style.height = '100.1%';
             setTimeout(() => {
                 document.body.style.height = '';
@@ -130,23 +130,23 @@ function initializeMobileOptimizations() {
         }, 200);
     }, { passive: true });
 
-    // Superior scroll performance for mobile Chrome with enhanced theme support
+    // Scroll performance for mobile
     let ticking = false;
     function optimizeScrollPerformance() {
         if (!ticking) {
             requestAnimationFrame(() => {
-                // Enhanced theme-aware scroll optimizations
+                // Theme-aware scroll optimizations
                 const isDarkMode = document.body.classList.contains('dark-mode');
                 const scrollableElements = document.querySelectorAll('section, nav, main, article, header');
                 
                 scrollableElements.forEach(element => {
-                    // Force hardware acceleration with better properties
+                    // Force hardware acceleration
                     element.style.willChange = 'transform, opacity';
                     element.style.transform = 'translateZ(0)';
                     element.style.backfaceVisibility = 'hidden';
                     element.style.webkitBackfaceVisibility = 'hidden'; // iOS Safari
                     
-                    // Enhanced theme-specific performance optimizations
+                    // Theme-specific performance optimizations
                     if (isDarkMode) {
                         element.style.perspective = '1000px';
                         element.style.transformStyle = 'preserve-3d';
@@ -155,7 +155,7 @@ function initializeMobileOptimizations() {
                         element.style.transformStyle = 'preserve-3d';
                     }
                     
-                    // Apply smooth theme-aware transitions
+                    // Apply smooth transitions
                     element.style.transition = `all ${isDarkMode ? '0.4s' : '0.3s'} cubic-bezier(0.4, 0, 0.2, 1)`;
                 });
                 
@@ -165,19 +165,19 @@ function initializeMobileOptimizations() {
         }
     }
     
-    // Make optimizeScrollPerformance globally available
+    // Make function globally available
     window.optimizeScrollPerformance = optimizeScrollPerformance;
     
     window.addEventListener('scroll', optimizeScrollPerformance, { passive: true });
 
-    // Enhanced overscroll prevention for mobile Chrome with theme awareness
+    // Overscroll prevention for mobile
     document.body.addEventListener('touchmove', function(e) {
         if (e.target === document.body) {
             e.preventDefault();
         }
     }, { passive: false });
 
-    // Superior mobile Chrome navigation auto-hide with enhanced theme transitions
+    // Mobile navigation auto-hide
     const mobileNav = document.querySelector('.nav-container');
     if (mobileNav) {
         let lastScrollTop = 0;
@@ -191,10 +191,10 @@ function initializeMobileOptimizations() {
                 const isDarkMode = document.body.classList.contains('dark-mode');
                 const scrollDiff = Math.abs(scrollTop - lastScrollTop);
                 
-                // Only trigger animation if scroll difference is significant
+                // Only trigger if scroll difference is significant
                 if (scrollDiff > 5) {
                     if (scrollTop > lastScrollTop && scrollTop > 100 && isNavVisible) {
-                        // Scrolling down - hide nav with enhanced theme-aware animation
+                        // Scrolling down - hide nav
                         mobileNav.style.transform = 'translateY(-100%)';
                         mobileNav.style.transition = 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
                         isNavVisible = false;
@@ -205,7 +205,7 @@ function initializeMobileOptimizations() {
                             mobileNav.style.boxShadow = '0 2px 30px rgba(52, 152, 219, 0.1)';
                         }
                     } else if ((scrollTop < lastScrollTop || scrollTop <= 100) && !isNavVisible) {
-                        // Scrolling up - show nav with enhanced smooth animation
+                        // Scrolling up - show nav
                         mobileNav.style.transform = 'translateY(0)';
                         mobileNav.style.transition = 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
                         isNavVisible = true;
@@ -218,13 +218,13 @@ function initializeMobileOptimizations() {
                     }
                 }
                 lastScrollTop = scrollTop;
-            }, 15); // Reduced delay for more responsive feel
+            }, 15); // Reduced delay for responsiveness
         }, { passive: true });
     }
 
-    // Enhanced mobile Chrome smooth scroll polyfill with theme awareness
+    // Mobile Chrome smooth scroll polyfill
     if (/Android.*Chrome/i.test(navigator.userAgent) && /Mobile/i.test(navigator.userAgent)) {
-        // Override native scrollIntoView for superior mobile Chrome performance
+        // Override native scrollIntoView for better mobile performance
         Element.prototype.smoothScrollIntoView = function(options = {}) {
             const targetElement = this;
             const targetPosition = targetElement.offsetTop;
@@ -234,7 +234,7 @@ function initializeMobileOptimizations() {
             const isDarkMode = document.body.classList.contains('dark-mode');
             let start = null;
 
-            // Enhanced easing function with theme-specific behavior
+            // Easing function with theme-specific behavior
             function enhancedEasing(t) {
                 if (isDarkMode) {
                     // Smoother easing for dark mode
@@ -253,7 +253,7 @@ function initializeMobileOptimizations() {
                 
                 const newPosition = startPosition + distance * easedProgress;
                 
-                // Use documentElement.scrollTop for better mobile Chrome performance
+                // Use documentElement.scrollTop for better mobile performance
                 document.documentElement.scrollTop = newPosition;
                 
                 if (timeElapsed < duration) {
@@ -275,10 +275,10 @@ function initializeMobileOptimizations() {
     // Initialize optimizations
     optimizeScrollPerformance();
     
-    console.log('📱 Enhanced mobile optimizations initialized with theme awareness');
+    console.log('📱 Mobile optimizations initialized');
 }
 
-// Navigation Menu with enhanced mobile optimization
+// Navigation Menu
 function initializeNavigation() {
     const mobileToggle = document.querySelector('.mobile-menu-toggle');
     const navLinks = document.querySelector('.nav-links');
@@ -289,7 +289,7 @@ function initializeNavigation() {
     console.log('🔗 Nav links found:', !!navLinks);
     
     if (mobileToggle && navLinks) {
-        // Enhanced mobile toggle with touch optimization
+        // Mobile toggle with touch optimization
         mobileToggle.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -369,17 +369,17 @@ function initializeNavigation() {
     console.log('✅ Navigation initialized successfully');
 }
 
-// Enhanced Dark Mode Toggle with PC and Mobile Optimization
+// Dark Mode Toggle
 function initializeDarkMode() {
     let darkModeToggle = document.querySelector('.dark-mode-toggle');
     const body = document.body;
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
     
-    console.log('🌙 Enhanced Dark mode initialization started');
+    console.log('🌙 Dark mode initialization started');
     console.log('🔍 Dark mode toggle element found:', !!darkModeToggle);
     console.log('🎯 Toggle element:', darkModeToggle);
     
-    // Enhanced visibility check - check if button is actually visible
+    // Visibility check - check if button is actually visible
     function isElementVisible(element) {
         if (!element) return false;
         const rect = element.getBoundingClientRect();
@@ -411,7 +411,7 @@ function initializeDarkMode() {
     document.body.removeChild(testElement);
     console.log('🎨 CSS Variables loaded:', cssLoaded);
     
-    // Enhanced toggle icon update with smooth animation
+    // Toggle icon update
     function updateToggleIcon(isDark, animate = true) {
         console.log('🎨 Updating toggle icon, isDark:', isDark);
         if (darkModeToggle) {
@@ -419,7 +419,7 @@ function initializeDarkMode() {
             console.log('🎯 Theme icon element:', icon);
             if (icon) {
                 if (animate) {
-                    // Add rotation animation for smooth transition
+                    // Add rotation animation
                     icon.style.transform = 'rotate(180deg) scale(0.8)';
                     icon.style.transition = 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
                     
@@ -447,7 +447,7 @@ function initializeDarkMode() {
         }
     }
     
-    // Enhanced theme detection with better mobile support
+    // Theme detection
     const savedTheme = localStorage.getItem('theme');
     const systemTheme = prefersDark.matches ? 'dark' : 'light';
     const currentTheme = savedTheme || systemTheme;
@@ -470,7 +470,7 @@ function initializeDarkMode() {
         
         updateToggleIcon(isDark, animate);
         
-        // Update CSS custom properties for enhanced theming
+        // Update CSS custom properties for theming
         const root = document.documentElement;
         if (isDark) {
             root.style.setProperty('--scroll-accent', '#00ffff');
@@ -490,9 +490,9 @@ function initializeDarkMode() {
     // Initial theme application
     applyTheme(currentTheme === 'dark', false);
     
-    // Enhanced toggle functionality with mobile and PC optimization
+    // Toggle functionality
     if (darkModeToggle) {
-        console.log('🎛️ Adding enhanced click event listener to dark mode toggle');
+        console.log('🎛️ Adding click event listener to dark mode toggle');
         
         // PC hover effects
         darkModeToggle.addEventListener('mouseenter', function() {
@@ -509,13 +509,13 @@ function initializeDarkMode() {
             }
         });
         
-        // Enhanced mobile touch feedback
+        // Mobile touch feedback
         if ('ontouchstart' in window) {
             darkModeToggle.addEventListener('touchstart', function(e) {
                 this.style.transform = 'scale(0.95)';
                 this.style.opacity = '0.8';
                 
-                // Add haptic feedback if available
+                // Haptic feedback if available
                 if (navigator.vibrate) {
                     navigator.vibrate(50);
                 }
@@ -534,7 +534,7 @@ function initializeDarkMode() {
             e.preventDefault();
             e.stopPropagation();
             
-            console.log('🖱️ Enhanced dark mode toggle clicked!');
+            console.log('🖱️ Dark mode toggle clicked!');
             
             // Prevent rapid clicking
             if (this.disabled) return;
@@ -552,13 +552,13 @@ function initializeDarkMode() {
             localStorage.setItem('theme', willBeDark ? 'dark' : 'light');
             console.log('💾 Theme preference saved:', willBeDark ? 'dark' : 'light');
             
-            // Show enhanced notification
+            // Show notification
             if (typeof showNotification === 'function') {
                 const message = `Switched to ${willBeDark ? 'dark' : 'light'} mode ${willBeDark ? '🌙' : '☀️'}`;
                 showNotification(message, 'success', 2500);
             }
             
-            // Update smooth scrolling performance for new theme
+            // Update smooth scrolling performance
             setTimeout(() => {
                 updateScrollPerformanceForTheme();
             }, 200);
@@ -582,7 +582,7 @@ function initializeDarkMode() {
         console.log('🔍 Available buttons:', document.querySelectorAll('button'));
     }
     
-    // Enhanced system theme change detection
+    // System theme change detection
     prefersDark.addEventListener('change', (e) => {
         if (!localStorage.getItem('theme')) {
             console.log('🖥️ System theme changed to:', e.matches ? 'dark' : 'light');
@@ -594,7 +594,7 @@ function initializeDarkMode() {
         }
     });
     
-    // Theme-aware performance optimization function
+    // Theme-aware performance optimization
     function updateScrollPerformanceForTheme() {
         const isDarkMode = body.classList.contains('dark-mode');
         const scrollableElements = document.querySelectorAll('section, article, nav, main');
@@ -615,9 +615,9 @@ function initializeDarkMode() {
     updateScrollPerformanceForTheme();
 }
 
-// Create a simple, guaranteed working toggle
+// Create working toggle
 function createSimpleWorkingToggle() {
-    console.log('🎨 Creating SWITCH-STYLE toggle near welcome text...');
+    console.log('🎨 Creating toggle near welcome text...');
     
     // Remove ALL existing toggles
     const allExistingToggles = document.querySelectorAll('[id*="toggle"], [class*="toggle"], [id*="Toggle"], [class*="Toggle"]');
@@ -635,7 +635,7 @@ function createSimpleWorkingToggle() {
         return;
     }
     
-    // Create the switch-style toggle HTML - GOLDEN/BLACK/ORANGE THEME
+    // Create the toggle HTML - GOLDEN/BLACK/ORANGE THEME
     const toggleHTML = `
         <div id="themeSwitchContainer" style="
             position: relative;
