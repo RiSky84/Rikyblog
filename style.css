@@ -3030,23 +3030,23 @@ body.dark-mode section#blog-posts::before {
     pointer-events: none !important;
 }
 
-/* Hobbies Section Dark Mode - Ultra Specific with Vibrant Colors */
+/* Hobbies Section Dark Mode - Golden Theme Only */
 body.dark-mode section#my-hobbies {
     background: linear-gradient(135deg, 
-        #0a1f0a 0%, 
-        #1a2f3a 25%, 
-        #2d1b69 50%, 
-        #4a148c 75%, 
-        #1a1a2e 100%) !important;
-    border-left: 8px solid #4caf50 !important;
-    border-right: 4px solid #66bb6a !important;
-    border-top: 3px solid #81c784 !important;
-    border-bottom: 4px solid #2e7d32 !important;
+        #1a1a1a 0%, 
+        #2d2d2d 25%, 
+        #1f1f1f 50%, 
+        #2a2a2a 75%, 
+        #1a1a1a 100%) !important;
+    border-left: 8px solid var(--orange-primary) !important;
+    border-right: 4px solid var(--golden-primary) !important;
+    border-top: 3px solid var(--orange-secondary) !important;
+    border-bottom: 4px solid var(--golden-secondary) !important;
     position: relative !important;
     overflow: hidden !important;
     color: #ffffff !important;
-    box-shadow: 0 12px 40px rgba(76, 175, 80, 0.6), 
-                inset 0 1px 0 rgba(129, 199, 132, 0.3) !important;
+    box-shadow: 0 12px 40px rgba(255, 140, 0, 0.6), 
+                inset 0 1px 0 rgba(218, 165, 32, 0.3) !important;
 }
 
 body.dark-mode section#my-hobbies::before {
@@ -3057,24 +3057,24 @@ body.dark-mode section#my-hobbies::before {
     right: 0 !important;
     bottom: 0 !important;
     background: 
-        radial-gradient(circle at 20% 20%, rgba(76, 175, 80, 0.2) 0%, transparent 40%),
-        radial-gradient(circle at 80% 30%, rgba(129, 199, 132, 0.15) 0%, transparent 45%),
-        radial-gradient(circle at 40% 80%, rgba(46, 125, 50, 0.18) 0%, transparent 50%),
-        radial-gradient(circle at 70% 70%, rgba(102, 187, 106, 0.12) 0%, transparent 35%) !important;
+        radial-gradient(circle at 20% 20%, rgba(255, 140, 0, 0.2) 0%, transparent 40%),
+        radial-gradient(circle at 80% 30%, rgba(218, 165, 32, 0.15) 0%, transparent 45%),
+        radial-gradient(circle at 40% 80%, rgba(255, 215, 0, 0.18) 0%, transparent 50%),
+        radial-gradient(circle at 70% 70%, rgba(255, 165, 0, 0.12) 0%, transparent 35%) !important;
     pointer-events: none !important;
     z-index: 1 !important;
 }
 
 body.dark-mode section#my-hobbies ul li {
     color: #ffffff !important;
-    background: rgba(102, 187, 106, 0.25) !important;
+    background: rgba(255, 140, 0, 0.25) !important;
     padding: 15px 25px !important;
     margin: 12px 0 !important;
     border-radius: 30px !important;
-    border-left: 5px solid #66bb6a !important;
-    border: 2px solid rgba(102, 187, 106, 0.4) !important;
+    border-left: 5px solid var(--orange-primary) !important;
+    border: 2px solid rgba(255, 140, 0, 0.4) !important;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6), 
-                0 2px 10px rgba(102, 187, 106, 0.3) !important;
+                0 2px 10px rgba(255, 140, 0, 0.3) !important;
     transition: all 0.4s ease !important;
     font-weight: 700 !important;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8) !important;
@@ -3083,54 +3083,54 @@ body.dark-mode section#my-hobbies ul li {
     backdrop-filter: blur(10px) !important;
 }
 
-/* Individual hobby item colors */
+/* Individual hobby item colors - Golden/Orange Theme Only */
 body.dark-mode section#my-hobbies ul li:nth-child(1) {
-    background: linear-gradient(135deg, rgba(255, 87, 34, 0.3) 0%, rgba(255, 152, 0, 0.2) 100%) !important;
-    border-left-color: #ff5722 !important;
-    border-color: rgba(255, 87, 34, 0.5) !important;
-    box-shadow: 0 6px 20px rgba(255, 87, 34, 0.4) !important;
+    background: linear-gradient(135deg, rgba(255, 140, 0, 0.3) 0%, rgba(255, 165, 0, 0.2) 100%) !important;
+    border-left-color: var(--orange-primary) !important;
+    border-color: rgba(255, 140, 0, 0.5) !important;
+    box-shadow: 0 6px 20px rgba(255, 140, 0, 0.4) !important;
 }
 
 body.dark-mode section#my-hobbies ul li:nth-child(2) {
-    background: linear-gradient(135deg, rgba(156, 39, 176, 0.3) 0%, rgba(186, 104, 200, 0.2) 100%) !important;
-    border-left-color: #9c27b0 !important;
-    border-color: rgba(156, 39, 176, 0.5) !important;
-    box-shadow: 0 6px 20px rgba(156, 39, 176, 0.4) !important;
+    background: linear-gradient(135deg, rgba(218, 165, 32, 0.3) 0%, rgba(255, 215, 0, 0.2) 100%) !important;
+    border-left-color: var(--golden-primary) !important;
+    border-color: rgba(218, 165, 32, 0.5) !important;
+    box-shadow: 0 6px 20px rgba(218, 165, 32, 0.4) !important;
 }
 
 body.dark-mode section#my-hobbies ul li:nth-child(3) {
-    background: linear-gradient(135deg, rgba(33, 150, 243, 0.3) 0%, rgba(100, 181, 246, 0.2) 100%) !important;
-    border-left-color: #2196f3 !important;
-    border-color: rgba(33, 150, 243, 0.5) !important;
-    box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4) !important;
+    background: linear-gradient(135deg, rgba(255, 165, 0, 0.3) 0%, rgba(255, 140, 0, 0.2) 100%) !important;
+    border-left-color: var(--orange-secondary) !important;
+    border-color: rgba(255, 165, 0, 0.5) !important;
+    box-shadow: 0 6px 20px rgba(255, 165, 0, 0.4) !important;
 }
 
 body.dark-mode section#my-hobbies ul li:nth-child(4) {
-    background: linear-gradient(135deg, rgba(255, 193, 7, 0.3) 0%, rgba(255, 235, 59, 0.2) 100%) !important;
-    border-left-color: #ffc107 !important;
-    border-color: rgba(255, 193, 7, 0.5) !important;
-    box-shadow: 0 6px 20px rgba(255, 193, 7, 0.4) !important;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.3) 0%, rgba(218, 165, 32, 0.2) 100%) !important;
+    border-left-color: var(--golden-secondary) !important;
+    border-color: rgba(255, 215, 0, 0.5) !important;
+    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4) !important;
 }
 
 body.dark-mode section#my-hobbies ul li:nth-child(5) {
-    background: linear-gradient(135deg, rgba(76, 175, 80, 0.3) 0%, rgba(129, 199, 132, 0.2) 100%) !important;
-    border-left-color: #4caf50 !important;
-    border-color: rgba(76, 175, 80, 0.5) !important;
-    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4) !important;
+    background: linear-gradient(135deg, rgba(255, 140, 0, 0.3) 0%, rgba(255, 165, 0, 0.2) 100%) !important;
+    border-left-color: var(--orange-primary) !important;
+    border-color: rgba(255, 140, 0, 0.5) !important;
+    box-shadow: 0 6px 20px rgba(255, 140, 0, 0.4) !important;
 }
 
 body.dark-mode section#my-hobbies ul li:nth-child(6) {
-    background: linear-gradient(135deg, rgba(233, 30, 99, 0.3) 0%, rgba(244, 143, 177, 0.2) 100%) !important;
-    border-left-color: #e91e63 !important;
-    border-color: rgba(233, 30, 99, 0.5) !important;
-    box-shadow: 0 6px 20px rgba(233, 30, 99, 0.4) !important;
+    background: linear-gradient(135deg, rgba(218, 165, 32, 0.3) 0%, rgba(255, 215, 0, 0.2) 100%) !important;
+    border-left-color: var(--golden-primary) !important;
+    border-color: rgba(218, 165, 32, 0.5) !important;
+    box-shadow: 0 6px 20px rgba(218, 165, 32, 0.4) !important;
 }
 
 body.dark-mode section#my-hobbies ul li:nth-child(7) {
-    background: linear-gradient(135deg, rgba(0, 188, 212, 0.3) 0%, rgba(77, 208, 225, 0.2) 100%) !important;
-    border-left-color: #00bcd4 !important;
-    border-color: rgba(0, 188, 212, 0.5) !important;
-    box-shadow: 0 6px 20px rgba(0, 188, 212, 0.4) !important;
+    background: linear-gradient(135deg, rgba(255, 165, 0, 0.3) 0%, rgba(255, 140, 0, 0.2) 100%) !important;
+    border-left-color: var(--orange-secondary) !important;
+    border-color: rgba(255, 165, 0, 0.5) !important;
+    box-shadow: 0 6px 20px rgba(255, 165, 0, 0.4) !important;
 }
 
 body.dark-mode section#my-hobbies ul li:hover {
@@ -3139,6 +3139,109 @@ body.dark-mode section#my-hobbies ul li:hover {
     border-left-width: 8px !important;
     text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9) !important;
     filter: brightness(1.2) !important;
+}
+
+/* Light Mode Hobbies Section - Golden Theme Only */
+body:not(.dark-mode) section#my-hobbies {
+    background: linear-gradient(135deg, 
+        #ffffff 0%, 
+        #fdfbf7 25%, 
+        #faf6f0 50%, 
+        #f8f4ec 75%, 
+        #ffffff 100%) !important;
+    border-left: 6px solid var(--orange-primary) !important;
+    border-right: 3px solid var(--golden-primary) !important;
+    border-top: 2px solid var(--orange-secondary) !important;
+    border-bottom: 3px solid var(--golden-secondary) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    color: var(--text-color) !important;
+    box-shadow: 0 8px 30px rgba(255, 140, 0, 0.2), 
+                inset 0 1px 0 rgba(218, 165, 32, 0.1) !important;
+}
+
+body:not(.dark-mode) section#my-hobbies::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    background: 
+        radial-gradient(circle at 20% 20%, rgba(255, 140, 0, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 80% 30%, rgba(218, 165, 32, 0.03) 0%, transparent 45%),
+        radial-gradient(circle at 40% 80%, rgba(255, 215, 0, 0.04) 0%, transparent 50%),
+        radial-gradient(circle at 70% 70%, rgba(255, 165, 0, 0.03) 0%, transparent 35%) !important;
+    pointer-events: none !important;
+    z-index: 1 !important;
+}
+
+body:not(.dark-mode) section#my-hobbies ul li {
+    color: var(--text-heading) !important;
+    background: rgba(255, 140, 0, 0.08) !important;
+    padding: 12px 20px !important;
+    margin: 10px 0 !important;
+    border-radius: 25px !important;
+    border-left: 4px solid var(--orange-primary) !important;
+    border: 2px solid rgba(255, 140, 0, 0.2) !important;
+    box-shadow: 0 4px 15px rgba(255, 140, 0, 0.1), 
+                0 2px 8px rgba(0, 0, 0, 0.05) !important;
+    transition: all 0.3s ease !important;
+    font-weight: 600 !important;
+    position: relative !important;
+    z-index: 2 !important;
+}
+
+/* Light mode individual hobby item colors - Golden/Orange Theme Only */
+body:not(.dark-mode) section#my-hobbies ul li:nth-child(1) {
+    background: linear-gradient(135deg, rgba(255, 140, 0, 0.1) 0%, rgba(255, 165, 0, 0.05) 100%) !important;
+    border-left-color: var(--orange-primary) !important;
+    border-color: rgba(255, 140, 0, 0.3) !important;
+}
+
+body:not(.dark-mode) section#my-hobbies ul li:nth-child(2) {
+    background: linear-gradient(135deg, rgba(218, 165, 32, 0.1) 0%, rgba(255, 215, 0, 0.05) 100%) !important;
+    border-left-color: var(--golden-primary) !important;
+    border-color: rgba(218, 165, 32, 0.3) !important;
+}
+
+body:not(.dark-mode) section#my-hobbies ul li:nth-child(3) {
+    background: linear-gradient(135deg, rgba(255, 165, 0, 0.1) 0%, rgba(255, 140, 0, 0.05) 100%) !important;
+    border-left-color: var(--orange-secondary) !important;
+    border-color: rgba(255, 165, 0, 0.3) !important;
+}
+
+body:not(.dark-mode) section#my-hobbies ul li:nth-child(4) {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(218, 165, 32, 0.05) 100%) !important;
+    border-left-color: var(--golden-secondary) !important;
+    border-color: rgba(255, 215, 0, 0.3) !important;
+}
+
+body:not(.dark-mode) section#my-hobbies ul li:nth-child(5) {
+    background: linear-gradient(135deg, rgba(255, 140, 0, 0.1) 0%, rgba(255, 165, 0, 0.05) 100%) !important;
+    border-left-color: var(--orange-primary) !important;
+    border-color: rgba(255, 140, 0, 0.3) !important;
+}
+
+body:not(.dark-mode) section#my-hobbies ul li:nth-child(6) {
+    background: linear-gradient(135deg, rgba(218, 165, 32, 0.1) 0%, rgba(255, 215, 0, 0.05) 100%) !important;
+    border-left-color: var(--golden-primary) !important;
+    border-color: rgba(218, 165, 32, 0.3) !important;
+}
+
+body:not(.dark-mode) section#my-hobbies ul li:nth-child(7) {
+    background: linear-gradient(135deg, rgba(255, 165, 0, 0.1) 0%, rgba(255, 140, 0, 0.05) 100%) !important;
+    border-left-color: var(--orange-secondary) !important;
+    border-color: rgba(255, 165, 0, 0.3) !important;
+}
+
+body:not(.dark-mode) section#my-hobbies ul li:hover {
+    color: var(--text-heading) !important;
+    transform: translateX(15px) scale(1.03) !important;
+    border-left-width: 6px !important;
+    box-shadow: 0 6px 20px rgba(255, 140, 0, 0.2), 
+                0 3px 12px rgba(0, 0, 0, 0.1) !important;
+    background: rgba(255, 140, 0, 0.15) !important;
 }
 
 /* Enhanced YouTube Section Dark Mode - Ultra Specific */
