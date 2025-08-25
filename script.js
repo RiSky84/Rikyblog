@@ -275,7 +275,101 @@ function initializeMobileOptimizations() {
     // Initialize optimizations
     optimizeScrollPerformance();
     
+    // Enhanced Mobile Scroll Performance Optimization
+    initializeEnhancedMobileScrolling();
+    
     console.log('📱 Mobile optimizations initialized');
+}
+
+// Enhanced Mobile Scrolling Performance Function
+function initializeEnhancedMobileScrolling() {
+    const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    const isAndroid = /Android/i.test(navigator.userAgent);
+    
+    if (!isMobile) return;
+    
+    // Force hardware acceleration on all scrollable elements
+    const scrollableElements = document.querySelectorAll('body, html, section, nav, main, header, article, .content, .container');
+    scrollableElements.forEach(element => {
+        element.style.webkitTransform = 'translateZ(0)';
+        element.style.transform = 'translateZ(0)';
+        element.style.webkitBackfaceVisibility = 'hidden';
+        element.style.backfaceVisibility = 'hidden';
+        element.style.willChange = 'scroll-position, transform';
+    });
+    
+    // iOS specific optimizations
+    if (isIOS) {
+        document.body.style.webkitOverflowScrolling = 'touch';
+        document.documentElement.style.webkitOverflowScrolling = 'touch';
+        
+        // Prevent elastic bounce scrolling
+        let touchStartY = 0;
+        let touchMoveY = 0;
+        
+        document.addEventListener('touchstart', (e) => {
+            touchStartY = e.touches[0].clientY;
+        }, { passive: true });
+        
+        document.addEventListener('touchmove', (e) => {
+            touchMoveY = e.touches[0].clientY;
+            const touchDelta = touchMoveY - touchStartY;
+            const scrollTop = window.pageYOffset;
+            const scrollHeight = document.documentElement.scrollHeight;
+            const clientHeight = window.innerHeight;
+            
+            // Prevent overscroll at top and bottom
+            if ((scrollTop <= 0 && touchDelta > 0) || 
+                (scrollTop + clientHeight >= scrollHeight && touchDelta < 0)) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+    }
+    
+    // Android specific optimizations
+    if (isAndroid) {
+        // Optimize scroll behavior for Android
+        document.documentElement.style.scrollBehavior = 'auto';
+        
+        // Custom smooth scroll implementation for Android
+        window.addEventListener('scroll', () => {
+            requestAnimationFrame(() => {
+                // Trigger reflow for smoother scrolling
+                document.body.offsetHeight;
+            });
+        }, { passive: true });
+    }
+    
+    // Universal mobile scroll optimization
+    const optimizeScrollCSS = document.createElement('style');
+    optimizeScrollCSS.textContent = `
+        @media (max-width: 768px) {
+            html, body {
+                -webkit-overflow-scrolling: touch !important;
+                overscroll-behavior: none !important;
+                scroll-behavior: auto !important;
+                -webkit-transform: translateZ(0);
+                transform: translateZ(0);
+            }
+            
+            * {
+                -webkit-backface-visibility: hidden;
+                backface-visibility: hidden;
+                -webkit-perspective: 1000px;
+                perspective: 1000px;
+            }
+            
+            section, article, nav, main, header {
+                will-change: transform, opacity;
+                -webkit-transform: translateZ(0);
+                transform: translateZ(0);
+            }
+        }
+    `;
+    document.head.appendChild(optimizeScrollCSS);
+    
+    console.log('🚀 Enhanced mobile scrolling optimizations applied');
 }
 
 // Navigation Menu
