@@ -3565,72 +3565,11 @@ body.dark-mode #my-hobbies img:hover {
 
 /* FUTURISTIC ENHANCEMENTS */
 
-/* Quantum Particle System */
-/* DISABLED: Quantum particles (too overwhelming)
-.quantum-particles {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: -5;
-    overflow: hidden;
-}
-
-.quantum-particles::before,
-.quantum-particles::after {
-    content: '';
-    position: absolute;
-    width: 4px;
-    height: 4px;
-    background: var(--neon-blue);
-    border-radius: 50%;
-    box-shadow: 
-        0 0 10px var(--neon-blue),
-        100px 200px 0 var(--neon-purple),
-        200px 400px 0 var(--neon-green),
-        300px 100px 0 var(--neon-pink),
-        450px 300px 0 var(--neon-blue),
-        600px 150px 0 var(--neon-purple),
-        750px 350px 0 var(--neon-green),
-        850px 250px 0 var(--neon-pink),
-        950px 450px 0 var(--neon-blue),
-        1050px 50px 0 var(--neon-purple);
-    animation: quantum-float 15s ease-in-out infinite;
-}
-
-.quantum-particles::after {
-    animation-delay: -7.5s;
-    animation-duration: 20s;
-}
-*/
-
-/* DISABLED: Quantum animation keyframes
-@keyframes quantum-float {
-    0%, 100% { 
-        transform: translateY(0px) rotate(0deg); 
-        opacity: 0.8;
-    }
-    25% { 
-        transform: translateY(-100px) rotate(90deg); 
-        opacity: 1;
-    }
-    50% { 
-        transform: translateY(-200px) rotate(180deg); 
-        opacity: 0.6;
-    }
-    75% { 
-        transform: translateY(-150px) rotate(270deg); 
-        opacity: 1;
-    }
-}
-*/
-
 /* Floating UI Panels */
 .floating-panel {
     position: fixed;
     background: rgba(10, 10, 15, 0.85);
+    -webkit-backdrop-filter: blur(25px) saturate(200%);
     backdrop-filter: blur(25px) saturate(200%);
     border: 1px solid var(--glass-border);
     border-radius: 20px;
@@ -3650,56 +3589,11 @@ body.dark-mode #my-hobbies img:hover {
         inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
-/* DISABLED: Holographic Text Effects (too flashy)
-.holographic-text {
-    background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple), var(--neon-green), var(--neon-pink));
-    background-size: 400% 400%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: holographic-shift 3s ease-in-out infinite;
-    filter: drop-shadow(0 0 10px var(--neon-blue));
-}
-*/
-
 /* Subtle text highlight alternative */
 .subtle-highlight {
     color: var(--accent-color);
     font-weight: 600;
 }
-
-/* DISABLED: Holographic shift animation
-@keyframes holographic-shift {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-}
-*/
-
-/* DISABLED: Typography with Neon Effects (too flashy)
-section h2, header h1 {
-    position: relative;
-    overflow: visible;
-}
-
-section h2::after, header h1::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: inherit;
-    filter: blur(15px);
-    z-index: -1;
-    opacity: 0.6;
-    animation: neon-flicker 4s ease-in-out infinite;
-}
-
-@keyframes neon-flicker {
-    0%, 100% { opacity: 0.6; }
-    50% { opacity: 0.2; }
-}
-*/
 
 /* Futuristic List Items Enhancement */
 section ul li {
@@ -3769,6 +3663,7 @@ textarea,
     font-family: 'Segoe UI', sans-serif !important;
     font-size: 1.1em !important;
     transition: all 0.4s ease !important;
+    -webkit-backdrop-filter: blur(15px) !important;
     backdrop-filter: blur(15px) !important;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;
 }
@@ -3805,6 +3700,7 @@ input[type="submit"],
     transition: all 0.4s ease !important;
     position: relative !important;
     overflow: hidden !important;
+    -webkit-backdrop-filter: blur(10px) !important;
     backdrop-filter: blur(10px) !important;
     box-shadow: 0 6px 20px rgba(0, 255, 255, 0.3) !important;
 }
