@@ -55,14 +55,51 @@ function ensureInitialScrolling() {
     document.documentElement.style.position = 'relative';
     document.body.style.position = 'relative';
     
-    // Ensure touch scrolling is enabled
-    document.documentElement.style.webkitOverflowScrolling = 'touch';
-    document.body.style.webkitOverflowScrolling = 'touch';
+    // Enhanced mobile scroll enablement
+    if (/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        // Force momentum scrolling
+        document.documentElement.style.webkitOverflowScrolling = 'touch';
+        document.body.style.webkitOverflowScrolling = 'touch';
+        
+        // Disable scroll-behavior auto on mobile for better performance
+        document.documentElement.style.scrollBehavior = 'auto';
+        
+        // Add CSS for ultra-smooth mobile scrolling
+        const mobileScrollCSS = document.createElement('style');
+        mobileScrollCSS.innerHTML = `
+            @media (max-width: 768px) {
+                html, body {
+                    scroll-behavior: auto !important;
+                    -webkit-overflow-scrolling: touch !important;
+                    overflow-y: auto !important;
+                    transform: translateZ(0) !important;
+                    -webkit-transform: translateZ(0) !important;
+                    will-change: scroll-position !important;
+                }
+                
+                /* Smooth scrolling for all elements */
+                * {
+                    -webkit-backface-visibility: hidden !important;
+                    backface-visibility: hidden !important;
+                    -webkit-perspective: 1000px !important;
+                    perspective: 1000px !important;
+                }
+                
+                /* Optimize sections for smooth scrolling */
+                section, article, nav, main, header, div {
+                    -webkit-transform: translateZ(0) !important;
+                    transform: translateZ(0) !important;
+                    will-change: transform !important;
+                }
+            }
+        `;
+        document.head.appendChild(mobileScrollCSS);
+    }
     
     // Force a reflow to apply changes
     document.body.offsetHeight;
     
-    console.log('🔓 Initial scrolling enabled');
+    console.log('🔓 Enhanced initial scrolling enabled');
 }
 
 // Mobile optimizations
@@ -385,36 +422,57 @@ function initializeEnhancedMobileScrolling() {
         }, { passive: true });
     }
     
-    // Universal mobile scroll optimization - less aggressive approach
+    // Universal mobile scroll optimization - ultra-aggressive approach for smoothness
     const optimizeScrollCSS = document.createElement('style');
     optimizeScrollCSS.textContent = `
         @media (max-width: 768px) {
             html {
                 -webkit-overflow-scrolling: touch !important;
-                overscroll-behavior: contain !important;
-                scroll-behavior: smooth !important;
+                overscroll-behavior: none !important;
+                scroll-behavior: auto !important;
                 overflow-y: auto !important;
                 overflow-x: hidden !important;
-                -webkit-transform: translateZ(0);
-                transform: translateZ(0);
+                -webkit-transform: translateZ(0) !important;
+                transform: translateZ(0) !important;
+                will-change: scroll-position !important;
+                -webkit-backface-visibility: hidden !important;
+                backface-visibility: hidden !important;
             }
             
             body {
                 -webkit-overflow-scrolling: touch !important;
-                overscroll-behavior: contain !important;
+                overscroll-behavior: none !important;
                 overflow-y: auto !important;
                 overflow-x: hidden !important;
-                -webkit-transform: translateZ(0);
-                transform: translateZ(0);
+                -webkit-transform: translateZ(0) !important;
+                transform: translateZ(0) !important;
+                will-change: scroll-position !important;
+                -webkit-backface-visibility: hidden !important;
+                backface-visibility: hidden !important;
             }
             
-            /* Performance optimizations for scrollable elements */
-            section, article, nav, main, header {
-                will-change: transform;
-                -webkit-transform: translateZ(0);
-                transform: translateZ(0);
-                -webkit-backface-visibility: hidden;
-                backface-visibility: hidden;
+            /* Ultra-smooth scrolling for all elements */
+            *, *:before, *:after {
+                -webkit-backface-visibility: hidden !important;
+                backface-visibility: hidden !important;
+                -webkit-perspective: 1000px !important;
+                perspective: 1000px !important;
+                -webkit-transform: translateZ(0) !important;
+                transform: translateZ(0) !important;
+            }
+            
+            /* Performance boost for main sections */
+            section, article, nav, main, header, div, p, h1, h2, h3, h4, h5, h6 {
+                will-change: transform !important;
+                -webkit-transform: translateZ(0) !important;
+                transform: translateZ(0) !important;
+                -webkit-backface-visibility: hidden !important;
+                backface-visibility: hidden !important;
+            }
+            
+            /* Disable smooth scrolling on mobile for better performance */
+            .nav-link, a[href^="#"] {
+                scroll-behavior: auto !important;
             }
         }
     `;
@@ -1780,7 +1838,17 @@ function initializeSmoothScrolling() {
                 optimizeScrollPerformance();
                 
                 // Choose scroll method based on device capability
-                if (device.isDesktop && 'scrollBehavior' in document.documentElement.style) {
+                if (device.isMobile) {
+                    // Use native scrolling on mobile for best performance
+                    targetSection.scrollIntoView({
+                        behavior: 'auto', // Use auto for mobile performance
+                        block: 'start',
+                        inline: 'nearest'
+                    });
+                    
+                    // Reset opacity immediately for mobile
+                    this.style.opacity = '1';
+                } else if (device.isDesktop && 'scrollBehavior' in document.documentElement.style) {
                     // Use native smooth scrolling on capable desktop browsers
                     targetSection.scrollIntoView({
                         behavior: 'smooth',
@@ -1793,7 +1861,7 @@ function initializeSmoothScrolling() {
                         this.style.opacity = '1';
                     }, 800);
                 } else {
-                    // Use our enhanced custom scrolling
+                    // Use our enhanced custom scrolling for other cases
                     ultraSmoothScrollTo(targetSection, {
                         offset: 80,
                         duration: device.isMobile ? 1200 : 900,
