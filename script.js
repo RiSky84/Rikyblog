@@ -3,6 +3,9 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log('📄 DOM fully loaded');
     
+    // IMMEDIATE SCROLL FIX - Ensure scrolling works from page load
+    ensureInitialScrolling();
+    
     // CREATE WORKING TOGGLE
     createSimpleWorkingToggle();
     
@@ -37,6 +40,30 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeTimelineAnimations();
     initializeNewsletterForm();
 });
+
+// Ensure initial scrolling works properly
+function ensureInitialScrolling() {
+    // Force enable scrolling immediately
+    document.documentElement.style.overflow = 'auto';
+    document.documentElement.style.overflowY = 'auto';
+    document.documentElement.style.overflowX = 'hidden';
+    document.body.style.overflow = 'auto';
+    document.body.style.overflowY = 'auto';
+    document.body.style.overflowX = 'hidden';
+    
+    // Remove any potential scroll blocking styles
+    document.documentElement.style.position = 'relative';
+    document.body.style.position = 'relative';
+    
+    // Ensure touch scrolling is enabled
+    document.documentElement.style.webkitOverflowScrolling = 'touch';
+    document.body.style.webkitOverflowScrolling = 'touch';
+    
+    // Force a reflow to apply changes
+    document.body.offsetHeight;
+    
+    console.log('🔓 Initial scrolling enabled');
+}
 
 // Mobile optimizations
 function initializeMobileOptimizations() {
@@ -304,27 +331,44 @@ function initializeEnhancedMobileScrolling() {
         document.body.style.webkitOverflowScrolling = 'touch';
         document.documentElement.style.webkitOverflowScrolling = 'touch';
         
-        // Prevent elastic bounce scrolling
+        // Improved elastic bounce scrolling prevention - less aggressive
         let touchStartY = 0;
         let touchMoveY = 0;
+        let allowScroll = true;
         
         document.addEventListener('touchstart', (e) => {
             touchStartY = e.touches[0].clientY;
+            allowScroll = true;
         }, { passive: true });
         
         document.addEventListener('touchmove', (e) => {
+            if (!allowScroll) return;
+            
             touchMoveY = e.touches[0].clientY;
             const touchDelta = touchMoveY - touchStartY;
             const scrollTop = window.pageYOffset;
             const scrollHeight = document.documentElement.scrollHeight;
             const clientHeight = window.innerHeight;
             
-            // Prevent overscroll at top and bottom
-            if ((scrollTop <= 0 && touchDelta > 0) || 
-                (scrollTop + clientHeight >= scrollHeight && touchDelta < 0)) {
+            // Only prevent overscroll at extreme boundaries with tolerance
+            const tolerance = 5;
+            const isAtTop = scrollTop <= tolerance;
+            const isAtBottom = scrollTop + clientHeight >= scrollHeight - tolerance;
+            const isScrollingUp = touchDelta > 0;
+            const isScrollingDown = touchDelta < 0;
+            
+            // Only prevent if we're at the boundary AND trying to scroll beyond
+            if ((isAtTop && isScrollingUp && Math.abs(touchDelta) > 10) || 
+                (isAtBottom && isScrollingDown && Math.abs(touchDelta) > 10)) {
                 e.preventDefault();
+                allowScroll = false;
             }
         }, { passive: false });
+        
+        // Reset allow scroll on touch end
+        document.addEventListener('touchend', () => {
+            allowScroll = true;
+        }, { passive: true });
     }
     
     // Android specific optimizations
@@ -341,29 +385,36 @@ function initializeEnhancedMobileScrolling() {
         }, { passive: true });
     }
     
-    // Universal mobile scroll optimization
+    // Universal mobile scroll optimization - less aggressive approach
     const optimizeScrollCSS = document.createElement('style');
     optimizeScrollCSS.textContent = `
         @media (max-width: 768px) {
-            html, body {
+            html {
                 -webkit-overflow-scrolling: touch !important;
-                overscroll-behavior: none !important;
-                scroll-behavior: auto !important;
+                overscroll-behavior: contain !important;
+                scroll-behavior: smooth !important;
+                overflow-y: auto !important;
+                overflow-x: hidden !important;
                 -webkit-transform: translateZ(0);
                 transform: translateZ(0);
             }
             
-            * {
+            body {
+                -webkit-overflow-scrolling: touch !important;
+                overscroll-behavior: contain !important;
+                overflow-y: auto !important;
+                overflow-x: hidden !important;
+                -webkit-transform: translateZ(0);
+                transform: translateZ(0);
+            }
+            
+            /* Performance optimizations for scrollable elements */
+            section, article, nav, main, header {
+                will-change: transform;
+                -webkit-transform: translateZ(0);
+                transform: translateZ(0);
                 -webkit-backface-visibility: hidden;
                 backface-visibility: hidden;
-                -webkit-perspective: 1000px;
-                perspective: 1000px;
-            }
-            
-            section, article, nav, main, header {
-                will-change: transform, opacity;
-                -webkit-transform: translateZ(0);
-                transform: translateZ(0);
             }
         }
     `;
